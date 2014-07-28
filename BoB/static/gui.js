@@ -1890,7 +1890,7 @@ IDE_Morph.prototype.snapMenu = function () {
     menu.addItem(
         'Reference manual',
         function () {
-            window.open('help/SnapManual.pdf', 'SnapReferenceManual');
+            window.open('/static/help/SnapManual.pdf', 'SnapReferenceManual');
         }
     );
     menu.addItem(
@@ -2415,7 +2415,7 @@ IDE_Morph.prototype.projectMenu = function () {
                 );
 
             function loadCostume(name) {
-                var url = dir + '/' + name,
+                var url = '/static/' + dir + '/' + name,
                     img = new Image();
                 img.onload = function () {
                     var canvas = newCanvas(new Point(img.width, img.height));
@@ -2444,7 +2444,7 @@ IDE_Morph.prototype.projectMenu = function () {
                 libMenu = new MenuMorph(this, 'Import sound');
 
             function loadSound(name) {
-                var url = 'Sounds/' + name,
+                var url = '/static/Sounds/' + name,
                     audio = new Audio();
                 audio.src = url;
                 audio.load();
