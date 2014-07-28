@@ -1,3 +1,5 @@
+
+
 """
 Django settings for BoB project.
 
@@ -38,6 +40,19 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +65,15 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'BoB.urls'
 
 WSGI_APPLICATION = 'BoB.wsgi.application'
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+
+    # this bit of fanciness dynamically sets the templates dir to be relative to this file
+    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+)
 
 
 # Database

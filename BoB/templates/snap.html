@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Snap! Build Your Own Blocks. Beta</title>
+
+		{% load staticfiles %}
+
+    <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
+		
+
+		<script type="text/javascript" src="{% static "morphic.js"%}"></script>
+		<script type="text/javascript" src="{% static "widgets.js"%}"></script>
+		<script type="text/javascript" src="{% static "blocks.js"%}"></script>
+		<script type="text/javascript" src="{% static "threads.js"%}"></script>
+		<script type="text/javascript" src="{% static "objects.js"%}"></script>
+		<script type="text/javascript" src="{% static "gui.js"%}"></script>
+		<script type="text/javascript" src="{% static "paint.js"%}"></script>
+		<script type="text/javascript" src="{% static "lists.js"%}"></script>
+		<script type="text/javascript" src="{% static "byob.js"%}"></script>
+		<script type="text/javascript" src="{% static "xml.js"%}"></script>
+		<script type="text/javascript" src="{% static "store.js"%}"></script>
+		<script type="text/javascript" src="{% static "locale.js"%}"></script>
+		<script type="text/javascript" src="{% static "cloud.js"%}"></script>
+		<script type="text/javascript" src="{% static "sha512.js"%}"></script>
+		<script type="text/javascript">
+			var world;
+			window.onload = function () {
+				world = new WorldMorph(document.getElementById('world'), true); // second arg sets fillPage
+                world.worldCanvas.focus();
+				new IDE_Morph().openIn(world);
+				setInterval(loop, 1);
+			};
+			function loop() {
+				world.doOneCycle();
+			}
+		</script>
+	</head>
+	<body style="margin: 0;">
+		<div>hey goes here.</div>
+		<canvas id="world" tabindex="1" style="position: absolute;" />
+    </body>
+</html>
