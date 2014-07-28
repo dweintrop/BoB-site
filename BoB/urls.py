@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^snap/help', views.help),
     url(r'^snap/Costumes', views.costumes),
     url(r'^snap/Sounds', views.sounds),
+    url(r'^snap/Backgrounds', views.backgrounds),
     url(r'^snap/$', views.snap),
 
 
