@@ -12,8 +12,17 @@ SnapStudy.SnapRun = function(xml, clickSource) {
 		'student_id' : $('#id_student_id').val(),
 		'pair_id' : $('#id_pair_id').val(),
 		'condition' : $('#id_condition').val(),
-		'logtype' : clickSource,
+		'run_type' : clickSource,
 		'xml' : xml
 	}
-	console.log(jsonData);
+
+	$.ajax({
+		type: "POST",
+		url: "/snapRun/",
+		data: jsonData
+	}).done(function( msg ) {
+		console.log(msg);
+	});
+
+	// console.log(jsonData);
 }

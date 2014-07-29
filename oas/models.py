@@ -17,5 +17,5 @@ class SnapRun(models.Model):
   # StageImage = models.ImageField()
   
   def __unicode__(self):
-		return self.StudentID + ': ' + self.ProjectName + " -  " + self.TimeStamp
+		return self.StudentID + ': ' + self.ProjectName + " -  " + self.TimeStamp.strftime("%m.%d.%Y %H:%M:%S")
 
