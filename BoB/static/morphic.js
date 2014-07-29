@@ -10418,7 +10418,11 @@ WorldMorph.prototype.initEventListeners = function () {
         }
         // For Safari / chrome
         return msg;
-    };
+    };    
+
+    window.onunload = function(){
+        SnapStudy.SnapRun(world.children[0],'projectClose');
+    }
 };
 
 WorldMorph.prototype.mouseDownLeft = function () {
