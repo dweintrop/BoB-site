@@ -20,6 +20,7 @@ SnapStudy.SnapRun = function(ide, clickSource) {
 	var jsonData = {
 		'student_id' : $('#id_student_id').val(),
 		'pair_id' : $('#id_pair_id').val(),
+		'project_name' : (ide.projectName) ? ide.projectName : 'Untitled',
 		'condition' : $('#id_condition').val(),
 		'run_type' : clickSource,
 		'scriptXML' : scriptXML,

@@ -26,7 +26,7 @@ def snapRun(request):
 		snapRun = SnapRun(
 			StudentID = request.POST['student_id'],
 			PairID = request.POST['pair_id'],
-			ProjectName = 'temp',
+			ProjectName = request.POST['project_name'],
 			TimeStamp = datetime.datetime.now(),
 			Condition = request.POST['condition'],
 			RunType = request.POST['run_type'],
