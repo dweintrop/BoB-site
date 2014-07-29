@@ -1,8 +1,24 @@
 from django.shortcuts import render
+from forms import LoginForm
 
+def login(request):
+    return render(request, 'login.html', {'form': LoginForm()})
 
 def snap(request):
-    return render(request, 'snap.html')
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			return render(request, 'snap.html', {'form': form})
+		else:
+			return render(request, 'login.html', {'form': form})
+	        # return HttpResponse(form.errors)
+	else:
+		return render(request, 'login.html', {'form': LoginForm()})
+
+# store run 
+def snapRun(request):
+
+	return False
 
 # pass through mappings to get around my not being able to figure out how to show an image directory
 def help(request):

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Building on Blocks - login</title>
+
+		{% load staticfiles %}
+	</head>
+	<body style="margin: 0;">
+
+	  {% if form.errors %}
+	    <p class="error-msg">
+	      Please correct the error{{ form.errors|pluralize }} below.
+	      {{form.errors}}
+	    </p>
+	  {% endif %}
+
+		Please enter your student ID
+
+		<form id="theForm" action="/snap/" method="post">
+		  <table class="info-form" style="width: 650px;">
+	      <tr>
+	         <td class="label"><label for="first_name">Student ID:</label></td>
+	         <td>
+	         	<input type="text" name="student_id" size="8"/>
+	         </td>
+	      </tr>    
+	      <tr>
+	         <td class="label"><label for="first_name">Pair ID:</label></td>
+	         <td>
+	         	<input type="text" name="pair_id" size="8"/>
+	         </td>
+	      </tr>  
+	      <tr>
+         <td class="label"><label for="period">Class Period:</label></td>
+         <td>
+            {{form.class_period}}
+         </td>
+     	</tr>
+     	<tr>
+     		<td colspan="2">
+     			<input type="submit" value="Submit">
+     		</td>
+     	</tr>
+     </table>
+		</form>
+
+
+
+    </body>
+</html>

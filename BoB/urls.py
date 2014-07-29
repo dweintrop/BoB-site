@@ -14,6 +14,9 @@ urlpatterns = patterns('',
     url(r'^snap/Backgrounds', views.backgrounds),
     url(r'^snap/$', views.snap),
 
+    url(r'^snapRun', views.snapRun ),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^.*', views.login),
 )

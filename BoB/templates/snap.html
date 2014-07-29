@@ -4,10 +4,14 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Snap! Build Your Own Blocks. Beta</title>
 
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
 		{% load staticfiles %}
 
     <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
 		
+		<script type="text/javascript" src="{% static "snapStudy.js"%}"></script>
 
 		<script type="text/javascript" src="{% static "morphic.js"%}"></script>
 		<script type="text/javascript" src="{% static "widgets.js"%}"></script>
@@ -37,7 +41,11 @@
 		</script>
 	</head>
 	<body style="margin: 0;">
-		<div>hey goes here.</div>
+		<div style="display:none;">
+			{{form.student_id}}
+			{{form.pair_id}}
+			<input id="id_condition" value="{{form.class_period.value}}"/>
+		</div>
 		<canvas id="world" tabindex="1" style="position: absolute;" />
     </body>
 </html>
