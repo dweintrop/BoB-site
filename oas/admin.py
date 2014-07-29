@@ -14,13 +14,13 @@ class SnapRunAdmin(admin.ModelAdmin):
 		response = HttpResponse(content_type='text/csv')
 
 		writer = UnicodeWriter(response)
-		writer.writerow(['Student DB ID', 'student ID', 'f_name', 'l_name', 'grade', 'sex', 'school', 'email', 'ethnicity/comments'])
+		writer.writerow(['SnapRun DB ID', 'Student ID', 'Pair ID', 'Project Name', 'TimeStamp', 'RunType', 'Condition', 'ProjectXML'])
 
-		for stu in queryset:
-			stu_info = [stu.id, stu.student_id, stu.first_name, stu.last_name, stu.grade, stu.sex, stu.school, stu.email] + stu.ethnicity.rsplit('|')
-			writer.writerow(stu_info)
+		for run in queryset:
+			run_info = [run.id, run.StudentID, run.PairID, run.ProjectName, run.TimeStamp, run.RunType, run.Condition, run.ProjectXML]
+			writer.writerow(run_info)
 
-		response['Content-Disposition'] = 'attachment; filename="students.csv"'
+		response['Content-Disposition'] = 'attachment; filename="snapruns.csv"'
 		return response
 
 admin.site.register(SnapRun, SnapRunAdmin)
