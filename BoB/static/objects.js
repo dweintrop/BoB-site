@@ -4719,7 +4719,7 @@ console.log( 'Log: fire green flag event');
         ide = this.parentThatIsA(IDE_Morph),
         myself = this;
 
-    SnapStudy.SnapRun(ide.serializer.serialize(myself), 'GreenFlag');
+    SnapStudy.SnapRun(ide, 'GreenFlag');
 
     this.children.concat(this).forEach(function (morph) {
         if (morph instanceof SpriteMorph || morph instanceof StageMorph) {

@@ -30,7 +30,8 @@ def snapRun(request):
 			TimeStamp = datetime.datetime.now(),
 			Condition = request.POST['condition'],
 			RunType = request.POST['run_type'],
-			ProjectXML = request.POST['xml']
+			ScriptXML = request.POST['scriptXML'],
+			ProjectXML = request.POST['projectXML']
 			)
 		snapRun.save()
 		return HttpResponse('success')

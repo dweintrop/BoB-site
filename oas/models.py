@@ -8,6 +8,7 @@ class SnapRun(models.Model):
   TimeStamp = models.DateTimeField()
   RunType = models.CharField(max_length=20)
   Condition = models.CharField(max_length=20)
+  ScriptXML = models.TextField()
   ProjectXML = models.TextField()
 
   # Not going to do this for now, but could look into Amazon s3 backend
