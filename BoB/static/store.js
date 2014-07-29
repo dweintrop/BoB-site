@@ -1378,8 +1378,8 @@ StageMorph.prototype.toXML = function (serializer) {
             serializer.version,
             (ide && ide.projectNotes) ? ide.projectNotes : '',
             this.name,
-            StageMorph.prototype.dimensions.x,
-            StageMorph.prototype.dimensions.y,
+            Math.round(StageMorph.prototype.dimensions.x),
+            Math.round(StageMorph.prototype.dimensions.y),
             StageMorph.prototype.frameRate !== 0,
             serializer.store(this.variables),
             serializer.store(this.customBlocks),
@@ -1457,57 +1457,76 @@ SpriteMorph.prototype.toXML = function (serializer) {
     var stage = this.parentThatIsA(StageMorph),
         ide = stage ? stage.parentThatIsA(IDE_Morph) : null,
         idx = ide ? ide.sprites.asArray().indexOf(this) + 1 : 0;
-    return serializer.format(
-        '<sprite name="@" idx="@" x="@" y="@"' +
-            ' heading="@"' +
-            ' scale="@"' +
-            ' rotation="@"' +
-            ' draggable="@"' +
-            '%' +
-            ' costume="@" color="@,@,@" pen="@" ~>' +
-            '%' + // nesting info
-            '<costumes>%</costumes>' +
-            '<sounds>%</sounds>' +
-            '<variables>%</variables>' +
-            '<blocks>%</blocks>' +
-            '<scripts>%</scripts>' +
-            '</sprite>',
-        this.name,
-        idx,
-        this.xPosition(),
-        this.yPosition(),
-        this.heading,
-        this.scale,
-        this.rotationStyle,
-        this.isDraggable,
-        this.isVisible ? '' : ' hidden="true"',
-        this.getCostumeIdx(),
-        this.color.r,
-        this.color.g,
-        this.color.b,
-        this.penPoint,
+    
+    if (serializer.scriptsOnly) {
+       return serializer.format(
+                '<sprite name="@" idx="@" x="@" y="@"' +
+                    '<variables>%</variables>' +
+                    '<blocks>%</blocks>' +
+                    '<scripts>%</scripts>' +
+                    '</sprite>',
+                this.name,
+                idx,
+                Math.round(this.xPosition()),
+                Math.round(this.yPosition()),
+                
+                serializer.store(this.variables),
+                !this.customBlocks ? '' : serializer.store(this.customBlocks),
+                serializer.store(this.scripts)
+            );
+    } else {
+        return serializer.format(
+            '<sprite name="@" idx="@" x="@" y="@"' +
+                ' heading="@"' +
+                ' scale="@"' +
+                ' rotation="@"' +
+                ' draggable="@"' +
+                '%' +
+                ' costume="@" color="@,@,@" pen="@" ~>' +
+                '%' + // nesting info
+                '<costumes>%</costumes>' +
+                '<sounds>%</sounds>' +
+                '<variables>%</variables>' +
+                '<blocks>%</blocks>' +
+                '<scripts>%</scripts>' +
+                '</sprite>',
+            this.name,
+            idx,
+            this.xPosition(),
+            this.yPosition(),
+            this.heading,
+            this.scale,
+            this.rotationStyle,
+            this.isDraggable,
+            this.isVisible ? '' : ' hidden="true"',
+            this.getCostumeIdx(),
+            this.color.r,
+            this.color.g,
+            this.color.b,
+            this.penPoint,
 
-        // nesting info
-        this.anchor
-            ? '<nest anchor="' +
-                    this.anchor.name +
-                    '" synch="'
-                    + this.rotatesWithAnchor
-                    + (this.scale === this.nestingScale ? '' :
-                            '"'
-                            + ' scale="'
-                            + this.nestingScale)
+            // nesting info
+            this.anchor
+                ? '<nest anchor="' +
+                        this.anchor.name +
+                        '" synch="'
+                        + this.rotatesWithAnchor
+                        + (this.scale === this.nestingScale ? '' :
+                                '"'
+                                + ' scale="'
+                                + this.nestingScale)
 
-                    + '"/>'
-            : '',
+                        + '"/>'
+                : '',
 
-        serializer.store(this.costumes, this.name + '_cst'),
-        serializer.store(this.sounds, this.name + '_snd'),
-        serializer.store(this.variables),
-        !this.customBlocks ?
-                    '' : serializer.store(this.customBlocks),
-        serializer.store(this.scripts)
-    );
+            serializer.store(this.costumes, this.name + '_cst'),
+            serializer.store(this.sounds, this.name + '_snd'),
+            serializer.store(this.variables),
+            !this.customBlocks ?
+                        '' : serializer.store(this.customBlocks),
+            serializer.store(this.scripts)
+        );
+    }
 };
 
 Costume.prototype[XML_Serializer.prototype.mediaDetectionProperty] = true;
@@ -1517,8 +1536,8 @@ Costume.prototype.toXML = function (serializer) {
         return serializer.format(
             '<costume name="@" center-x="@" center-y="@" ~/>',
             this.name,
-            this.rotationCenter.x,
-            this.rotationCenter.y
+            Math.round(this.rotationCenter.x),
+            Math.round(this.rotationCenter.y)
         );
     } else {
         return serializer.format(
@@ -1633,11 +1652,19 @@ BlockMorph.prototype.toXML = BlockMorph.prototype.toScriptXML = function (
 
     // save my position to xml
     if (savePosition) {
-        xml = serializer.format(
-            '<script x="@" y="@">',
-            position.x / scale,
-            position.y / scale
-        );
+        if (serializer.scriptsOnly) {
+            xml = serializer.format(
+                '<script x="@" y="@">',
+                Math.round(position.x / scale),
+                Math.round(position.y / scale)
+            );
+        } else {
+            xml = serializer.format(
+                '<script x="@" y="@">',
+                position.x / scale,
+                position.y / scale
+            );
+        }
     } else {
         xml = '<script>';
     }
