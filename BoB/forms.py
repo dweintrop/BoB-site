@@ -7,7 +7,7 @@ class LoginForm(forms.Form):
 			self.fields['class_period'].widget.attrs['class'] = 'selectBoxIt'
 
 		student_id = forms.CharField()
-		pair_id = forms.CharField()
+		pair_id = forms.CharField(required=False)
 		# project_name = forms.CharField()
 		class_period = forms.CharField(widget=forms.Select)
 		
