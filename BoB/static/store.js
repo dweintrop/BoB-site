@@ -79,6 +79,8 @@ function XML_Serializer() {
     this.contents = [];
     this.media = [];
     this.isCollectingMedia = false;
+
+    this.scriptsOnly = false;
 }
 
 // XML_Serializer preferences settings:
@@ -1328,6 +1330,7 @@ StageMorph.prototype.toXML = function (serializer) {
         thumbdata,
         ide = this.parentThatIsA(IDE_Morph);
 
+
     // catch cross-origin tainting exception when using SVG costumes
     try {
         thumbdata = thumbnail.toDataURL('image/png');
@@ -1352,60 +1355,102 @@ StageMorph.prototype.toXML = function (serializer) {
     }
 
     this.removeAllClones();
-    return serializer.format(
-        '<project name="@" app="@" version="@">' +
-            '<notes>$</notes>' +
-            '<thumbnail>$</thumbnail>' +
-            '<stage name="@" width="@" height="@" ' +
-            'costume="@" tempo="@" threadsafe="@" ' +
-            'lines="@" ' +
-            'codify="@" ' +
-            'scheduled="@" ~>' +
-            '<pentrails>$</pentrails>' +
-            '<costumes>%</costumes>' +
-            '<sounds>%</sounds>' +
-            '<variables>%</variables>' +
-            '<blocks>%</blocks>' +
-            '<scripts>%</scripts><sprites>%</sprites>' +
-            '</stage>' +
-            '<hidden>$</hidden>' +
-            '<headers>%</headers>' +
-            '<code>%</code>' +
-            '<blocks>%</blocks>' +
-            '<variables>%</variables>' +
-            '</project>',
-        (ide && ide.projectName) ? ide.projectName : 'Untitled',
-        serializer.app,
-        serializer.version,
-        (ide && ide.projectNotes) ? ide.projectNotes : '',
-        thumbdata,
-        this.name,
-        StageMorph.prototype.dimensions.x,
-        StageMorph.prototype.dimensions.y,
-        this.getCostumeIdx(),
-        this.getTempo(),
-        this.isThreadSafe,
-        SpriteMorph.prototype.useFlatLineEnds ? 'flat' : 'round',
-        this.enableCodeMapping,
-        StageMorph.prototype.frameRate !== 0,
-        this.trailsCanvas.toDataURL('image/png'),
-        // TODO: a possible place to shrink the size of xml sent across the wire
-        serializer.store(this.costumes, this.name + '_cst'),
-        serializer.store(this.sounds, this.name + '_snd'),
-        serializer.store(this.variables),
-        serializer.store(this.customBlocks),
-        serializer.store(this.scripts),
-        serializer.store(this.children),
-        Object.keys(StageMorph.prototype.hiddenPrimitives).reduce(
-                function (a, b) {return a + ' ' + b; },
-                ''
-            ),
-        code('codeHeaders'),
-        code('codeMappings'),
-        serializer.store(this.globalBlocks),
-        (ide && ide.globalVariables) ?
-                    serializer.store(ide.globalVariables) : ''
-    );
+
+
+    // alternative (and hopefully smaller) exporter
+    if (serializer.scriptsOnly) {
+
+        return serializer.format(
+            '<project name="@" app="@" version="@">' +
+                '<notes>$</notes>' +
+                '<stage name="@" width="@" height="@" ' +
+                'scheduled="@" ~>' +
+                '<variables>%</variables>' +
+                '<blocks>%</blocks>' +
+                '<scripts>%</scripts><sprites>%</sprites>' +
+                '</stage>' +
+                '<hidden>$</hidden>' +
+                '<blocks>%</blocks>' +
+                '<variables>%</variables>' +
+                '</project>',
+            (ide && ide.projectName) ? ide.projectName : 'Untitled',
+            serializer.app,
+            serializer.version,
+            (ide && ide.projectNotes) ? ide.projectNotes : '',
+            this.name,
+            StageMorph.prototype.dimensions.x,
+            StageMorph.prototype.dimensions.y,
+            StageMorph.prototype.frameRate !== 0,
+            serializer.store(this.variables),
+            serializer.store(this.customBlocks),
+            serializer.store(this.scripts),
+            serializer.store(this.children),
+            Object.keys(StageMorph.prototype.hiddenPrimitives).reduce(
+                    function (a, b) {return a + ' ' + b; },
+                    ''
+                ),
+            serializer.store(this.globalBlocks),
+            (ide && ide.globalVariables) ?
+                        serializer.store(ide.globalVariables) : ''
+        );
+
+    } else {
+        return serializer.format(
+            '<project name="@" app="@" version="@">' +
+                '<notes>$</notes>' +
+                '<thumbnail>$</thumbnail>' +
+                '<stage name="@" width="@" height="@" ' +
+                'costume="@" tempo="@" threadsafe="@" ' +
+                'lines="@" ' +
+                'codify="@" ' +
+                'scheduled="@" ~>' +
+                '<pentrails>$</pentrails>' +
+                '<costumes>%</costumes>' +
+                '<sounds>%</sounds>' +
+                '<variables>%</variables>' +
+                '<blocks>%</blocks>' +
+                '<scripts>%</scripts><sprites>%</sprites>' +
+                '</stage>' +
+                '<hidden>$</hidden>' +
+                '<headers>%</headers>' +
+                '<code>%</code>' +
+                '<blocks>%</blocks>' +
+                '<variables>%</variables>' +
+                '</project>',
+            (ide && ide.projectName) ? ide.projectName : 'Untitled',
+            serializer.app,
+            serializer.version,
+            (ide && ide.projectNotes) ? ide.projectNotes : '',
+            thumbdata,
+            this.name,
+            StageMorph.prototype.dimensions.x,
+            StageMorph.prototype.dimensions.y,
+            this.getCostumeIdx(),
+            this.getTempo(),
+            this.isThreadSafe,
+            SpriteMorph.prototype.useFlatLineEnds ? 'flat' : 'round',
+            this.enableCodeMapping,
+            StageMorph.prototype.frameRate !== 0,
+            this.trailsCanvas.toDataURL('image/png'),
+
+            // TODO: a possible place to shrink the size of xml sent across the wire
+            serializer.store(this.costumes, this.name + '_cst'),
+            serializer.store(this.sounds, this.name + '_snd'),
+            serializer.store(this.variables),
+            serializer.store(this.customBlocks),
+            serializer.store(this.scripts),
+            serializer.store(this.children),
+            Object.keys(StageMorph.prototype.hiddenPrimitives).reduce(
+                    function (a, b) {return a + ' ' + b; },
+                    ''
+                ),
+            code('codeHeaders'),
+            code('codeMappings'),
+            serializer.store(this.globalBlocks),
+            (ide && ide.globalVariables) ?
+                        serializer.store(ide.globalVariables) : ''
+        );
+    }
 };
 
 SpriteMorph.prototype.toXML = function (serializer) {
@@ -1468,14 +1513,23 @@ SpriteMorph.prototype.toXML = function (serializer) {
 Costume.prototype[XML_Serializer.prototype.mediaDetectionProperty] = true;
 
 Costume.prototype.toXML = function (serializer) {
-    return serializer.format(
-        '<costume name="@" center-x="@" center-y="@" image="@" ~/>',
-        this.name,
-        this.rotationCenter.x,
-        this.rotationCenter.y,
-        this instanceof SVG_Costume ?
-                this.contents.src : this.contents.toDataURL('image/png')
-    );
+    if (serializer.scriptsOnly) {
+        return serializer.format(
+            '<costume name="@" center-x="@" center-y="@" ~/>',
+            this.name,
+            this.rotationCenter.x,
+            this.rotationCenter.y
+        );
+    } else {
+        return serializer.format(
+            '<costume name="@" center-x="@" center-y="@" image="@" ~/>',
+            this.name,
+            this.rotationCenter.x,
+            this.rotationCenter.y,
+            this instanceof SVG_Costume ?
+                    this.contents.src : this.contents.toDataURL('image/png')
+        );
+    }
 };
 
 Sound.prototype[XML_Serializer.prototype.mediaDetectionProperty] = true;

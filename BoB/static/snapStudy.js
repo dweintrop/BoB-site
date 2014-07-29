@@ -38,5 +38,8 @@ SnapStudy.SnapRun = function(ide, clickSource) {
 }
 
 SnapStudy.ScriptsXML = function (ide) {
-	return ide.serializer.serialize(ide.stage);
+	ide.serializer.scriptsOnly = true;
+	xml = ide.serializer.serialize(ide.stage);
+	ide.serializer.scriptsOnly = false;
+	return xml;
 }
