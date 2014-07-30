@@ -98,18 +98,15 @@ IDE_Morph.prototype.setDefaultDesign = function () {
     MorphicPreferences.isFlat = false;
     SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
     SpriteMorph.prototype.paletteTextColor = new Color(230, 230, 230);
-    StageMorph.prototype.paletteTextColor
-        = SpriteMorph.prototype.paletteTextColor;
+    StageMorph.prototype.paletteTextColor = SpriteMorph.prototype.paletteTextColor;
     StageMorph.prototype.paletteColor = SpriteMorph.prototype.paletteColor;
-    SpriteMorph.prototype.sliderColor
-        = SpriteMorph.prototype.paletteColor.lighter(30);
+    SpriteMorph.prototype.sliderColor = SpriteMorph.prototype.paletteColor.lighter(30);
 
     IDE_Morph.prototype.buttonContrast = 30;
     IDE_Morph.prototype.backgroundColor = new Color(40, 40, 40);
     IDE_Morph.prototype.frameColor = SpriteMorph.prototype.paletteColor;
 
-    IDE_Morph.prototype.groupColor
-        = SpriteMorph.prototype.paletteColor.lighter(8);
+    IDE_Morph.prototype.groupColor = SpriteMorph.prototype.paletteColor.lighter(8);
     IDE_Morph.prototype.sliderColor = SpriteMorph.prototype.sliderColor;
     IDE_Morph.prototype.buttonLabelColor = new Color(255, 255, 255);
     IDE_Morph.prototype.tabColors = [
@@ -122,22 +119,17 @@ IDE_Morph.prototype.setDefaultDesign = function () {
     IDE_Morph.prototype.scriptsPaneTexture = '/static/scriptsPaneTexture.gif';
     IDE_Morph.prototype.padding = 5;
 
-    SpriteIconMorph.prototype.labelColor
-        = IDE_Morph.prototype.buttonLabelColor;
-    CostumeIconMorph.prototype.labelColor
-        = IDE_Morph.prototype.buttonLabelColor;
-    SoundIconMorph.prototype.labelColor
-        = IDE_Morph.prototype.buttonLabelColor;
-    TurtleIconMorph.prototype.labelColor
-        = IDE_Morph.prototype.buttonLabelColor;
+    SpriteIconMorph.prototype.labelColor = IDE_Morph.prototype.buttonLabelColor;
+    CostumeIconMorph.prototype.labelColor = IDE_Morph.prototype.buttonLabelColor;
+    SoundIconMorph.prototype.labelColor = IDE_Morph.prototype.buttonLabelColor;
+    TurtleIconMorph.prototype.labelColor = IDE_Morph.prototype.buttonLabelColor;
 };
 
 IDE_Morph.prototype.setFlatDesign = function () {
     MorphicPreferences.isFlat = true;
     SpriteMorph.prototype.paletteColor = new Color(255, 255, 255);
     SpriteMorph.prototype.paletteTextColor = new Color(70, 70, 70);
-    StageMorph.prototype.paletteTextColor
-        = SpriteMorph.prototype.paletteTextColor;
+    StageMorph.prototype.paletteTextColor = SpriteMorph.prototype.paletteTextColor;
     StageMorph.prototype.paletteColor = SpriteMorph.prototype.paletteColor;
     SpriteMorph.prototype.sliderColor = SpriteMorph.prototype.paletteColor;
 

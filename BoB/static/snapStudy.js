@@ -10,7 +10,7 @@ var SnapStudy = {}
 SnapStudy.SnapRun = function(ide, clickSource) {
 
 	var projectXML = '';
-	if (clickSource == 'projectClose') {
+	if (clickSource == 'projectClose' && ide) {
 		projectXML = ide.serializer.serialize(ide.stage);
 	} 
 
