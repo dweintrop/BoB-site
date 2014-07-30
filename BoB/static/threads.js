@@ -135,7 +135,11 @@ ThreadManager.prototype.toggleProcess = function (block) {
 };
 
 ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
-    SnapStudy.SnapRun(world.children[0],'threadStart');
+    
+    // don't log when I recieve thread runs as we will have already recorded the state on the inital broadcast
+    if (block.blockSpec.indexOf("when I receive") == -1){
+        SnapStudy.SnapRun(world.children[0],'threadStart');
+    }
 
     var active = this.findProcess(block),
         top = block.topBlock(),
