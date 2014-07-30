@@ -135,7 +135,7 @@ ThreadManager.prototype.toggleProcess = function (block) {
 };
 
 ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
-    console.log("Log: ThreadManager - startProcess");
+    SnapStudy.SnapRun(world.children[0],'threadStart');
 
     var active = this.findProcess(block),
         top = block.topBlock(),

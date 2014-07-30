@@ -9,12 +9,12 @@ var SnapStudy = {}
 
 SnapStudy.SnapRun = function(ide, clickSource) {
 
-	projectXML = '';
+	var projectXML = '';
 	if (clickSource == 'projectClose') {
 		projectXML = ide.serializer.serialize(ide.stage);
 	} 
 
-	scriptXML = SnapStudy.ScriptsXML(ide);
+	var scriptXML = SnapStudy.ScriptsXML(ide);
 	
 
 	var jsonData = {
@@ -40,7 +40,7 @@ SnapStudy.SnapRun = function(ide, clickSource) {
 
 SnapStudy.ScriptsXML = function (ide) {
 	ide.serializer.scriptsOnly = true;
-	xml = ide.serializer.serialize(ide.stage);
+	var xml = ide.serializer.serialize(ide.stage);
 	ide.serializer.scriptsOnly = false;
 	return xml;
 }
