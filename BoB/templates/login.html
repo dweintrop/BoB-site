@@ -2,50 +2,149 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+
 		<title>Building on Blocks - login</title>
 
 		{% load staticfiles %}
+
+		<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' type='text/css'>
+	
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
+		<script type="text/javascript" src="{% static "selectBoxIt.min.js"%}"></script>
+
+		<link rel="stylesheet" href="{% static "css/selectBoxIt.css"%}" type="text/css">
+
+
+		<style type="text/css">
+			.header {
+		    color: #006600;
+		    font: 33px Georgia,"Times New Roman",Times,serif;
+		    letter-spacing: 2px;
+			}
+
+			.header-label {
+		    float: right;
+		    padding-right: 74px;
+		    padding-top: 31px;
+			}
+
+			.input-label{
+		    color: #006600;
+		    font: 18px Georgia,"Times New Roman",Times,serif;
+		    letter-spacing: 1px;
+		    padding: 8px;
+			}
+
+			.text-input {
+		    border: 1px solid #006600;
+		    border-radius: 4px;
+		    font-family: sans-serif;
+		    font-size: 10pt;
+		    margin: 1px;
+		    padding: 4px;
+			}
+
+			.page {
+				padding: 20px 70px;
+				background-color: #eee;
+				border: 2px solid;
+				border-color: #006600;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				width: 49%;
+			 }
+
+			.submit-button {
+			  background-color: #fff;
+		    border: 1px solid #006600;
+		    border-radius: 4px;
+		    font-family: sans-serif;
+		    color: #006600;
+		    font-size: 12pt;
+		    margin: 9px;
+		    padding: 7px;
+			}
+
+			.submit-button:hover {
+			   background-color: #B2E0B2;
+			}
+
+			.error-msg {
+				color:red;
+				font-size:11pt;
+			}
+
+			.sponsor-info {
+			   font-size: 12px;
+			   font-family: sans-serif;
+			   color: #333;
+			   text-align: center;
+			}
+
+		</style>
+
+<script type="text/javascript">
+    $(function() {
+      //Calls the selectBoxIt method on your HTML select box.
+      $("select").selectBoxIt({
+      	autoWidth: false
+      });
+    });
+</script>
+
 	</head>
 	<body style="margin: 0;">
 
-	  {% if form.errors %}
-	    <p class="error-msg">
-	      Please correct the error{{ form.errors|pluralize }} below.
-	      {{form.errors}}
-	    </p>
-	  {% endif %}
 
-		Please enter your student ID
+		<div class="page">
+			<div style="display:none;">
+			  {% if form.errors %}
+			    <p class="error-msg">
+			      Please correct the error{{ form.errors|pluralize }} below.
+			      {{form.errors}}
+			    </p>
+			  {% endif %}
+			</div>
 
-		<form id="theForm" action="/snap/" method="post">
-		  <table class="info-form" style="width: 650px;">
-	      <tr>
-	         <td class="label"><label for="first_name">Student ID:</label></td>
-	         <td>
-	         	<input type="text" name="student_id" size="8"/>
-	         </td>
-	      </tr>    
-	      <tr>
-	         <td class="label"><label for="first_name">Pair ID:</label></td>
-	         <td>
-	         	<input type="text" name="pair_id" size="8"/>
-	         </td>
-	      </tr>  
-	      <tr>
-         <td class="label"><label for="period">Class Period:</label></td>
-         <td>
-            {{form.class_period}}
-         </td>
-     	</tr>
-     	<tr>
-     		<td colspan="2">
-     			<input type="submit" value="Submit">
-     		</td>
-     	</tr>
-     </table>
-		</form>
+			<div id="content" class="container">
 
+		    <div class="header">
+		    	<div class="header-label">Lane Tech Programming I</div>
+					<image src="{% static "images/LaneTechLogo.png"%}" height="101px;"/>
+		    </div>
+				<div style="margin:0 1%; height:3px; border-top:#CCCCCC solid 1px;" align="center">&nbsp;</div>
+				<div style="height:10px; border-top:#CCCCCC solid 2px">&nbsp;</div>
 
+				<form id="theForm" action="/snap/" method="post">
+					<div class="input-label">Student ID: <input type="text" name="student_id" size="8" class="text-input"/><span class="error-msg">
+            {% for error in form.student_id.errors %}
+              {{ error }}
+            {% endfor %}
+          </span></div>
 
-    </body>
+					<div class="input-label">Pair ID: <input type="text" name="pair_id" size="8" class="text-input"/> </div>
+					
+
+					<div class="input-label">Programming I Section: {{form.class_period}}</div>
+					
+					<input class="submit-button" type="submit" value="Let's Go ►"/>
+				</form>
+				
+				<!-- 
+				<br/>
+			  <div class="sponsor-info">
+		      This work is covered by Northwestern University IRB Study STU00097586.
+		    </div>
+		     -->
+
+			</div>
+		</div>
+  </body>
 </html>
