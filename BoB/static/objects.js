@@ -182,8 +182,7 @@ SpriteMorph.prototype.blockColor = {
 
 SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
 SpriteMorph.prototype.paletteTextColor = new Color(230, 230, 230);
-SpriteMorph.prototype.sliderColor
-    = SpriteMorph.prototype.paletteColor.lighter(30);
+SpriteMorph.prototype.sliderColor = SpriteMorph.prototype.paletteColor.lighter(30);
 SpriteMorph.prototype.isCachingPrimitives = true;
 
 SpriteMorph.prototype.enableNesting = true;
@@ -4225,136 +4224,35 @@ StageMorph.prototype.codeMappings = {
     // doScreenshot: (will students see this block?)
 
 // Sound
+    playSound: "this.playSound(<#1>);",
+    // doPlaySoundUntilDone: {
+    // note: this might be a way to access the running process - but I'm not sure...
+    //       I only do it here becuase stopAll does rely on process state
+    doStopAllSounds: "this.parentThatIsA(StageMorph).threads.processes[0].doStopAllSounds();",
+    //doRest: 
+    // doPlayNote: {
+    doChangeTempo: "this.parentThatIsA(StageMorph).changeTempo(<#1>);",
+    doSetTempo: "this.parentThatIsA(StageMorph).setTempo(<#1>);",
+    getTempo: "this.parentThatIsA(StageMorph).getTempo(<#1>);",
+
+// Pen
+    clear: "this.clear();",
+    down: "this.down();",
+    up: "this.up();",
+    // not sure how to do pallete as text input
+    // setColor: {
+    changeHue: "this.changeHue(<#1>);",
+    setHue: "this.setHue(<#1>);",
+    changeBrightness: "this.changeBrightness(<#1>);",
+    setBrightness: "this.setBrightness(<#1>);",
+    changeSize: "this.changeSize(<#1>);",
+    setSize: "this.changeSize(<#1>);",
+    doStamp: "this.doStamp();"
+    
+// Control
+        
 /*
-
-        playSound: {
-            type: 'command',
-            category: 'sound',
-            spec: 'play sound %snd'
-        },
-        doPlaySoundUntilDone: {
-            type: 'command',
-            category: 'sound',
-            spec: 'play sound %snd until done'
-        },
-        doStopAllSounds: {
-            type: 'command',
-            category: 'sound',
-            spec: 'stop all sounds'
-        },
-        doRest: {
-            type: 'command',
-            category: 'sound',
-            spec: 'rest for %n beats',
-            defaults: [0.2]
-        },
-        doPlayNote: {
-            type: 'command',
-            category: 'sound',
-            spec: 'play note %n for %n beats',
-            defaults: [60, 0.5]
-        },
-        doChangeTempo: {
-            type: 'command',
-            category: 'sound',
-            spec: 'change tempo by %n',
-            defaults: [20]
-        },
-        doSetTempo: {
-            type: 'command',
-            category: 'sound',
-            spec: 'set tempo to %n bpm',
-            defaults: [60]
-        },
-        getTempo: {
-            type: 'reporter',
-            category: 'sound',
-            spec: 'tempo'
-        },
-
-        // Sound - Debugging primitives for development mode
-        reportSounds: {
-            dev: true,
-            type: 'reporter',
-            category: 'sound',
-            spec: 'jukebox'
-        },
-
-        // Pen
-        clear: {
-            type: 'command',
-            category: 'pen',
-            spec: 'clear'
-        },
-        down: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'pen down'
-        },
-        up: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'pen up'
-        },
-        setColor: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'set pen color to %clr'
-        },
-        changeHue: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'change pen color by %n',
-            defaults: [10]
-        },
-        setHue: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'set pen color to %n',
-            defaults: [0]
-        },
-        changeBrightness: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'change pen shade by %n',
-            defaults: [10]
-        },
-        setBrightness: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'set pen shade to %n',
-            defaults: [100]
-        },
-        changeSize: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'change pen size by %n',
-            defaults: [1]
-        },
-        setSize: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'set pen size to %n',
-            defaults: [1]
-        },
-        doStamp: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'pen',
-            spec: 'stamp'
-        },
-
-        // Control
-        receiveGo: {
+    receiveGo: {
             type: 'hat',
             category: 'control',
             spec: 'when %greenflag clicked'
