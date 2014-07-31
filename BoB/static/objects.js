@@ -4139,6 +4139,17 @@ SpriteMorph.prototype.doScreenshot = function (imgSource, data) {
     this.addCostume(costume);
 };
 
+
+// snapStudy helper functions for js code mapping - use at your own risk!
+SpriteMorph.prototype.getStage = function() {
+    return this.parentThatIsA(StageMorph);
+}
+
+SpriteMorph.prototype.getProcess = function() {
+    return this.getStage().threads.processes[0];
+}
+
+
 // SpriteHighlightMorph /////////////////////////////////////////////////
 
 // SpriteHighlightMorph inherits from Morph:
@@ -4152,6 +4163,8 @@ SpriteHighlightMorph.uber = Morph.prototype;
 function SpriteHighlightMorph() {
     this.init();
 }
+
+
 
 // StageMorph /////////////////////////////////////////////////////////
 
@@ -4198,18 +4211,16 @@ StageMorph.prototype.codeMappings = {
     xPosition: "this.xPosition()",
     yPosition: "this.yPosition()",
     direction: "this.heading",
-
-    // doFaceTowards: 
-    // doGotoObject: 
+    doFaceTowards: "this.getProcess().doFaceTowards(<#1>);"
+    doGotoObject: "this.getProcess().doGotoObject(<#1>);"
 
 // Looks
     doSwitchToCostume: "this.wearCostume(this.getCostumeByName(<#1>));",
     doWearNextCostume: "this.doWearNextCostume();",
     getCostumeIdx: "this.getCostumeIdx();",
-
-    // doSayFor: "console.log(<#1>);",
+    doSayFor: "this.getProcess().doSayFor(<#1>, <#2>);",
     bubble: "this.bubble(<#1>, false, false);",
-    // doThinkFor: {
+    doThinkFor: "this.getProcess().doThinkFor(<#1>, <#2>);"
     doThink: "this.doThink(<#1>);",
     changeEffect: "this.changeEffect([<#1>], <#2>);",
     setEffect: "this.setEffect([<#1>], <#2>);",
@@ -4221,19 +4232,17 @@ StageMorph.prototype.codeMappings = {
     hide: "this.hide();",
     comeToFront: "this.comeToFront();",
     goBack: "this.goBack(<#1>);",
-    // doScreenshot: (will students see this block?)
+    doScreenshot: "this.doScreenshot(<#1>, <#2>);"
 
 // Sound
     playSound: "this.playSound(<#1>);",
-    // doPlaySoundUntilDone: {
-    // note: this might be a way to access the running process - but I'm not sure...
-    //       I only do it here becuase stopAll does rely on process state
-    doStopAllSounds: "this.parentThatIsA(StageMorph).threads.processes[0].doStopAllSounds();",
-    //doRest: 
-    // doPlayNote: {
-    doChangeTempo: "this.parentThatIsA(StageMorph).changeTempo(<#1>);",
-    doSetTempo: "this.parentThatIsA(StageMorph).setTempo(<#1>);",
-    getTempo: "this.parentThatIsA(StageMorph).getTempo(<#1>);",
+    doPlaySoundUntilDone: "this.getProcess().doPlaySoundUntilDone(<#1>);"
+    doStopAllSounds: "this.getProcess().doStopAllSounds();",
+    doRest: "this.getProcess().doRest(<#1>);"
+    doPlayNote: "this.getProcess().doPlayNote(<#1>, <#2>);"
+    doChangeTempo: "this.getStage().changeTempo(<#1>);",
+    doSetTempo: "this.getStage().setTempo(<#1>);",
+    getTempo: "this.getStage().getTempo(<#1>);",
 
 // Pen
     clear: "this.clear();",
@@ -4251,162 +4260,58 @@ StageMorph.prototype.codeMappings = {
     
 // Control
     /* I'm not yet sure what the code for these should look like - since you can't put them inside the code of block
-    receiveGo: "this.parentThatIsA(StageMorph).fireGreenFlagEvent();",
+    receiveGo: "this.getStage().fireGreenFlagEvent();",
     receiveKey: "this.allHatBlocksForKey(<#1>);",
     receiveClick: 
     receiveMessage: 
     */  
-    doBroadcast: "this.parentThatIsA(StageMorph).doBroadcast(<#1>);",
-    // doBroadcastAndWait:
-    getLastMessage:"this.parentThatIsA(StageMorph).getLastMessage()",
-    // doWait: 
-    // doWaitUntil: 
-
+    doBroadcast: "this.getStage().doBroadcast(<#1>);",
+    doBroadcastAndWait: "this.getProcess().doBroadcastAndWait(<#1>);"
+    getLastMessage:"this.getStage().getLastMessage()",
+    doWait: "this.getProcess().doWait(<#1>);",
+    doWaitUntil: "this.getProcess().doWaitUntil(<#1>);",
     doForever: "while (true) {\n  <#1>\n}",
     doRepeat: "for (var __snapStudyIter = 0; __snapStudyIter < <#1>; __snapStudyIter++) {\n  <#2>\n}",
     doUntil: "do {\n  <#2>\n} while (!(<#1>));"
     doIf: "if (<#1>) {\n  <#2>\n}",
     doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",
     doReport: "return <#1>;",
-    // doStopThis: 
-    // doStopOthers: 
+    doStopThis: "this.getProcess().doStopThis(<#1>);",
+    doStopOthers: "this.getProcess().doStopOthers(<#1>);",
     doRun: "eval(<#1>);",
-    // fork: 
+    // fork:
     evaluate: "eval(<#1>);",
     doCallCC: "eval(<#1>);",
     reportCallCC: "eval(<#1>);",
-    // doWarp: 
+    doWarp:  "this.getProcess().doWarp(<#1>);",
     // receiveOnClone: {
-    createClone: "this.createClone(<#1>);"
-    removeClone: "this.removeClone();"
+    createClone: "this.createClone(<#1>);",
+    removeClone: "this.removeClone();",
 
+// Sensing
+    reportTouchingObject: "this.getProcess().objectTouchingObject(this, <#1>)",
+    reportTouchingColor: "this.getProcess().reportTouchingColor(this, <#1>)",
+    reportColorIsTouchingColor: "this.getProcess().reportColorIsTouchingColor(<#1>, <#2>)",
+    doAsk: "this.getProcess().doAsk(<#1>);",
+    reportLastAnswer: "this.getLastAnswer()",
+    getLastAnswer: "this.getLastAnswer()",
+    reportMouseX: "this.reportMouseX()",
+    reportMouseY: "this.reportMouseY()",
+    reportMouseDown: "this.getProcess().reportMouseDown()",
+    reportKeyPressed: "this.getProcess().reportKeyPressed(<#1>)",
+    reportDistanceTo: "this.getProcess().reportDistanceTo(<#1>)",
+    doResetTimer: "this.getProcess().doResetTimer();",
+    reportTimer: "this.getStage().getTimer()",
+    getTimer: "this.getStage().getTimer()",
+    reportAttributeOf: "this.getProcess().reportAttributeOf(<#1>, <#2>)",
+    reportURL: "this.getProcess().reportURL()",
+    reportIsFastTracking: "this.getProcess().reportIsFastTracking()",
+    doSetFastTracking: "this.getProcess().doSetFastTracking(<#1>)",
+    reportDate: "this.getProcess().reportDate(<#1>)",
+    
+// Operators
 /*
 
-        // Sensing
-
-        reportTouchingObject: {
-            only: SpriteMorph,
-            type: 'predicate',
-            category: 'sensing',
-            spec: 'touching %col ?'
-        },
-        reportTouchingColor: {
-            only: SpriteMorph,
-            type: 'predicate',
-            category: 'sensing',
-            spec: 'touching %clr ?'
-        },
-        reportColorIsTouchingColor: {
-            only: SpriteMorph,
-            type: 'predicate',
-            category: 'sensing',
-            spec: 'color %clr is touching %clr ?'
-        },
-        colorFiltered: {
-            dev: true,
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'filtered for %clr'
-        },
-        reportStackSize: {
-            dev: true,
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'stack size'
-        },
-        reportFrameCount: {
-            dev: true,
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'frames'
-        },
-        doAsk: {
-            type: 'command',
-            category: 'sensing',
-            spec: 'ask %s and wait',
-            defaults: [localize('what\'s your name?')]
-        },
-        reportLastAnswer: { // retained for legacy compatibility
-            dev: true,
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'answer'
-        },
-        getLastAnswer: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'answer'
-        },
-        reportMouseX: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'mouse x'
-        },
-        reportMouseY: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'mouse y'
-        },
-        reportMouseDown: {
-            type: 'predicate',
-            category: 'sensing',
-            spec: 'mouse down?'
-        },
-        reportKeyPressed: {
-            type: 'predicate',
-            category: 'sensing',
-            spec: 'key %key pressed?'
-        },
-        reportDistanceTo: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'distance to %dst'
-        },
-        doResetTimer: {
-            type: 'command',
-            category: 'sensing',
-            spec: 'reset timer'
-        },
-        reportTimer: { // retained for legacy compatibility
-            dev: true,
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'timer'
-        },
-        getTimer: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'timer'
-        },
-        reportAttributeOf: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: '%att of %spr',
-            defaults: [['costume #']]
-        },
-        reportURL: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'http:// %s',
-            defaults: ['snap.berkeley.edu']
-        },
-        reportIsFastTracking: {
-            type: 'predicate',
-            category: 'sensing',
-            spec: 'turbo mode?'
-        },
-        doSetFastTracking: {
-            type: 'command',
-            category: 'sensing',
-            spec: 'set turbo mode to %b'
-        },
-        reportDate: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'current %dates'
-        },
-
-        // Operators
         reifyScript: {
             type: 'ring',
             category: 'other',
