@@ -4310,119 +4310,41 @@ StageMorph.prototype.codeMappings = {
     reportDate: "this.getProcess().reportDate(<#1>)",
     
 // Operators
+    reifyScript: "this.getProcess().reifyScript(<#1>, <#2>);",
+    reifyReporter: "this.getProcess().reifyReporter(<#1>, <#2>);",
+    reifyPredicate: "this.getProcess().reifyPredicate(<#1>, <#2>);",
+    reportSum: "(<#1> + <#2>)",
+    reportDifference: "(<#1> - <#2>)",
+    reportProduct: "(<#1> * <#2>)",
+    reportQuotient: "(<#1> / <#2>)",
+    reportRound: "Math.round(<#1)",
+    reportModulus: "(<#1> % <#2>)",
+    reportMonadic: "this.getProcess().reportMonadic(<#1>, <#2>)",
+    reportRandom: "this.getProcess().reportRandom(<#1>, <#2>)",
+    reportLessThan: "(<#1> < <#2>)",
+    reportEquals: "(<#1> === <#2>)",
+    reportGreaterThan: "(<#1> > <#2>)",
+    reportAnd: "(<#1> && <#2>)",
+    reportOr: "(<#1> || <#2>)",
+    reportNot: "(!<#1>)",
+    reportTrue: "true",
+    reportFalse: "false",
+    // reportJoinWords: "(<#1>, <#2>)",
+    reportJoinWords: "this.getProcess().reportJoinWords(<#1>)",
+    reportTextSplit: "this.getProcess().reportTextSplit(<#1>, <#2>)",
+    reportLetter: "this.getProcess().reportLetter(<#1>, <#2>)",
+    reportStringSize: "(<#1>.length)",
+    reportUnicode: "<#1>.charCodeAt(0)",
+    reportUnicodeAsLetter: "String.fromCharCode(<#1>)",
+    reportIsA: "this.getProcess().reportIsA(<#1>, <#2>)",
+    reportIsIdentical: "<#1> === <#2>",
 /*
-
-        reifyScript: {
-            type: 'ring',
-            category: 'other',
-            spec: '%rc %ringparms'
-        },
-        reifyReporter: {
-            type: 'ring',
-            category: 'other',
-            spec: '%rr %ringparms'
-        },
-        reifyPredicate: {
-            type: 'ring',
-            category: 'other',
-            spec: '%rp %ringparms'
-        },
-
-        reportSum: "(<#1> + <#2>)",
-        reportDifference: "(<#1> - <#2>)",
-        reportProduct: "(<#1> * <#2>)",
-        reportQuotient: "(<#1> / <#2>)",
-
-        reportRound: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'round %n'
-        },
-        reportMonadic: {
-            type: 'reporter',
-            category: 'operators',
-            spec: '%fun of %n',
-            defaults: [null, 10]
-        },
-
-        reportModulus: "(<#1> % <#2>)",
-
-        reportRandom: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'pick random %n to %n',
-            defaults: [1, 10]
-        },
-
-        reportLessThan: "(<#1> < <#2>)",
-        reportEquals: "(<#1> === <#2>)",
-        reportGreaterThan: "(<#1> > <#2>)",
-        reportAnd: "(<#1> && <#2>)",
-        reportOr: "(<#1> || <#2>)",
-        reportNot: "(!<#1>)",
-        reportTrue: "true",
-        reportFalse: "false",
-        reportJoinWords: "(<#1>, <#2>)",
-
-
-    
-        reportLetter: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'letter %n of %s',
-            defaults: [1, localize('world')]
-        },
-
-        reportStringSize: "(<#1>.length)",
-
-        reportUnicode: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'unicode of %s',
-            defaults: ['a']
-        },
-        reportUnicodeAsLetter: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'unicode %n as letter',
-            defaults: [65]
-        },
-        reportIsA: {
-            type: 'predicate',
-            category: 'operators',
-            spec: 'is %s a %typ ?',
-            defaults: [5]
-        },
-        reportIsIdentical: {
-            type: 'predicate',
-            category: 'operators',
-            spec: 'is %s identical to %s ?'
-        },
-        reportTextSplit: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'split %s by %delim',
-            defaults: [localize('hello') + ' ' + localize('world'), " "]
-        },
         reportJSFunction: { // experimental
             type: 'reporter',
             category: 'operators',
             spec: 'JavaScript function ( %mult%s ) { %code }'
         },
-        reportTypeOf: { // only in dev mode for debugging
-            dev: true,
-            type: 'reporter',
-            category: 'operators',
-            spec: 'type of %s',
-            defaults: [5]
-        },
-        reportTextFunction: { // only in dev mode - experimental
-            dev: true,
-            type: 'reporter',
-            category: 'operators',
-            spec: '%txtfun of %s',
-            defaults: [null, "Abelson & Sussman"]
-        },
+
 
    
 
