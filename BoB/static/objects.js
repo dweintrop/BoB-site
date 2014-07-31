@@ -4223,8 +4223,8 @@ StageMorph.prototype.codeMappings = {
     bubble: "this.bubble(<#1>, false, false);",
     doThinkFor: "this.getProcess().doThinkFor(<#1>, <#2>);",
     doThink: "this.doThink(<#1>);",
-    changeEffect: "this.changeEffect([<#1>], <#2>);",
-    setEffect: "this.setEffect([<#1>], <#2>);",
+    changeEffect: "this.changeEffect(['<#1>''], <#2>);",
+    setEffect: "this.setEffect(['<#1>'], <#2>);",
     clearEffects: "this.clearEffects();",
     changeScale: "this.changeScale(<#1>);",
     setScale: "this.setScale(<#1>);",
@@ -4266,7 +4266,7 @@ StageMorph.prototype.codeMappings = {
     receiveClick: 
     receiveMessage: 
     */  
-    doBroadcast: "this.getStage().doBroadcast(<#1>);",
+    doBroadcast: "this.getProcess().doBroadcast(<#1>);",
     doBroadcastAndWait: "this.getProcess().doBroadcastAndWait(<#1>);",
     getLastMessage:"this.getStage().getLastMessage()",
     doWait: "this.getProcess().doWait(<#1>);",
@@ -4304,11 +4304,11 @@ StageMorph.prototype.codeMappings = {
     doResetTimer: "this.getProcess().doResetTimer();",
     reportTimer: "this.getStage().getTimer()",
     getTimer: "this.getStage().getTimer()",
-    reportAttributeOf: "this.getProcess().reportAttributeOf(<#1>, <#2>)",
+    reportAttributeOf: "this.getProcess().reportAttributeOf(['<#1>'], <#2>)",
     reportURL: "this.getProcess().reportURL()",
     reportIsFastTracking: "this.getProcess().reportIsFastTracking()",
     doSetFastTracking: "this.getProcess().doSetFastTracking(<#1>)",
-    reportDate: "this.getProcess().reportDate(<#1>)",
+    reportDate: "this.getProcess().reportDate('<#1>')",
     
 // Operators
     reifyScript: "this.getProcess().reifyScript(<#1>, <#2>);",
@@ -4320,7 +4320,7 @@ StageMorph.prototype.codeMappings = {
     reportQuotient: "(<#1> / <#2>)",
     reportRound: "Math.round(<#1)",
     reportModulus: "(<#1> % <#2>)",
-    reportMonadic: "this.getProcess().reportMonadic(<#1>, <#2>)",
+    reportMonadic: "this.getProcess().reportMonadic('<#1>', <#2>)",
     reportRandom: "this.getProcess().reportRandom(<#1>, <#2>)",
     reportLessThan: "(<#1> < <#2>)",
     reportEquals: "(<#1> === <#2>)",
@@ -4337,7 +4337,7 @@ StageMorph.prototype.codeMappings = {
     reportStringSize: "(<#1>.length)",
     reportUnicode: "<#1>.charCodeAt(0)",
     reportUnicodeAsLetter: "String.fromCharCode(<#1>)",
-    reportIsA: "this.getProcess().reportIsA(<#1>, <#2>)",
+    reportIsA: "this.getProcess().reportIsA(<#1>, '<#2>')",
     reportIsIdentical: "<#1> === <#2>",
     // reportJSFunction: 
 
