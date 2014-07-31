@@ -4211,8 +4211,8 @@ StageMorph.prototype.codeMappings = {
     xPosition: "this.xPosition()",
     yPosition: "this.yPosition()",
     direction: "this.heading",
-    doFaceTowards: "this.getProcess().doFaceTowards(<#1>);"
-    doGotoObject: "this.getProcess().doGotoObject(<#1>);"
+    doFaceTowards: "this.getProcess().doFaceTowards(<#1>);",
+    doGotoObject: "this.getProcess().doGotoObject(<#1>);",
 
 // Looks
     doSwitchToCostume: "this.wearCostume(this.getCostumeByName(<#1>));",
@@ -4220,7 +4220,7 @@ StageMorph.prototype.codeMappings = {
     getCostumeIdx: "this.getCostumeIdx();",
     doSayFor: "this.getProcess().doSayFor(<#1>, <#2>);",
     bubble: "this.bubble(<#1>, false, false);",
-    doThinkFor: "this.getProcess().doThinkFor(<#1>, <#2>);"
+    doThinkFor: "this.getProcess().doThinkFor(<#1>, <#2>);",
     doThink: "this.doThink(<#1>);",
     changeEffect: "this.changeEffect([<#1>], <#2>);",
     setEffect: "this.setEffect([<#1>], <#2>);",
@@ -4232,14 +4232,14 @@ StageMorph.prototype.codeMappings = {
     hide: "this.hide();",
     comeToFront: "this.comeToFront();",
     goBack: "this.goBack(<#1>);",
-    doScreenshot: "this.doScreenshot(<#1>, <#2>);"
+    doScreenshot: "this.doScreenshot(<#1>, <#2>);",
 
 // Sound
     playSound: "this.playSound(<#1>);",
-    doPlaySoundUntilDone: "this.getProcess().doPlaySoundUntilDone(<#1>);"
+    doPlaySoundUntilDone: "this.getProcess().doPlaySoundUntilDone(<#1>);",
     doStopAllSounds: "this.getProcess().doStopAllSounds();",
-    doRest: "this.getProcess().doRest(<#1>);"
-    doPlayNote: "this.getProcess().doPlayNote(<#1>, <#2>);"
+    doRest: "this.getProcess().doRest(<#1>);",
+    doPlayNote: "this.getProcess().doPlayNote(<#1>, <#2>);",
     doChangeTempo: "this.getStage().changeTempo(<#1>);",
     doSetTempo: "this.getStage().setTempo(<#1>);",
     getTempo: "this.getStage().getTempo(<#1>);",
@@ -4266,13 +4266,13 @@ StageMorph.prototype.codeMappings = {
     receiveMessage: 
     */  
     doBroadcast: "this.getStage().doBroadcast(<#1>);",
-    doBroadcastAndWait: "this.getProcess().doBroadcastAndWait(<#1>);"
+    doBroadcastAndWait: "this.getProcess().doBroadcastAndWait(<#1>);",
     getLastMessage:"this.getStage().getLastMessage()",
     doWait: "this.getProcess().doWait(<#1>);",
     doWaitUntil: "this.getProcess().doWaitUntil(<#1>);",
     doForever: "while (true) {\n  <#1>\n}",
     doRepeat: "for (var __snapStudyIter = 0; __snapStudyIter < <#1>; __snapStudyIter++) {\n  <#2>\n}",
-    doUntil: "do {\n  <#2>\n} while (!(<#1>));"
+    doUntil: "do {\n  <#2>\n} while (!(<#1>));",
     doIf: "if (<#1>) {\n  <#2>\n}",
     doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",
     doReport: "return <#1>;",
@@ -4338,112 +4338,39 @@ StageMorph.prototype.codeMappings = {
     reportUnicodeAsLetter: "String.fromCharCode(<#1>)",
     reportIsA: "this.getProcess().reportIsA(<#1>, <#2>)",
     reportIsIdentical: "<#1> === <#2>",
-/*
-        reportJSFunction: { // experimental
-            type: 'reporter',
-            category: 'operators',
-            spec: 'JavaScript function ( %mult%s ) { %code }'
-        },
+    // reportJSFunction: 
 
+// Variables
+    doSetVar: "<#1> = <#2>;",
+    doChangeVar: "<#1> += <#2>;",
+    doShowVar: "this.getProcess().doShowVar(<#1>);",
+    doHideVar: "this.getProcess().doHideVar(<#1>);",
+    doDeclareVariables: "var <#1>;",
 
-   
-
-    // Variables
-        doSetVar: "<#1> = <#2>;",
-        doChangeVar: "<#1> += <#2>;",
-
-        doShowVar: {
-            type: 'command',
-            category: 'variables',
-            spec: 'show variable %var'
-        },
-        doHideVar: {
-            type: 'command',
-            category: 'variables',
-            spec: 'hide variable %var'
-        },
-
-        doDeclareVariables: "var <#1>;",
-    
     // Lists
-        reportNewList: "[<#1>]",
-        reportListItem: "<#2>[<#1> - 1]",
-        reportListLength: "(<#1>.length)",
-        doAddToList: "<#2>.push(<#1>);",
+    reportNewList: "[<#1>]",
+    reportListItem: "<#2>[<#1> - 1]",
+    reportListLength: "(<#1>.length)",
+    doAddToList: "<#2>.push(<#1>);",
+    reportCONS: "new List().cons(<#1>, <#2>)",
+    reportCDR: "<#1>.cdr()",
+    reportListContainsItem: "<#1>.contains(<#2>)",
+    doDeleteFromList: "<#2>.remove(<#1>)",
+    doInsertInList: "<#3>.add(<#1>, <#2>)",
+    doReplaceInList: "<#2>.put(<#3>, <#1>)",
 
-        reportCONS: {
-            type: 'reporter',
-            category: 'lists',
-            spec: '%s in front of %l'
-        },
-        reportCDR: {
-            type: 'reporter',
-            category: 'lists',
-            spec: 'all but first of %l'
-        },
-        reportListContainsItem: {
-            type: 'predicate',
-            category: 'lists',
-            spec: '%l contains %s',
-            defaults: [null, localize('thing')]
-        },
-        doDeleteFromList: {
-            type: 'command',
-            category: 'lists',
-            spec: 'delete %ida of %l',
-            defaults: [1]
-        },
-        doInsertInList: {
-            type: 'command',
-            category: 'lists',
-            spec: 'insert %s at %idx of %l',
-            defaults: [localize('thing'), 1]
-        },
-        doReplaceInList: {
-            type: 'command',
-            category: 'lists',
-            spec: 'replace item %idx of %l with %s',
-            defaults: [1, null, localize('thing')]
-        },
-
-        // MAP - experimental
-        reportMap: {
-            dev: true,
-            type: 'reporter',
-            category: 'lists',
-            spec: 'map %repRing over %l'
-        },
-
-        // Code mapping - experimental
-        doMapCodeOrHeader: { // experimental
-            type: 'command',
-            category: 'other',
-            spec: 'map %cmdRing to %codeKind %code'
-        },
-        doMapStringCode: { // experimental
-            type: 'command',
-            category: 'other',
-            spec: 'map String to code %code',
-            defaults: ['<#1>']
-        },
-        doMapListCode: { // experimental
-            type: 'command',
-            category: 'other',
-            spec: 'map %codeListPart of %codeListKind to code %code'
-        },
-        reportMappedCode: { // experimental
-            type: 'reporter',
-            category: 'other',
-            spec: 'code of %cmdRing'
-
-*/
+    // MAP 
+    reportMap: "this.getProcess().reportMap(<#1>, <#2>);",
+    doMapCodeOrHeader: "this.doMapCodeOrHeader(<#1>, <#2>, <#3>);",
+    doMapListCode: "this.getProcess().doMapListCode(<#1>, <#2>, <#3>);",
+    reportMappedCode: "this.getProcess().reportMappedCode(<#1>);",
 
     // operators
     // unclear what to do with these three
     string: "'<#1>'",
     tempvars_delim: ",",
     delim: ","
-    
+
 };
 
 StageMorph.prototype.codeHeaders = {};
