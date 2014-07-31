@@ -4215,7 +4215,7 @@ StageMorph.prototype.codeMappings = {
     setEffect: "this.setEffect([<#1>], <#2>);",
     clearEffects: "this.clearEffects();",
     changeScale: "this.changeScale(<#1>);",
-    setScale: "this.setScale(<#1>);"
+    setScale: "this.setScale(<#1>);",
     getScale: "this.scale",
     show: "this.show();",
     hide: "this.hide();",
@@ -4240,164 +4240,47 @@ StageMorph.prototype.codeMappings = {
     down: "this.down();",
     up: "this.up();",
     // not sure how to do pallete as text input
-    // setColor: {
+    // setColor: 
     changeHue: "this.changeHue(<#1>);",
     setHue: "this.setHue(<#1>);",
     changeBrightness: "this.changeBrightness(<#1>);",
     setBrightness: "this.setBrightness(<#1>);",
     changeSize: "this.changeSize(<#1>);",
     setSize: "this.changeSize(<#1>);",
-    doStamp: "this.doStamp();"
+    doStamp: "this.doStamp();",
     
 // Control
-        
+    /* I'm not yet sure what the code for these should look like - since you can't put them inside the code of block
+    receiveGo: "this.parentThatIsA(StageMorph).fireGreenFlagEvent();",
+    receiveKey: "this.allHatBlocksForKey(<#1>);",
+    receiveClick: 
+    receiveMessage: 
+    */  
+    doBroadcast: "this.parentThatIsA(StageMorph).doBroadcast(<#1>);",
+    // doBroadcastAndWait:
+    getLastMessage:"this.parentThatIsA(StageMorph).getLastMessage()",
+    // doWait: 
+    // doWaitUntil: 
+
+    doForever: "while (true) {\n  <#1>\n}",
+    doRepeat: "for (var __snapStudyIter = 0; __snapStudyIter < <#1>; __snapStudyIter++) {\n  <#2>\n}",
+    doUntil: "do {\n  <#2>\n} while (!(<#1>));"
+    doIf: "if (<#1>) {\n  <#2>\n}",
+    doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",
+    doReport: "return <#1>;",
+    // doStopThis: 
+    // doStopOthers: 
+    doRun: "eval(<#1>);",
+    // fork: 
+    evaluate: "eval(<#1>);",
+    doCallCC: "eval(<#1>);",
+    reportCallCC: "eval(<#1>);",
+    // doWarp: 
+    // receiveOnClone: {
+    createClone: "this.createClone(<#1>);"
+    removeClone: "this.removeClone();"
+
 /*
-    receiveGo: {
-            type: 'hat',
-            category: 'control',
-            spec: 'when %greenflag clicked'
-        },
-        receiveKey: {
-            type: 'hat',
-            category: 'control',
-            spec: 'when %keyHat key pressed'
-        },
-        receiveClick: {
-            type: 'hat',
-            category: 'control',
-            spec: 'when I am clicked'
-        },
-        receiveMessage: {
-            type: 'hat',
-            category: 'control',
-            spec: 'when I receive %msgHat'
-        },
-        doBroadcast: {
-            type: 'command',
-            category: 'control',
-            spec: 'broadcast %msg'
-        },
-        doBroadcastAndWait: {
-            type: 'command',
-            category: 'control',
-            spec: 'broadcast %msg and wait'
-        },
-        getLastMessage: {
-            type: 'reporter',
-            category: 'control',
-            spec: 'message'
-        },
-        doWait: {
-            type: 'command',
-            category: 'control',
-            spec: 'wait %n secs',
-            defaults: [1]
-        },
-        doWaitUntil: {
-            type: 'command',
-            category: 'control',
-            spec: 'wait until %b'
-        },
-        doForever: {
-            type: 'command',
-            category: 'control',
-            spec: 'forever %c'
-        },
-        doRepeat: {
-            type: 'command',
-            category: 'control',
-            spec: 'repeat %n %c',
-            defaults: [10]
-        },
-        doUntil: {
-            type: 'command',
-            category: 'control',
-            spec: 'repeat until %b %c'
-        },
-        doIf: {
-            type: 'command',
-            category: 'control',
-            spec: 'if %b %c'
-        },
-        doIfElse: {
-            type: 'command',
-            category: 'control',
-            spec: 'if %b %c else %c'
-        },
-
-
-        doStopThis: {
-            type: 'command',
-            category: 'control',
-            spec: 'stop %stopChoices'
-        },
-        doStopOthers: {
-            type: 'command',
-            category: 'control',
-            spec: 'stop %stopOthersChoices'
-        },
-        doRun: {
-            type: 'command',
-            category: 'control',
-            spec: 'run %cmdRing %inputs'
-        },
-        fork: {
-            type: 'command',
-            category: 'control',
-            spec: 'launch %cmdRing %inputs'
-        },
-        evaluate: {
-            type: 'reporter',
-            category: 'control',
-            spec: 'call %repRing %inputs'
-        },
-    
-        doReport: {
-            type: 'command',
-            category: 'control',
-            spec: 'report %s'
-        },
-    
-        doCallCC: {
-            type: 'command',
-            category: 'control',
-            spec: 'run %cmdRing w/continuation'
-        },
-        reportCallCC: {
-            type: 'reporter',
-            category: 'control',
-            spec: 'call %cmdRing w/continuation'
-        },
-        doWarp: {
-            type: 'command',
-            category: 'other',
-            spec: 'warp %c'
-        },
-
-        // Cloning - very experimental
-        receiveOnClone: {
-            type: 'hat',
-            category: 'control',
-            spec: 'when I start as a clone'
-        },
-        createClone: {
-            type: 'command',
-            category: 'control',
-            spec: 'create a clone of %cln'
-        },
-        removeClone: {
-            type: 'command',
-            category: 'control',
-            spec: 'delete this clone'
-        },
-
-        // Debugging - pausing
-
-        doPauseAll: {
-            type: 'command',
-            category: 'control',
-            spec: 'pause all %pause'
-        },
 
         // Sensing
 
@@ -4539,26 +4422,12 @@ StageMorph.prototype.codeMappings = {
             category: 'other',
             spec: '%rp %ringparms'
         },
-        reportSum: {
-            type: 'reporter',
-            category: 'operators',
-            spec: '%n + %n'
-        },
-        reportDifference: {
-            type: 'reporter',
-            category: 'operators',
-            spec: '%n \u2212 %n'
-        },
-        reportProduct: {
-            type: 'reporter',
-            category: 'operators',
-            spec: '%n \u00D7 %n'
-        },
-        reportQuotient: {
-            type: 'reporter',
-            category: 'operators',
-            spec: '%n / %n' // '%n \u00F7 %n'
-        },
+
+        reportSum: "(<#1> + <#2>)",
+        reportDifference: "(<#1> - <#2>)",
+        reportProduct: "(<#1> * <#2>)",
+        reportQuotient: "(<#1> / <#2>)",
+
         reportRound: {
             type: 'reporter',
             category: 'operators',
@@ -4570,75 +4439,37 @@ StageMorph.prototype.codeMappings = {
             spec: '%fun of %n',
             defaults: [null, 10]
         },
-        reportModulus: {
-            type: 'reporter',
-            category: 'operators',
-            spec: '%n mod %n'
-        },
+
+        reportModulus: "(<#1> % <#2>)",
+
         reportRandom: {
             type: 'reporter',
             category: 'operators',
             spec: 'pick random %n to %n',
             defaults: [1, 10]
         },
-        reportLessThan: {
-            type: 'predicate',
-            category: 'operators',
-            spec: '%s < %s'
-        },
-        reportEquals: {
-            type: 'predicate',
-            category: 'operators',
-            spec: '%s = %s'
-        },
-        reportGreaterThan: {
-            type: 'predicate',
-            category: 'operators',
-            spec: '%s > %s'
-        },
-        reportAnd: {
-            type: 'predicate',
-            category: 'operators',
-            spec: '%b and %b'
-        },
-        reportOr: {
-            type: 'predicate',
-            category: 'operators',
-            spec: '%b or %b'
-        },
-        reportNot: {
-            type: 'predicate',
-            category: 'operators',
-            spec: 'not %b'
-        },
-        reportTrue: {
-            type: 'predicate',
-            category: 'operators',
-            spec: 'true'
-        },
-        reportFalse: {
-            type: 'predicate',
-            category: 'operators',
-            spec: 'false'
-        },
-        reportJoinWords: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'join %words',
-            defaults: [localize('hello') + ' ', localize('world')]
-        },
+
+        reportLessThan: "(<#1> < <#2>)",
+        reportEquals: "(<#1> === <#2>)",
+        reportGreaterThan: "(<#1> > <#2>)",
+        reportAnd: "(<#1> && <#2>)",
+        reportOr: "(<#1> || <#2>)",
+        reportNot: "(!<#1>)",
+        reportTrue: "true",
+        reportFalse: "false",
+        reportJoinWords: "(<#1>, <#2>)",
+
+
+    
         reportLetter: {
             type: 'reporter',
             category: 'operators',
             spec: 'letter %n of %s',
             defaults: [1, localize('world')]
         },
-        reportStringSize: {
-            type: 'reporter',
-            category: 'operators',
-            spec: 'length of %s',
-            defaults: [localize('world')]
-        },
+
+        reportStringSize: "(<#1>.length)",
+
         reportUnicode: {
             type: 'reporter',
             category: 'operators',
@@ -4690,19 +4521,10 @@ StageMorph.prototype.codeMappings = {
 
    
 
-        // Variables
-        doSetVar: {
-            type: 'command',
-            category: 'variables',
-            spec: 'set %var to %s',
-            defaults: [null, 0]
-        },
-        doChangeVar: {
-            type: 'command',
-            category: 'variables',
-            spec: 'change %var by %n',
-            defaults: [null, 1]
-        },
+    // Variables
+        doSetVar: "<#1> = <#2>;",
+        doChangeVar: "<#1> += <#2>;",
+
         doShowVar: {
             type: 'command',
             category: 'variables',
@@ -4713,50 +4535,30 @@ StageMorph.prototype.codeMappings = {
             category: 'variables',
             spec: 'hide variable %var'
         },
-        doDeclareVariables: {
-            type: 'command',
-            category: 'other',
-            spec: 'script variables %scriptVars'
-        },
 
-        // Lists
-        reportNewList: {
-            type: 'reporter',
-            category: 'lists',
-            spec: 'list %exp'
-        },
+        doDeclareVariables: "var <#1>;",
+    
+    // Lists
+        reportNewList: "[<#1>]",
+        reportListItem: "<#2>[<#1> - 1]",
+        reportListLength: "(<#1>.length)",
+        doAddToList: "<#2>.push(<#1>);",
+
         reportCONS: {
             type: 'reporter',
             category: 'lists',
             spec: '%s in front of %l'
-        },
-        reportListItem: {
-            type: 'reporter',
-            category: 'lists',
-            spec: 'item %idx of %l',
-            defaults: [1]
         },
         reportCDR: {
             type: 'reporter',
             category: 'lists',
             spec: 'all but first of %l'
         },
-        reportListLength: {
-            type: 'reporter',
-            category: 'lists',
-            spec: 'length of %l'
-        },
         reportListContainsItem: {
             type: 'predicate',
             category: 'lists',
             spec: '%l contains %s',
             defaults: [null, localize('thing')]
-        },
-        doAddToList: {
-            type: 'command',
-            category: 'lists',
-            spec: 'add %s to %l',
-            defaults: [localize('thing')]
         },
         doDeleteFromList: {
             type: 'command',
@@ -4807,55 +4609,14 @@ StageMorph.prototype.codeMappings = {
             category: 'other',
             spec: 'code of %cmdRing'
 
-
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // operators
+    // unclear what to do with these three
     string: "'<#1>'",
     tempvars_delim: ",",
-    delim: ",",
-    doIf: "if (<#1>) {\n  <#2>\n}",
-    doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",
-    reportSum: "(<#1> + <#2>)",
-    reportDifference: "(<#1> - <#2>)",
-    reportProduct: "(<#1> * <#2>)",
-    reportQuotient: "(<#1> / <#2>)",
-    reportModulus: "(<#1> % <#2>)",
-    reportLessThan: "(<#1> < <#2>)",
-    reportEquals: "(<#1> === <#2>)",
-    reportGreaterThan: "(<#1> > <#2>)",
-    reportAnd: "(<#1> && <#2>)",
-    reportOr: "(<#1> || <#2>)",
-    reportNot: "(!<#1>)",
-    reportTrue: "true",
-    reportFalse: "false",
-    reportJoinWords: "(<#1>, <#2>)",
-    reportStringSize: "(<#1>.length)",
-    doSetVar: "<#1> = <#2>;",
-    doChangeVar: "<#1> += 1;",
-    doShowVar: "console.log(<#1>);",
-    doDeclareVariables: "var <#1>;",
-    reportNewList: "[<#1>]",
-    reportListLength: "(<#1>.length)",
-    reportListItem: "<#2>[<#1> - 1]",
-    doAddToList: "<#2>.push(<#1>);",
-    doReport: "return <#1>;" 
+    delim: ","
+    
 };
 
 StageMorph.prototype.codeHeaders = {};
@@ -5358,7 +5119,6 @@ StageMorph.prototype.inspectKeyEvent
     = CursorMorph.prototype.inspectKeyEvent;
 
 StageMorph.prototype.fireGreenFlagEvent = function () {
-console.log( 'Log: fire green flag event');
 
     var procs = [],
         hats = [],
