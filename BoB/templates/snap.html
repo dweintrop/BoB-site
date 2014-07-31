@@ -4,15 +4,23 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Snap! Build Your Own Blocks. Beta</title>
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 
 		{% load staticfiles %}
 
-    <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
-		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
 		<script type="text/javascript" src="{% static "snapStudy.js"%}"></script>
 
+
+		<script type="text/javascript" src="{% static "codemirror/codemirror.js"%}"></script>
+		<link rel="stylesheet" href="{% static "css/codemirror.css"%}" type="text/css">
+		<script type="text/javascript" src="{% static "codemirror/javascript.js"%}"></script>
+		<link rel="stylesheet" href="{% static "css/jquery-ui.css"%}" type="text/css">
+		<link rel="stylesheet" href="{% static "css/jquery-ui.theme.css"%}" type="text/css">
+
+
+    <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
 		<script type="text/javascript" src="{% static "morphic.js"%}"></script>
 		<script type="text/javascript" src="{% static "widgets.js"%}"></script>
 		<script type="text/javascript" src="{% static "blocks.js"%}"></script>
@@ -28,16 +36,39 @@
 		<script type="text/javascript" src="{% static "cloud.js"%}"></script>
 		<script type="text/javascript" src="{% static "sha512.js"%}"></script>
 		<script type="text/javascript">
+
 			var world;
+			var myCodeMirror;
+
 			window.onload = function () {
 				world = new WorldMorph(document.getElementById('world'), true); // second arg sets fillPage
                 world.worldCanvas.focus();
 				new IDE_Morph().openIn(world);
 				setInterval(loop, 1);
+
+				// setup javascript editor
+				var cmTextArea = document.getElementById('javascriptIDE');
+				myCodeMirror = CodeMirror.fromTextArea(cmTextArea, {
+					mode: "javascript"
+					// readOnly: true
+				});
+
 			};
 			function loop() {
-				world.doOneCycle();
+				world.doOneCycle();				
 			}
+
+			function openEditor(inCode) {
+				$( "#editorWrapper" ).dialog({
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+				myCodeMirror.setValue(inCode);
+			}
+
 		</script>
 	</head>
 	<body style="margin: 0;">
@@ -46,6 +77,11 @@
 			{{form.pair_id}}
 			<input id="id_condition" value="{{form.class_period.value}}"/>
 		</div>
-		<canvas id="world" tabindex="1" style="position: absolute;" />
-    </body>
+
+    <div id="editorWrapper" title="Javascript Editor" style="position:aboslute;z-index:-1;">
+    	<textarea name="javascriptIDE" id="javascriptIDE" size="15"></textarea>
+    </div>
+
+		<canvas id="world" tabindex="1" style="position: absolute;z-index:0;" />
+  </body>
 </html>
