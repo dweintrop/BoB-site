@@ -2547,7 +2547,7 @@ SpriteMorph.prototype.doSwitchToCostume = function (id) {
             this.doWearPreviousCostume();
             return;
         }
-        costume = getCostumeByName(id);
+        costume = this.getCostumeByName(id);
         if (costume === null) {
             num = parseFloat(id);
             if (num === 0) {
@@ -4146,7 +4146,8 @@ SpriteMorph.prototype.getStage = function() {
 }
 
 SpriteMorph.prototype.getProcess = function() {
-    return this.getStage().threads.processes[0];
+    // return the last process in the collection
+    return this.getStage().threads.processes[this.getStage().threads.processes.length - 1];
 }
 
 
@@ -4227,7 +4228,7 @@ StageMorph.prototype.codeMappings = {
     clearEffects: "this.clearEffects();",
     changeScale: "this.changeScale(<#1>);",
     setScale: "this.setScale(<#1>);",
-    getScale: "this.scale",
+    getScale: "(this.scale * 100)",
     show: "this.show();",
     hide: "this.hide();",
     comeToFront: "this.comeToFront();",
