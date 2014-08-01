@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
 from BoB import views
 
+import settings
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -20,3 +22,8 @@ urlpatterns = patterns('',
 
     url(r'^.*', views.login),
 )
+
+if not settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    )
