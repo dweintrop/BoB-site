@@ -44,3 +44,20 @@ SnapStudy.ScriptsXML = function (ide) {
 	ide.serializer.scriptsOnly = false;
 	return xml;
 }
+
+SnapStudy.openEditor = function (inCode) {
+	// open the editor
+	$( "#editorWrapper" ).dialog({
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+
+	// fill it with the code from the clicked box
+	myCodeMirror.setValue(inCode);
+
+	// hide the text bubble
+	world.hand.destroyTemporaries();
+}

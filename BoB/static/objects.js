@@ -4272,7 +4272,7 @@ StageMorph.prototype.codeMappings = {
     doWait: "this.getProcess().doWait(<#1>);",
     doWaitUntil: "this.getProcess().doWaitUntil(<#1>);",
     doForever: "while (true) {\n  <#1>\n}",
-    doRepeat: "for (var __snapStudyIter = 0; __snapStudyIter < <#1>; __snapStudyIter++) {\n  <#2>\n}",
+    doRepeat: "for (var i = 0; i < <#1>; i++) {\n  <#2>\n}",
     doUntil: "do {\n  <#2>\n} while (!(<#1>));",
     doIf: "if (<#1>) {\n  <#2>\n}",
     doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",

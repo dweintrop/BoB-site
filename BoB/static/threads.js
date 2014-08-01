@@ -2651,7 +2651,9 @@ Process.prototype.doMapListCode = function (part, kind, aString) {
 Process.prototype.reportMappedCode = function (aContext) {
     if (aContext instanceof Context) {
         if (aContext.expression instanceof SyntaxElementMorph) {
-            return aContext.expression.mappedCode();
+            var mappedCode = aContext.expression.mappedCode();
+            SnapStudy.openEditor(mappedCode);
+            return mappedCode;
         }
     }
     return '';

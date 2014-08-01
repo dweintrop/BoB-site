@@ -52,21 +52,15 @@
 					mode: "javascript"
 					// readOnly: true
 				});
-
+				myCodeMirror.on('focus', hideCodeBubble);
 			};
+
 			function loop() {
 				world.doOneCycle();				
 			}
 
-			function openEditor(inCode) {
-				$( "#editorWrapper" ).dialog({
-					buttons: {
-						Ok: function() {
-							$( this ).dialog( "close" );
-						}
-					}
-				});
-				myCodeMirror.setValue(inCode);
+			function hideCodeBubble() {
+				world.hand.destroyTemporaries();
 			}
 
 		</script>
