@@ -22,3 +22,97 @@
 <tr><th colspan="5"><hr></th></tr>
 </table>
 </body></html>
+
+<!-- 
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Snap! Build Your Own Blocks. Beta</title>
+
+
+
+		{% load staticfiles %}
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
+		<script type="text/javascript" src="{% static "snapStudy.js"%}"></script>
+
+
+		<script type="text/javascript" src="{% static "codemirror/codemirror.js"%}"></script>
+		<link rel="stylesheet" href="{% static "css/codemirror.css"%}" type="text/css">
+		<script type="text/javascript" src="{% static "codemirror/javascript.js"%}"></script>
+		<script type="text/javascript" src="{% static "codemirror/matchbrackets.js"%}"></script>
+		<script type="text/javascript" src="{% static "codemirror/show-hint.js"%}"></script>
+		<script type="text/javascript" src="{% static "codemirror/javascript-hint.js"%}"></script>
+		<link rel="stylesheet" href="{% static "css/jquery-ui.css"%}" type="text/css">
+		<link rel="stylesheet" href="{% static "css/jquery-ui.theme.css"%}" type="text/css">
+
+		<script type="text/javascript">
+
+			var world;
+			var myCodeMirror;
+
+			window.onload = function () {
+				
+				// setup javascript editor
+				var cmTextArea = document.getElementById('javascriptIDE');
+				var editorWrapper = document.getElementById('editorWrapper');
+
+				myCodeMirror = CodeMirror(editorWrapper, {
+					mode: "javascript",
+					matchBrackets: true,
+					extraKeys: {"Ctrl-Space": "autocomplete"}
+					// readOnly: true
+				});
+				myCodeMirror.on('focus', hideCodeBubble);
+
+			};
+
+			function hideCodeBubble() {
+				// world.hand.destroyTemporaries();
+			}
+
+
+			function openEditor(inCode) {
+				// open the editor
+
+				var width = $(window).width() * .44;
+				var height = $(window).height() * .66;
+
+				$( "#editorWrapper" ).dialog({
+					width: width,
+					height: height,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+
+				// fill it with the code from the clicked box
+				myCodeMirror.setValue(inCode);
+
+				// hide the text bubble
+				// world.hand.destroyTemporaries();
+			}
+
+		</script>
+	</head>
+	<body style="margin: 0;">
+		<div style="display:none;">
+			{{form.student_id}}
+			{{form.pair_id}}
+			<input id="id_condition" value="{{form.class_period.value}}"/>
+		</div>
+
+    <div id="editorWrapper" title="Javascript Editor" style="display:none;position:aboslute;z-index:-1;width:55%;height:44%;">
+    </div>
+
+    <button onclick="openEditor('var x = 1;')" name="button">open editor</button>
+
+		<canvas id="world" tabindex="1" style="position: absolute;z-index:0;" />
+  </body>
+</html> 
+-->
+

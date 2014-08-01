@@ -16,6 +16,10 @@
 		<script type="text/javascript" src="{% static "codemirror/codemirror.js"%}"></script>
 		<link rel="stylesheet" href="{% static "css/codemirror.css"%}" type="text/css">
 		<script type="text/javascript" src="{% static "codemirror/javascript.js"%}"></script>
+		<script type="text/javascript" src="{% static "codemirror/matchbrackets.js"%}"></script>
+		<script type="text/javascript" src="{% static "codemirror/show-hint.js"%}"></script>
+		<script type="text/javascript" src="{% static "codemirror/javascript-hint.js"%}"></script>
+
 		<link rel="stylesheet" href="{% static "css/jquery-ui.css"%}" type="text/css">
 		<link rel="stylesheet" href="{% static "css/jquery-ui.theme.css"%}" type="text/css">
 
@@ -47,12 +51,17 @@
 				setInterval(loop, 1);
 
 				// setup javascript editor
-				var cmTextArea = document.getElementById('javascriptIDE');
-				myCodeMirror = CodeMirror.fromTextArea(cmTextArea, {
-					mode: "javascript"
+				var cmDiv = document.getElementById('cmDiv');
+				myCodeMirror = CodeMirror(cmDiv, {
+					mode: "javascript",
+					matchBrackets: true,
+					extraKeys: {"Ctrl-Space": "autocomplete"}
 					// readOnly: true
 				});
+
+				// try and remove the code bubble from the code of block
 				myCodeMirror.on('focus', hideCodeBubble);
+				myCodeMirror.on('blur', hideCodeBubble);
 			};
 
 			function loop() {
@@ -62,7 +71,6 @@
 			function hideCodeBubble() {
 				world.hand.destroyTemporaries();
 			}
-
 		</script>
 	</head>
 	<body style="margin: 0;">
@@ -72,10 +80,7 @@
 			<input id="id_condition" value="{{form.class_period.value}}"/>
 		</div>
 
-    <div id="editorWrapper" title="Javascript Editor" style="position:aboslute;z-index:-1;">
-    	<textarea name="javascriptIDE" id="javascriptIDE" size="15"></textarea>
-    </div>
-
+    <div id="cmDiv" title="Javascript Editor" style="display:none;position:aboslute;z-index:-1;width:55%;height:44%;"></div>
 		<canvas id="world" tabindex="1" style="position: absolute;z-index:0;" />
   </body>
 </html>

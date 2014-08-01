@@ -16,7 +16,6 @@ SnapStudy.SnapRun = function(ide, clickSource) {
 
 	var scriptXML = SnapStudy.ScriptsXML(ide);
 	
-
 	var jsonData = {
 		'student_id' : $('#id_student_id').val(),
 		'pair_id' : $('#id_pair_id').val(),
@@ -46,8 +45,12 @@ SnapStudy.ScriptsXML = function (ide) {
 }
 
 SnapStudy.openEditor = function (inCode) {
-	// open the editor
-	$( "#editorWrapper" ).dialog({
+	var width = $(window).width() * .44;
+	var height = $(window).height() * .66;
+
+	$( "#cmDiv" ).dialog({
+		width: width,
+		height: height,
 		buttons: {
 			Ok: function() {
 				$( this ).dialog( "close" );
