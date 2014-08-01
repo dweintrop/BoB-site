@@ -1708,7 +1708,11 @@ IDE_Morph.prototype.applySavedSettings = function () {
     var design = this.getSetting('design'),
         zoom = this.getSetting('zoom'),
         language = this.getSetting('language'),
-        click = this.getSetting('click'),
+
+        // default click audio to on
+        click = true;
+        // click = this.getSetting('click'),
+        
         longform = this.getSetting('longform'),
         plainprototype = this.getSetting('plainprototype');
 
