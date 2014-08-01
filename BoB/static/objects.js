@@ -1945,6 +1945,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'variables') {
 
+        blocks.push(block('reportMappedCode'));
+        blocks.push('=');
+
+
         button = new PushButtonMorph(
             null,
             function () {
@@ -2014,47 +2018,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
-        blocks.push(block('reportNewList'));
-        blocks.push('-');
-        blocks.push(block('reportCONS'));
-        blocks.push(block('reportListItem'));
-        blocks.push(block('reportCDR'));
-        blocks.push('-');
-        blocks.push(block('reportListLength'));
-        blocks.push(block('reportListContainsItem'));
-        blocks.push('-');
-        blocks.push(block('doAddToList'));
-        blocks.push(block('doDeleteFromList'));
-        blocks.push(block('doInsertInList'));
-        blocks.push(block('doReplaceInList'));
-
-    // for debugging: ///////////////
-
-        if (this.world().isDevMode) {
-            blocks.push('-');
-            txt = new TextMorph(localize(
-                'development mode \ndebugging primitives:'
-            ));
-            txt.fontSize = 9;
-            txt.setColor(this.paletteTextColor);
-            blocks.push(txt);
-            blocks.push('-');
-            blocks.push(block('reportMap'));
-        }
-
-    /////////////////////////////////
-
-        blocks.push('=');
-
-        if (StageMorph.prototype.enableCodeMapping) {
-            blocks.push(block('doMapCodeOrHeader'));
-            blocks.push(block('doMapStringCode'));
-            blocks.push(block('doMapListCode'));
-            blocks.push('-');
-            blocks.push(block('reportMappedCode'));
-            blocks.push('=');
-        }
-
         button = new PushButtonMorph(
             null,
             function () {
@@ -2087,6 +2050,49 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.selector = 'addCustomBlock';
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
+
+        blocks.push('=');
+
+        blocks.push(block('reportNewList'));
+        blocks.push('-');
+        blocks.push(block('reportCONS'));
+        blocks.push(block('reportListItem'));
+        blocks.push(block('reportCDR'));
+        blocks.push('-');
+        blocks.push(block('reportListLength'));
+        blocks.push(block('reportListContainsItem'));
+        blocks.push('-');
+        blocks.push(block('doAddToList'));
+        blocks.push(block('doDeleteFromList'));
+        blocks.push(block('doInsertInList'));
+        blocks.push(block('doReplaceInList'));
+
+    // for debugging: ///////////////
+
+        if (this.world().isDevMode) {
+            blocks.push('-');
+            txt = new TextMorph(localize(
+                'development mode \ndebugging primitives:'
+            ));
+            txt.fontSize = 9;
+            txt.setColor(this.paletteTextColor);
+            blocks.push(txt);
+            blocks.push('-');
+            blocks.push(block('reportMap'));
+        }
+
+    /////////////////////////////////
+
+        if (StageMorph.prototype.enableCodeMapping) {
+            // blocks.push(block('doMapCodeOrHeader'));
+            // blocks.push(block('doMapStringCode'));
+            // blocks.push(block('doMapListCode'));
+            // blocks.push('-');
+            // blocks.push(block('reportMappedCode'));
+            // blocks.push('=');
+        }
+
+        
     }
     return blocks;
 };
@@ -5226,6 +5232,9 @@ StageMorph.prototype.blockTemplates = function (category) {
     //////////////////////////////////
 
     } else if (cat === 'variables') {
+        
+        blocks.push(block('reportMappedCode'));
+        blocks.push('=');
 
         button = new PushButtonMorph(
             null,
@@ -5323,12 +5332,12 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
 
         if (StageMorph.prototype.enableCodeMapping) {
-            blocks.push(block('doMapCodeOrHeader'));
-            blocks.push(block('doMapStringCode'));
-            blocks.push(block('doMapListCode'));
-            blocks.push('-');
-            blocks.push(block('reportMappedCode'));
-            blocks.push('=');
+            // blocks.push(block('doMapCodeOrHeader'));
+            // blocks.push(block('doMapStringCode'));
+            // blocks.push(block('doMapListCode'));
+            // blocks.push('-');
+            // blocks.push(block('reportMappedCode'));
+            // blocks.push('=');
         }
 
         button = new PushButtonMorph(
