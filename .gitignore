@@ -1,7 +1,3 @@
-bin
-include
-lib
-.Python
 *.pyc
 *.sublime*
 staticfiles
