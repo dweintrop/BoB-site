@@ -1171,7 +1171,12 @@ SpriteMorph.prototype.initBlocks = function () {
         reportMappedCode: { // experimental
             type: 'reporter',
             category: 'other',
-            spec: 'code of %cmdRing'
+            spec: 'see code of %cmdRing'
+        },
+        writeMappedCode: { // experimental
+            type: 'reporter',
+            category: 'other',
+            spec: 'write code for %cmdRing'
         }
     };
 };
@@ -1946,6 +1951,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     } else if (cat === 'variables') {
 
         blocks.push(block('reportMappedCode'));
+        blocks.push(block('writeMappedCode'));
         blocks.push('=');
 
 
@@ -5234,6 +5240,7 @@ StageMorph.prototype.blockTemplates = function (category) {
     } else if (cat === 'variables') {
         
         blocks.push(block('reportMappedCode'));
+        blocks.push(block('writeMappedCode'));
         blocks.push('=');
 
         button = new PushButtonMorph(

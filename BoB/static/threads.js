@@ -2652,8 +2652,19 @@ Process.prototype.reportMappedCode = function (aContext) {
     if (aContext instanceof Context) {
         if (aContext.expression instanceof SyntaxElementMorph) {
             var mappedCode = aContext.expression.mappedCode();
-            SnapStudy.openEditor(mappedCode);
+            SnapStudy.openViewer(mappedCode);
             return mappedCode;
+        }
+    }
+    return '';
+};
+
+Process.prototype.writeMappedCode = function (aContext) {
+    if (aContext instanceof Context) {
+        if (aContext.expression instanceof SyntaxElementMorph) {
+            var mappedCode = aContext.expression.mappedCode();
+            var newMappedCode = SnapStudy.openEditor(mappedCode, aContext.expression);
+            return newMappedCode;
         }
     }
     return '';

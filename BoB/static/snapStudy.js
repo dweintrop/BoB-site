@@ -44,18 +44,41 @@ SnapStudy.ScriptsXML = function (ide) {
 	return xml;
 }
 
-SnapStudy.openEditor = function (inCode) {
+SnapStudy.openViewer = function(inCode) {
+	myCodeMirror.setOption('readOnly', true);
+	myCodeMirror.setOption('cursorBlinkRate', -1);
+	SnapStudy.cmDialog("Javascript Viewer", inCode, function(){});
+}
+
+SnapStudy.openEditor = function(inCode, block) {
+	// if is not a custom block - open as viewer
+	if (!(block instanceof CustomCommandBlockMorph)) {
+		SnapStudy.openViewer(inCode);
+		return;
+	}
+
+	myCodeMirror.setOption('readOnly', false);
+	myCodeMirror.setOption('cursorBlinkRate', 530);
+	SnapStudy.cmDialog("Javascript Editor", inCode, function(){
+		block.definition.codeMapping = myCodeMirror.getValue();
+	});
+}
+
+SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 	var width = $(window).width() * .44;
 	var height = $(window).height() * .66;
 
 	$( "#cmDiv" ).dialog({
 		width: width,
 		height: height,
+		title: title,
+		modal: true,
 		buttons: {
 			Ok: function() {
 				$( this ).dialog( "close" );
 			}
-		}
+		},
+		beforeClose: closeCallback
 	});
 
 	// fill it with the code from the clicked box
