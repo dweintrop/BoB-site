@@ -274,6 +274,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog .ui-dialog-titlebar {
   margin-left: 5px;
+  margin-right: 5px;
   margin-top: 6px;
 	padding: .4em 1em;
 	position: relative;
@@ -298,6 +299,7 @@ button.ui-button::-moz-focus-inner {
 .ui-dialog .ui-dialog-content {
 	position: relative;
 	border: 0;
+	padding: 3px;
 	/*padding: .5em 1em;*/
 	background: none;
 	overflow: auto;

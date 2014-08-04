@@ -51,12 +51,16 @@
 				setInterval(loop, 1);
 
 				// setup javascript editor
+				var isReadOnly = "{{form.class_period.value}}" === "graph_read";
+				var cursorBlinkRate = isReadOnly ? -1 : 530
+
 				var cmDiv = document.getElementById('cmDiv');
 				myCodeMirror = CodeMirror(cmDiv, {
 					mode: "javascript",
 					matchBrackets: true,
+					readOnly: isReadOnly,
+					cursorBlinkRate: cursorBlinkRate,
 					extraKeys: {"Ctrl-Space": "autocomplete"}
-					// readOnly: true
 				});
 
 				// try and remove the code bubble from the code of block
@@ -80,7 +84,7 @@
 			<input id="id_condition" value="{{form.class_period.value}}"/>
 		</div>
 
-    <div id="cmDiv" title="Javascript Editor" style="display:none;position:aboslute;z-index:-1;width:55%;height:44%;"></div>
+    <div id="cmDiv" title="Javascript {% if form.class_period.value == 'graph_write'%}Editor{% else %}Viewer{%endif%}" style="display:none;position:aboslute;z-index:-1;width:55%;height:44%;"></div>
 		<canvas id="world" tabindex="1" style="position: absolute;z-index:0;" />
   </body>
 </html>
