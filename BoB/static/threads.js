@@ -1018,7 +1018,40 @@ Process.prototype.evaluateCustomBlock = function () {
         upvars,
         outer;
 
+
+    // if custom block has mapped code (i.e. what written in editor) then run the JS and exit
+    if (this.context.expression.mappedCode()) {
+        var jsFunc = Function.apply(
+            Object.create(Function.prototype),
+            new List().asArray().concat([this.context.expression.mappedCode()]));
+
+        this.evaluate(jsFunc, new List(), true, true);
+
+        // other attempts to get JS running before fining this, relatively straightfoward solution
+
+            // var tempRunBlock = SpriteMorph.prototype.blockForSelector("doRun", true);
+            // var tempJSBlock = SpriteMorph.prototype.blockForSelector("reportJSFunction", true);
+
+            // var jsFunc = Function.apply(
+            //     Object.create(Function.prototype),
+            //     parmNames.asArray().concat([body])
+            //     );
+
+            // // make a doRun/JS stack on the fly w/ user written code in its place and run it
+            // var newContext = Process.prototype.reify.call(
+            //     this.context,
+            //     tempRunBlock,
+            //     new List(),
+            //     true // ignore empty slots for custom block reification
+            // );
+
+            // newContext.receiver = this.homeContext.receiver.parentThatIsA(StageMorph);
+    }
+
+
+
     if (!context) {return null; }
+
     outer = new Context();
     outer.receiver = this.context.receiver; // || this.homeContext.receiver;
     outer.variables.parentFrame = outer.receiver ?
