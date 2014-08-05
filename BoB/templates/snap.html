@@ -19,9 +19,16 @@
 		<script type="text/javascript" src="{% static "codeMirror/matchbrackets.js"%}"></script>
 		<script type="text/javascript" src="{% static "codeMirror/show-hint.js"%}"></script>
 		<script type="text/javascript" src="{% static "codeMirror/javascript-hint.js"%}"></script>
+		<script type="text/javascript" src="{% static "codeMirror/jshint.js"%}"></script>
 
 		<link rel="stylesheet" href="{% static "css/jquery-ui.css"%}" type="text/css">
 		<link rel="stylesheet" href="{% static "css/jquery-ui.theme.css"%}" type="text/css">
+
+		<style type="text/css">
+			.lint-error {font-family: arial; font-size: 70%; background: #ffa; color: #a00; padding: 2px 5px 3px; }
+      .lint-error-icon {color: white; background-color: red; font-weight: bold; border-radius: 50%; padding: 0 3px; margin-right: 7px;}
+  
+		</style>
 
 
     <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">

@@ -68,6 +68,8 @@ SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 	var width = $(window).width() * .44;
 	var height = $(window).height() * .66;
 
+	var jsHintsInterval = {};
+
 	$( "#cmDiv" ).dialog({
 		width: width,
 		height: height,
@@ -75,6 +77,13 @@ SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 		modal: true,
 		buttons: {
 			Ok: function() {
+				SnapStudy.updateHints();
+				if (!myCodeMirror.options['readOnly'] && SnapStudy.errorWidgets.length > 0) {
+					clearInterval(jsHintsInterval);
+				  jsHintsInterval = setInterval(SnapStudy.updateHints, 999);
+					return;
+				}
+				clearInterval(jsHintsInterval);
 				$( this ).dialog( "close" );
 			}
 		},
@@ -87,3 +96,31 @@ SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 	// hide the text bubble
 	world.hand.destroyTemporaries();
 }
+
+SnapStudy.errorWidgets = [];
+
+SnapStudy.updateHints = function() {
+  myCodeMirror.operation(function(){
+    for (var i = 0; i < SnapStudy.errorWidgets.length; ++i)
+      myCodeMirror.removeLineWidget(SnapStudy.errorWidgets[i]);
+    SnapStudy.errorWidgets.length = 0;
+
+    JSHINT(myCodeMirror.getValue());
+    for (var i = 0; i < JSHINT.errors.length; ++i) {
+      var err = JSHINT.errors[i];
+      if (!err) continue;
+      var msg = document.createElement("div");
+      var icon = msg.appendChild(document.createElement("span"));
+      icon.innerHTML = "!!";
+      icon.className = "lint-error-icon";
+      msg.appendChild(document.createTextNode(err.reason));
+      msg.className = "lint-error";
+      SnapStudy.errorWidgets.push(myCodeMirror.addLineWidget(err.line - 1, msg, {coverGutter: false, noHScroll: true}));
+    }
+  });
+  var info = myCodeMirror.getScrollInfo();
+  var after = myCodeMirror.charCoords({line: myCodeMirror.getCursor().line + 1, ch: 0}, "local").top;
+  if (info.top + info.clientHeight < after)
+    myCodeMirror.scrollTo(null, after - info.clientHeight + 3);
+}
+
