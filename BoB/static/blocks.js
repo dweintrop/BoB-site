@@ -2044,8 +2044,8 @@ BlockMorph.prototype.userMenu = function () {
                     'mapToHeader'
                 );
                 menu.addItem(
-                    'code mapping...',
-                    'mapToCode'
+                    'view/edit code',
+                    'launchJSWindow'
                 );
             }
         }
@@ -2142,8 +2142,8 @@ BlockMorph.prototype.userMenu = function () {
             'mapToHeader'
         );
         menu.addItem(
-            'code mapping...',
-            'mapToCode'
+            'view/edit code',
+            'launchJSWindow'
         );
     }
     return menu;
@@ -2434,6 +2434,16 @@ BlockMorph.prototype.mapToHeader = function () {
         help
     );
 };
+
+BlockMorph.prototype.launchJSWindow = function() {
+    if (SnapStudy.getCondition() == "graph_read") {
+        SnapStudy.openViewer(this.mappedCode());
+    } else if (SnapStudy.getCondition() == "graph_write") {
+        SnapStudy.openEditor(this.mappedCode(), this);
+    } else {
+        this.mapToCode();
+    }
+}
 
 BlockMorph.prototype.mapToCode = function () {
     // open a dialog box letting the user map code via the GUI

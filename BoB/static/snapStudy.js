@@ -7,6 +7,10 @@
 
 var SnapStudy = {}
 
+SnapStudy.getCondition = function() {
+	return $('#id_condition').val();
+}
+
 SnapStudy.SnapRun = function(ide, clickSource) {
 
 	var projectXML = '';
@@ -75,6 +79,7 @@ SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 		height: height,
 		title: title,
 		modal: true,
+		closeOnEscape: false,
 		buttons: {
 			Ok: function() {
 				if (!myCodeMirror.options['readOnly']) {
