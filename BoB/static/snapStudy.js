@@ -77,11 +77,13 @@ SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 		modal: true,
 		buttons: {
 			Ok: function() {
-				SnapStudy.updateHints();
-				if (!myCodeMirror.options['readOnly'] && SnapStudy.errorWidgets.length > 0) {
-					clearInterval(jsHintsInterval);
-				  jsHintsInterval = setInterval(SnapStudy.updateHints, 999);
-					return;
+				if (!myCodeMirror.options['readOnly']) {
+					SnapStudy.updateHints();
+					if (SnapStudy.errorWidgets.length > 0) {
+						clearInterval(jsHintsInterval);
+					  jsHintsInterval = setInterval(SnapStudy.updateHints, 999);
+						return;
+					}
 				}
 				clearInterval(jsHintsInterval);
 				$( this ).dialog( "close" );
@@ -101,11 +103,15 @@ SnapStudy.errorWidgets = [];
 
 SnapStudy.updateHints = function() {
   myCodeMirror.operation(function(){
-    for (var i = 0; i < SnapStudy.errorWidgets.length; ++i)
+    for (var i = 0; i < SnapStudy.errorWidgets.length; ++i) {
       myCodeMirror.removeLineWidget(SnapStudy.errorWidgets[i]);
+    }
     SnapStudy.errorWidgets.length = 0;
 
-    JSHINT(myCodeMirror.getValue());
+    JSHINT(myCodeMirror.getValue(), {
+    	evil: true
+    });
+
     for (var i = 0; i < JSHINT.errors.length; ++i) {
       var err = JSHINT.errors[i];
       if (!err) continue;
