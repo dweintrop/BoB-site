@@ -3,7 +3,7 @@ import csv, codecs, cStringIO
 from django.contrib import admin
 from django.http import HttpResponse
 
-from oas.models import SnapRun
+from oas.models import SnapRun, TextInteraction
 
 class SnapRunAdmin(admin.ModelAdmin):
   list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition')
@@ -23,7 +23,27 @@ class SnapRunAdmin(admin.ModelAdmin):
 		response['Content-Disposition'] = 'attachment; filename="snapruns.csv"'
 		return response
 
+
+class TextInteractionAdmin(admin.ModelAdmin):
+  list_display = ('StudentID', 'PairID', 'TimeStamp', 'InteractionType', 'Condition')
+  list_filter = ('TimeStamp', 'InteractionType')
+  actions = ['export_snapTextInteractions']
+
+  def export_snapTextInteractions(studentadmin, request, queryset):
+        response = HttpResponse(content_type='text/csv')
+
+        writer = UnicodeWriter(response)
+        writer.writerow(['SnapRun DB ID', 'Student ID', 'Pair ID', 'TimeStamp', 'Interaction Type', 'Condition', 'Text'])
+
+        for run in queryset:
+            run_info = [run.id, run.StudentID, run.PairID, run.TimeStamp, run.InteractionType, run.Condition, run.Text]
+            writer.writerow(run_info)
+
+        response['Content-Disposition'] = 'attachment; filename="snapinteractions.csv"'
+        return response
+
 admin.site.register(SnapRun, SnapRunAdmin)
+admin.site.register(TextInteraction, TextInteractionAdmin)
 
 class UnicodeWriter:
     """

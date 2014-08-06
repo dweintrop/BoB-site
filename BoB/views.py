@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from forms import LoginForm
-from oas.models import SnapRun
+from oas.models import SnapRun, TextInteraction
 
 import datetime
 
@@ -36,6 +36,22 @@ def snapRun(request):
 		snapRun.save()
 		return HttpResponse('success')
 	return HttpResponse('faliure')
+
+# store a user viewing/editing code
+def snapTextInteraction(request): 
+	if request.method == 'POST':
+		textInteraction = TextInteraction(
+			StudentID = request.POST['student_id'],
+			PairID = request.POST['pair_id'],
+			TimeStamp = datetime.datetime.now(),
+			Condition = request.POST['condition'],
+			InteractionType = request.POST['interactionType'],
+			Text = request.POST['text']
+			)
+		textInteraction.save()
+		return HttpResponse('success')
+	return HttpResponse('faliure')
+
 
 # pass through mappings to get around my not being able to figure out how to show an image directory
 def help(request):

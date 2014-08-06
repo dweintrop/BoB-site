@@ -38,7 +38,7 @@ SnapStudy.SnapRun = function(ide, clickSource) {
 		console.log(msg);
 	});
 
-	console.log(jsonData);
+	// console.log(jsonData);
 }
 
 SnapStudy.ScriptsXML = function (ide) {
@@ -48,6 +48,24 @@ SnapStudy.ScriptsXML = function (ide) {
 	return xml;
 }
 
+SnapStudy.TextInteraction = function(interactionType, code) {
+		var jsonData = {
+		'student_id' : $('#id_student_id').val(),
+		'pair_id' : $('#id_pair_id').val(),
+		'condition' : $('#id_condition').val(),
+		'interactionType' : interactionType, // read or write
+		'text' : code
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "/snapTextInteraction/",
+		data: jsonData
+	}).done(function( msg ) {
+		console.log(msg);
+	});
+}
+
 SnapStudy.openViewer = function(inCode) {
 	// hide function structure
 	$('.function-structure').hide();
@@ -55,6 +73,8 @@ SnapStudy.openViewer = function(inCode) {
 	myCodeMirror.setOption('readOnly', true);
 	myCodeMirror.setOption('cursorBlinkRate', -1);
 	SnapStudy.cmDialog("Javascript Viewer", inCode, function(){});
+
+	SnapStudy.TextInteraction('read', inCode);
 }
 
 SnapStudy.openEditor = function(inCode, block) {
@@ -82,6 +102,8 @@ SnapStudy.openEditor = function(inCode, block) {
 	myCodeMirror.setOption('cursorBlinkRate', 530);
 	SnapStudy.cmDialog("Javascript Editor", inCode, function(){
 		block.definition.codeMapping = myCodeMirror.getValue();
+
+		SnapStudy.TextInteraction('write', myCodeMirror.getValue());
 	});
 }
 
