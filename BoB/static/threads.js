@@ -136,8 +136,12 @@ ThreadManager.prototype.toggleProcess = function (block) {
 
 ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
     
-    // don't log when I recieve thread runs as we will have already recorded the state on the inital broadcast
-    if (block.blockSpec.indexOf("when I receive") == -1){
+    // don't log:
+    //   when I recieve thread runs as we will have already recorded the state on the inital broadcast
+    //   read/write code blocks as those are recorded elsewhere
+    if (block.blockSpec.indexOf("when I receive") == -1 && 
+        block.blockSpec.indexOf("write code for") == -1 &&
+        block.blockSpec.indexOf("see code of") == -1 ){
         SnapStudy.SnapRun(world.children[0],'threadStart');
     }
 
