@@ -156,15 +156,15 @@ SpriteMorph.uber = PenMorph.prototype;
 SpriteMorph.prototype.categories =
     [
         'motion',
-        'control',
+        'events',
         'looks',
-        'sensing',
+        'control',
         'sound',
         'operators',
         'pen',
         'variables',
-        'lists',
-        'other'
+        'sensing',
+        'lists'
     ];
 
 SpriteMorph.prototype.blockColor = {
@@ -172,11 +172,12 @@ SpriteMorph.prototype.blockColor = {
     looks : new Color(143, 86, 227),
     sound : new Color(207, 74, 217),
     pen : new Color(0, 161, 120),
-    control : new Color(230, 168, 34),
+    control : new Color(252, 191, 55),
     sensing : new Color(4, 148, 220),
     operators : new Color(98, 194, 19),
     variables : new Color(243, 118, 29),
     lists : new Color(217, 77, 17),
+    events: new Color(191, 131, 22),
     other: new Color(150, 150, 150)
 };
 
@@ -572,37 +573,37 @@ SpriteMorph.prototype.initBlocks = function () {
         // Control
         receiveGo: {
             type: 'hat',
-            category: 'control',
+            category: 'events',
             spec: 'when %greenflag clicked'
         },
         receiveKey: {
             type: 'hat',
-            category: 'control',
+            category: 'events',
             spec: 'when %keyHat key pressed'
         },
         receiveClick: {
             type: 'hat',
-            category: 'control',
+            category: 'events',
             spec: 'when I am clicked'
         },
         receiveMessage: {
             type: 'hat',
-            category: 'control',
+            category: 'events',
             spec: 'when I receive %msgHat'
         },
         doBroadcast: {
             type: 'command',
-            category: 'control',
+            category: 'events',
             spec: 'broadcast %msg'
         },
         doBroadcastAndWait: {
             type: 'command',
-            category: 'control',
+            category: 'events',
             spec: 'broadcast %msg and wait'
         },
         getLastMessage: {
             type: 'reporter',
-            category: 'control',
+            category: 'events',
             spec: 'message'
         },
         doWait: {
@@ -713,6 +714,8 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'stop block'
         },
     */
+
+
         doCallCC: {
             type: 'command',
             category: 'control',
@@ -1785,8 +1788,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doStamp'));
 
-    } else if (cat === 'control') {
-
+    } else if (cat === 'events') {
         blocks.push(block('receiveGo'));
         blocks.push(block('receiveKey'));
         blocks.push(block('receiveClick'));
@@ -1795,9 +1797,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doBroadcast'));
         blocks.push(block('doBroadcastAndWait'));
         blocks.push(watcherToggle('getLastMessage'));
-        blocks.push(block('getLastMessage'));
-        blocks.push('-');
-        blocks.push(block('doWarp'));
+        blocks.push(block('getLastMessage'));        
+    } else if (cat === 'control') {
         blocks.push('-');
         blocks.push(block('doWait'));
         blocks.push(block('doWaitUntil'));
@@ -1811,6 +1812,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doReport'));
         blocks.push('-');
+        blocks.push(block('doWarp'));
     /*
     // old STOP variants, migrated to a newer version, now redundant
         blocks.push(block('doStopBlock'));
@@ -1830,10 +1832,12 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('forkWithInputList'));
         blocks.push(block('evaluateWithInputList'));
         blocks.push('-');
-    */
+    
+    // leave out continuations for now
         blocks.push(block('doCallCC'));
         blocks.push(block('reportCallCC'));
         blocks.push('-');
+    */
         blocks.push(block('receiveOnClone'));
         blocks.push(block('createClone'));
         blocks.push(block('removeClone'));
@@ -2052,6 +2056,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
             },
             'Make a block'
         );
+
         button.userMenu = helpMenu;
         button.selector = 'addCustomBlock';
         button.showHelp = BlockMorph.prototype.showHelp;
@@ -2059,20 +2064,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
-        blocks.push(block('reportNewList'));
-        blocks.push('-');
-        blocks.push(block('reportCONS'));
-        blocks.push(block('reportListItem'));
-        blocks.push(block('reportCDR'));
-        blocks.push('-');
-        blocks.push(block('reportListLength'));
-        blocks.push(block('reportListContainsItem'));
-        blocks.push('-');
-        blocks.push(block('doAddToList'));
-        blocks.push(block('doDeleteFromList'));
-        blocks.push(block('doInsertInList'));
-        blocks.push(block('doReplaceInList'));
-
+      
     // for debugging: ///////////////
 
         if (this.world().isDevMode) {
@@ -2099,6 +2091,20 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         }
 
         
+    } else if (cat === 'lists') {
+        blocks.push(block('reportNewList'));
+        blocks.push('-');
+        blocks.push(block('reportCONS'));
+        blocks.push(block('reportListItem'));
+        blocks.push(block('reportCDR'));
+        blocks.push('-');
+        blocks.push(block('reportListLength'));
+        blocks.push(block('reportListContainsItem'));
+        blocks.push('-');
+        blocks.push(block('doAddToList'));
+        blocks.push(block('doDeleteFromList'));
+        blocks.push(block('doInsertInList'));
+        blocks.push(block('doReplaceInList'));
     }
     return blocks;
 };
@@ -5080,8 +5086,7 @@ StageMorph.prototype.blockTemplates = function (category) {
 
         blocks.push(block('clear'));
 
-    } else if (cat === 'control') {
-
+    } else if (cat === 'events') {
         blocks.push(block('receiveGo'));
         blocks.push(block('receiveKey'));
         blocks.push(block('receiveClick'));
@@ -5091,8 +5096,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doBroadcastAndWait'));
         blocks.push(watcherToggle('getLastMessage'));
         blocks.push(block('getLastMessage'));
-        blocks.push('-');
-        blocks.push(block('doWarp'));
+    } else if (cat === 'control') {
         blocks.push('-');
         blocks.push(block('doWait'));
         blocks.push(block('doWaitUntil'));
@@ -5103,8 +5107,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doIf'));
         blocks.push(block('doIfElse'));
-        blocks.push('-');
         blocks.push(block('doReport'));
+        blocks.push('-');
+        blocks.push(block('doWarp'));
         blocks.push('-');
     /*
     // old STOP variants, migrated to a newer version, now redundant
@@ -5125,10 +5130,12 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('forkWithInputList'));
         blocks.push(block('evaluateWithInputList'));
         blocks.push('-');
-    */
+      
+    // leave out continuations for now
         blocks.push(block('doCallCC'));
         blocks.push(block('reportCallCC'));
         blocks.push('-');
+    */
         blocks.push(block('createClone'));
         blocks.push('-');
         blocks.push(block('doPauseAll'));
@@ -5306,20 +5313,6 @@ StageMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
-        blocks.push(block('reportNewList'));
-        blocks.push('-');
-        blocks.push(block('reportCONS'));
-        blocks.push(block('reportListItem'));
-        blocks.push(block('reportCDR'));
-        blocks.push('-');
-        blocks.push(block('reportListLength'));
-        blocks.push(block('reportListContainsItem'));
-        blocks.push('-');
-        blocks.push(block('doAddToList'));
-        blocks.push(block('doDeleteFromList'));
-        blocks.push(block('doInsertInList'));
-        blocks.push(block('doReplaceInList'));
-
     // for debugging: ///////////////
 
         if (this.world().isDevMode) {
@@ -5375,8 +5368,22 @@ StageMorph.prototype.blockTemplates = function (category) {
             'Make a block'
         );
         blocks.push(button);
+    } else if (cat === 'lists') {
+        blocks.push(block('reportNewList'));
+        blocks.push('-');
+        blocks.push(block('reportCONS'));
+        blocks.push(block('reportListItem'));
+        blocks.push(block('reportCDR'));
+        blocks.push('-');
+        blocks.push(block('reportListLength'));
+        blocks.push(block('reportListContainsItem'));
+        blocks.push('-');
+        blocks.push(block('doAddToList'));
+        blocks.push(block('doDeleteFromList'));
+        blocks.push(block('doInsertInList'));
+        blocks.push(block('doReplaceInList'));
     }
-    return blocks;
+
 };
 
 // StageMorph primitives
