@@ -49,6 +49,9 @@ SnapStudy.ScriptsXML = function (ide) {
 }
 
 SnapStudy.openViewer = function(inCode) {
+	// hide function structure
+	$('.function-structure').hide();
+
 	myCodeMirror.setOption('readOnly', true);
 	myCodeMirror.setOption('cursorBlinkRate', -1);
 	SnapStudy.cmDialog("Javascript Viewer", inCode, function(){});
@@ -60,6 +63,20 @@ SnapStudy.openEditor = function(inCode, block) {
 		SnapStudy.openViewer(inCode);
 		return;
 	}
+
+	// show function structure
+	$('.function-structure').show();
+
+	// populate function name
+	$('#function-name').empty().append(block.definition.helpSpec());
+	
+	// populate function args
+	var args_list = [];
+	$.each(block.definition.inputNames(), function (ind, name) {
+		args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
+	});
+	$('#arg-list').empty().append(args_list.join(", "));
+
 
 	myCodeMirror.setOption('readOnly', false);
 	myCodeMirror.setOption('cursorBlinkRate', 530);
@@ -74,7 +91,7 @@ SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 
 	var jsHintsInterval = {};
 
-	$( "#cmDiv" ).dialog({
+	$( "#cmDiv-wrapper" ).dialog({
 		width: width,
 		height: height,
 		title: title,

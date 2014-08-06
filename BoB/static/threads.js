@@ -1018,7 +1018,6 @@ Process.prototype.evaluateCustomBlock = function () {
         upvars,
         outer;
 
-
     // if custom block has mapped code (i.e. what written in editor) then run the JS and exit
     if (this.context.expression.mappedCode()) {
         var jsFunc = Function.apply(

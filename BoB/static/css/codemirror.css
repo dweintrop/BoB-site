@@ -33,7 +33,7 @@
 .CodeMirror-linenumbers {}
 .CodeMirror-linenumber {
   padding: 0 3px 0 5px;
-  min-width: 20px;
+  min-width: 17px;
   text-align: right;
   color: #999;
   -moz-box-sizing: content-box;
@@ -161,6 +161,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   border-right: 30px solid transparent;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+  background-color: #F2F3fF;
 }
 
 /* The fake, visible scrollbars. Used to force redraw during scrolling
