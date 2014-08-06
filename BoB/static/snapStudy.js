@@ -56,7 +56,7 @@ SnapStudy.openViewer = function(inCode) {
 
 SnapStudy.openEditor = function(inCode, block) {
 	// if is not a custom block - open as viewer
-	if (!(block instanceof CustomCommandBlockMorph)) {
+	if (!(block instanceof CustomCommandBlockMorph || block instanceof CustomReporterBlockMorph)) {
 		SnapStudy.openViewer(inCode);
 		return;
 	}

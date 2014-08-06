@@ -1171,15 +1171,25 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'other',
             spec: 'map %codeListPart of %codeListKind to code %code'
         },
-        reportMappedCode: { // experimental
+        reportMappedCmd: { // experimental
             type: 'reporter',
             category: 'other',
             spec: 'see code of %cmdRing'
         },
-        writeMappedCode: { // experimental
+        writeMappedCmd: { // experimental
             type: 'reporter',
             category: 'other',
             spec: 'write code for %cmdRing'
+        },        
+        reportMappedRep: { // experimental
+            type: 'reporter',
+            category: 'other',
+            spec: 'see code of %repRing'
+        },
+        writeMappedRep: { // experimental
+            type: 'reporter',
+            category: 'other',
+            spec: 'write code for %repRing'
         }
     };
 };
@@ -1954,8 +1964,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'variables') {
 
-        blocks.push(block('reportMappedCode'));
-        blocks.push(block('writeMappedCode'));
+        blocks.push(block('reportMappedCmd'));
+        blocks.push(block('reportMappedRep'));
+        blocks.push(block('writeMappedCmd'));
+        blocks.push(block('writeMappedRep'));
         blocks.push('=');
 
 
@@ -2062,7 +2074,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
 
-        blocks.push('=');
+        blocks.push('-');
 
       
     // for debugging: ///////////////
@@ -5246,8 +5258,10 @@ StageMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'variables') {
         
-        blocks.push(block('reportMappedCode'));
-        blocks.push(block('writeMappedCode'));
+        blocks.push(block('reportMappedCmd'));
+        blocks.push(block('reportMappedRep'));
+        blocks.push(block('writeMappedCmd'));
+        blocks.push(block('writeMappedRep'));
         blocks.push('=');
 
         button = new PushButtonMorph(

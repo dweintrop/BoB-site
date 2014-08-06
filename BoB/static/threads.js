@@ -2681,7 +2681,7 @@ Process.prototype.doMapListCode = function (part, kind, aString) {
     StageMorph.prototype.codeMappings[key1 + key2] = aString || '';
 };
 
-Process.prototype.reportMappedCode = function (aContext) {
+Process.prototype.reportMappedCmd = function (aContext) {
     if (aContext instanceof Context) {
         if (aContext.expression instanceof SyntaxElementMorph) {
             var mappedCode = aContext.expression.mappedCode();
@@ -2692,7 +2692,11 @@ Process.prototype.reportMappedCode = function (aContext) {
     return '';
 };
 
-Process.prototype.writeMappedCode = function (aContext) {
+Process.prototype.reportMappedRep = function (aContext) {
+    return this.reportMappedCmd(aContext);
+}
+
+Process.prototype.writeMappedCmd = function (aContext) {
     if (aContext instanceof Context) {
         if (aContext.expression instanceof SyntaxElementMorph) {
             var mappedCode = aContext.expression.mappedCode();
@@ -2702,6 +2706,10 @@ Process.prototype.writeMappedCode = function (aContext) {
     }
     return '';
 };
+
+Process.prototype.writeMappedRep = function (aContext) {
+return this.writeMappedCmd(aContext);
+}
 
 // Process music primitives
 
