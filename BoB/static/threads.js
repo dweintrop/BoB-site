@@ -1025,7 +1025,7 @@ Process.prototype.evaluateCustomBlock = function () {
             Object.create(Function.prototype),
             this.context.expression.definition.inputNames().concat([this.context.expression.mappedCode()]));
 
-        this.evaluate(jsFunc, args, true, true);
+        return this.evaluate(jsFunc, args, true, true);
 
         // other attempts to get JS running before fining this, relatively straightfoward solution
 
