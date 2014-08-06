@@ -2039,10 +2039,10 @@ BlockMorph.prototype.userMenu = function () {
             }
             if (StageMorph.prototype.enableCodeMapping) {
                 menu.addLine();
-                menu.addItem(
-                    'header mapping...',
-                    'mapToHeader'
-                );
+                // menu.addItem(
+                //     'header mapping...',
+                //     'mapToHeader'
+                // );
                 menu.addItem(
                     'view/edit code',
                     'launchJSWindow'
@@ -2137,10 +2137,10 @@ BlockMorph.prototype.userMenu = function () {
     menu.addItem("ringify", 'ringify');
     if (StageMorph.prototype.enableCodeMapping) {
         menu.addLine();
-        menu.addItem(
-            'header mapping...',
-            'mapToHeader'
-        );
+        // menu.addItem(
+        //     'header mapping...',
+        //     'mapToHeader'
+        // );
         menu.addItem(
             'view/edit code',
             'launchJSWindow'
