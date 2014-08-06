@@ -85,11 +85,35 @@ SnapStudy.openEditor = function(inCode, block) {
 	});
 }
 
-SnapStudy.cmDialog = function (title, inCode, closeCallback) {
+SnapStudy.cmDialog = function (title, inCode, saveCallback) {
 	var width = $(window).width() * .44;
 	var height = $(window).height() * .66;
 
 	var jsHintsInterval = {};
+
+	var dialogButtons = {};
+
+	if (myCodeMirror.options['readOnly']) {
+		dialogButtons.Ok = function() {
+			$( this ).dialog( "close" );
+		}
+	} else {
+		dialogButtons.Save = function() {
+			SnapStudy.updateHints();
+			if (SnapStudy.errorWidgets.length > 0) {
+				clearInterval(jsHintsInterval);
+			  jsHintsInterval = setInterval(SnapStudy.updateHints, 1551);
+				return;
+			}
+			clearInterval(jsHintsInterval);
+			saveCallback();
+			$( this ).dialog( "close" );
+		};
+		dialogButtons.Cancel = function() {
+			clearInterval(jsHintsInterval);
+			$( this ).dialog( "close" );
+		}
+	}
 
 	$( "#cmDiv-wrapper" ).dialog({
 		width: width,
@@ -97,21 +121,7 @@ SnapStudy.cmDialog = function (title, inCode, closeCallback) {
 		title: title,
 		modal: true,
 		closeOnEscape: false,
-		buttons: {
-			Ok: function() {
-				if (!myCodeMirror.options['readOnly']) {
-					SnapStudy.updateHints();
-					if (SnapStudy.errorWidgets.length > 0) {
-						clearInterval(jsHintsInterval);
-					  jsHintsInterval = setInterval(SnapStudy.updateHints, 999);
-						return;
-					}
-				}
-				clearInterval(jsHintsInterval);
-				$( this ).dialog( "close" );
-			}
-		},
-		beforeClose: closeCallback
+		buttons: dialogButtons
 	});
 
 	// fill it with the code from the clicked box
