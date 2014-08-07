@@ -1026,11 +1026,13 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'split %s by %delim',
             defaults: [localize('hello') + ' ' + localize('world'), " "]
         },
+        /*
         reportJSFunction: { // experimental
             type: 'reporter',
             category: 'operators',
             spec: 'JavaScript function ( %mult%s ) { %code }'
         },
+        */
         reportTypeOf: { // only in dev mode for debugging
             dev: true,
             type: 'reporter',
@@ -1941,9 +1943,11 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportUnicodeAsLetter'));
         blocks.push('-');
         blocks.push(block('reportIsA'));
+        /*
         blocks.push(block('reportIsIdentical'));
         blocks.push('-');
         blocks.push(block('reportJSFunction'));
+        */
 
     // for debugging: ///////////////
 
@@ -1964,10 +1968,15 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'variables') {
 
-        blocks.push(block('reportMappedCmd'));
-        blocks.push(block('reportMappedRep'));
-        blocks.push(block('writeMappedCmd'));
-        blocks.push(block('writeMappedRep'));
+        if (SnapStudy.getCondition() != 'graph') {            
+            blocks.push(block('reportMappedCmd'));
+            blocks.push(block('reportMappedRep'));
+        }
+        if (SnapStudy.getCondition() == 'graph_write' ) {
+            blocks.push(block('writeMappedCmd'));
+            blocks.push(block('writeMappedRep'));
+        }
+        
         blocks.push('=');
 
 
@@ -5235,9 +5244,11 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportUnicodeAsLetter'));
         blocks.push('-');
         blocks.push(block('reportIsA'));
+        /*
         blocks.push(block('reportIsIdentical'));
         blocks.push('-');
         blocks.push(block('reportJSFunction'));
+        */
 
     // for debugging: ///////////////
 
@@ -5258,10 +5269,14 @@ StageMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'variables') {
         
-        blocks.push(block('reportMappedCmd'));
-        blocks.push(block('reportMappedRep'));
-        blocks.push(block('writeMappedCmd'));
-        blocks.push(block('writeMappedRep'));
+        if (SnapStudy.getCondition() != 'graph') {            
+            blocks.push(block('reportMappedCmd'));
+            blocks.push(block('reportMappedRep'));
+        }
+        if (SnapStudy.getCondition() == 'graph_write' ) {
+            blocks.push(block('writeMappedCmd'));
+            blocks.push(block('writeMappedRep'));
+        }
         blocks.push('=');
 
         button = new PushButtonMorph(
@@ -5397,7 +5412,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doInsertInList'));
         blocks.push(block('doReplaceInList'));
     }
-
+    return blocks;
 };
 
 // StageMorph primitives
