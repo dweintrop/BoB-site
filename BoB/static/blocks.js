@@ -2037,17 +2037,19 @@ BlockMorph.prototype.userMenu = function () {
                     'hidePrimitive'
                 );
             }
-            if (StageMorph.prototype.enableCodeMapping) {
-                menu.addLine();
+            // if (StageMorph.prototype.enableCodeMapping) {
                 // menu.addItem(
                 //     'header mapping...',
                 //     'mapToHeader'
                 // );
+            if (SnapStudy.getCondition() != 'graph') {
+                menu.addLine();
                 menu.addItem(
                     'view/edit code',
                     'launchJSWindow'
                 );
             }
+            // }
         }
         return menu;
     }
@@ -2135,17 +2137,19 @@ BlockMorph.prototype.userMenu = function () {
     }
     menu.addLine();
     menu.addItem("ringify", 'ringify');
-    if (StageMorph.prototype.enableCodeMapping) {
-        menu.addLine();
+    // if (StageMorph.prototype.enableCodeMapping) {
         // menu.addItem(
         //     'header mapping...',
         //     'mapToHeader'
         // );
+    if (SnapStudy.getCondition() != 'graph') {
+        menu.addLine();
         menu.addItem(
             'view/edit code',
             'launchJSWindow'
         );
     }
+    // }
     return menu;
 };
 
@@ -2440,9 +2444,7 @@ BlockMorph.prototype.launchJSWindow = function() {
         SnapStudy.openViewer(this.mappedCode());
     } else if (SnapStudy.getCondition() == "graph_write") {
         SnapStudy.openEditor(this.mappedCode(), this);
-    } else {
-        this.mapToCode();
-    }
+    } 
 }
 
 BlockMorph.prototype.mapToCode = function () {
@@ -6894,15 +6896,15 @@ InputSlotMorph.prototype.reactToSliderEdit = function () {
 // InputSlotMorph menu:
 
 InputSlotMorph.prototype.userMenu = function () {
-    var menu = new MenuMorph(this);
-    if (!StageMorph.prototype.enableCodeMapping || this.isNumeric) {
+    // var menu = new MenuMorph(this);
+    // if (!StageMorph.prototype.enableCodeMapping || this.isNumeric) {
         return this.parent.userMenu();
-    }
-    menu.addItem(
-        'code string mapping...',
-        'mapToCode'
-    );
-    return menu;
+    // }
+    // menu.addItem(
+    //     'code string mapping...',
+    //     'mapToCode'
+    // );
+    // return menu;
 };
 
 // InputSlotMorph code mapping
@@ -9373,33 +9375,33 @@ MultiArgMorph.prototype.mouseClickLeft = function (pos) {
 // MultiArgMorph menu:
 
 MultiArgMorph.prototype.userMenu = function () {
-    var menu = new MenuMorph(this),
-        block = this.parentThatIsA(BlockMorph),
-        key = '',
-        myself = this;
-    if (!StageMorph.prototype.enableCodeMapping) {
+    // var menu = new MenuMorph(this),
+    //     block = this.parentThatIsA(BlockMorph),
+    //     key = '',
+    //     myself = this;
+    // if (!StageMorph.prototype.enableCodeMapping) {
         return this.parent.userMenu();
-    }
-    if (block) {
-        if (block instanceof RingMorph) {
-            key = 'parms_';
-        } else if (block.selector === 'doDeclareVariables') {
-            key = 'tempvars_';
-        }
-    }
-    menu.addItem(
-        'code list mapping...',
-        function () {myself.mapCodeList(key); }
-    );
-    menu.addItem(
-        'code item mapping...',
-        function () {myself.mapCodeItem(key); }
-    );
-    menu.addItem(
-        'code delimiter mapping...',
-        function () {myself.mapCodeDelimiter(key); }
-    );
-    return menu;
+    // }
+    // if (block) {
+    //     if (block instanceof RingMorph) {
+    //         key = 'parms_';
+    //     } else if (block.selector === 'doDeclareVariables') {
+    //         key = 'tempvars_';
+    //     }
+    // }
+    // menu.addItem(
+    //     'code list mapping...',
+    //     function () {myself.mapCodeList(key); }
+    // );
+    // menu.addItem(
+    //     'code item mapping...',
+    //     function () {myself.mapCodeItem(key); }
+    // );
+    // menu.addItem(
+    //     'code delimiter mapping...',
+    //     function () {myself.mapCodeDelimiter(key); }
+    // );
+    // return menu;
 };
 
 // MultiArgMorph code mapping

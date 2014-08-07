@@ -2109,14 +2109,14 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
     /////////////////////////////////
 
-        if (StageMorph.prototype.enableCodeMapping) {
+        // if (StageMorph.prototype.enableCodeMapping) {
             // blocks.push(block('doMapCodeOrHeader'));
             // blocks.push(block('doMapStringCode'));
             // blocks.push(block('doMapListCode'));
             // blocks.push('-');
             // blocks.push(block('reportMappedCode'));
             // blocks.push('=');
-        }
+        // }
 
         
     } else if (cat === 'lists') {
@@ -5369,14 +5369,14 @@ StageMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
-        if (StageMorph.prototype.enableCodeMapping) {
+        // if (StageMorph.prototype.enableCodeMapping) {
             // blocks.push(block('doMapCodeOrHeader'));
             // blocks.push(block('doMapStringCode'));
             // blocks.push(block('doMapListCode'));
             // blocks.push('-');
             // blocks.push(block('reportMappedCode'));
             // blocks.push('=');
-        }
+        // }
 
         button = new PushButtonMorph(
             null,
