@@ -749,7 +749,11 @@ CustomCommandBlockMorph.prototype.userMenu = function () {
         // menu.addItem("export definition...", 'exportBlockDefinition');
         menu.addItem("delete block definition...", 'deleteBlockDefinition');
     }
-    menu.addItem("edit...", 'edit'); // works also for prototypes
+    if (SnapStudy.getCondition() == 'graph_write') {
+        menu.addItem("edit header", 'edit'); // works also for prototypes
+    } else {
+        menu.addItem("edit...", 'edit'); // works also for prototypes
+    }
     return menu;
 };
 
