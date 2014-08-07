@@ -2558,7 +2558,7 @@ BlockMorph.prototype.mappedCode = function (definitions) {
 
     codeLines = code.split('\n');
     this.inputs().forEach(function (input) {
-        parts.push(input.mappedCode(defs).toString());
+        parts.push((input.mappedCode(defs)) ? input.mappedCode(defs).toString() : "");
     });
     parts.forEach(function (part) {
         var partLines = part.split('\n'),
