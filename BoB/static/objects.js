@@ -628,6 +628,11 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'repeat %n %c',
             defaults: [10]
         },
+        doWhile: {
+            type: 'command',
+            category: 'control',
+            spec: 'while %b %c'
+        },
         doUntil: {
             type: 'command',
             category: 'control',
@@ -1263,10 +1268,11 @@ SpriteMorph.prototype.blockAlternatives = {
     receiveClick: ['receiveGo'],
     doBroadcast: ['doBroadcastAndWait'],
     doBroadcastAndWait: ['doBroadcast'],
-    doIf: ['doIfElse', 'doUntil'],
-    doIfElse: ['doIf', 'doUntil'],
-    doRepeat: ['doUntil'],
-    doUntil: ['doRepeat', 'doIf'],
+    doIf: ['doIfElse', 'doUntil', 'doWhile'],
+    doIfElse: ['doIf', 'doUntil', 'doWhile'],
+    doWhile: ['doUntil', 'doRepeat', 'doIf'],
+    doUntil: ['doWhile', 'doRepeat', 'doIf'],
+    doRepeat: ['doUntil', 'doWhile'],
 
     // sensing:
     doAsk: ['bubble', 'doThink', 'doSayFor', 'doThinkFor'],
@@ -1817,7 +1823,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doForever'));
         blocks.push(block('doRepeat'));
-        blocks.push(block('doUntil'));
+        blocks.push(block('doWhile'));
+        // blocks.push(block('doUntil'));
         blocks.push('-');
         blocks.push(block('doIf'));
         blocks.push(block('doIfElse'));
@@ -4312,6 +4319,7 @@ StageMorph.prototype.codeMappings = {
     doWaitUntil: "this.getProcess().doWaitUntil(<#1>);",
     doForever: "while (true) {\n  <#1>\n}",
     doRepeat: "for (var i = 0; i < <#1>; i++) {\n  <#2>\n}",
+    doWhile: "while (<#1>) {\n  <#2>\n}",
     doUntil: "do {\n  <#2>\n} while (!(<#1>));",
     doIf: "if (<#1>) {\n  <#2>\n}",
     doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",
@@ -5124,7 +5132,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('doForever'));
         blocks.push(block('doRepeat'));
-        blocks.push(block('doUntil'));
+        blocks.push(block('doWhile'));
+        // blocks.push(block('doUntil'));
         blocks.push('-');
         blocks.push(block('doIf'));
         blocks.push(block('doIfElse'));

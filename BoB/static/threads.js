@@ -1601,6 +1601,20 @@ Process.prototype.doRepeat = function (counter, body) {
     this.pushContext();
 };
 
+Process.prototype.doWhile = function (goalCondition, body) {
+    if (!goalCondition) {
+        this.popContext();
+        this.pushContext('doYield');
+        return null;
+    }
+    this.context.inputs = [];
+    this.pushContext('doYield');
+    if (body) {
+        this.pushContext(body.blockSequence());
+    }
+    this.pushContext();
+};
+
 Process.prototype.doUntil = function (goalCondition, body) {
     if (goalCondition) {
         this.popContext();
