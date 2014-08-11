@@ -1031,13 +1031,13 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'split %s by %delim',
             defaults: [localize('hello') + ' ' + localize('world'), " "]
         },
-        /*
+        
         reportJSFunction: { // experimental
             type: 'reporter',
             category: 'operators',
             spec: 'JavaScript function ( %mult%s ) { %code }'
         },
-        */
+        
         reportTypeOf: { // only in dev mode for debugging
             dev: true,
             type: 'reporter',
@@ -3318,10 +3318,6 @@ SpriteMorph.prototype.turn = function (degrees) {
     this.setHeading(this.heading + (+degrees || 0));
 };
 
-SpriteMorph.prototype.turnLeft = function (degrees) {
-    this.setHeading(this.heading - (+degrees || 0));
-};
-
 SpriteMorph.prototype.xPosition = function () {
     var stage = this.parentThatIsA(StageMorph);
 
@@ -4196,6 +4192,23 @@ SpriteMorph.prototype.getProcess = function() {
     return this.getStage().threads.processes[this.getStage().threads.processes.length - 1];
 }
 
+// Cleaner SpriteMorph functions for code editing
+SpriteMorph.prototype.turnRight = function(degrees) { this.turn(degrees);}
+SpriteMorph.prototype.turnLeft = function (degrees) { this.setHeading(this.heading - (+degrees || 0)); };
+SpriteMorph.prototype.glide = function(a, b, c) { this.getProcess().doGlide(a, b, c); }
+SpriteMorph.prototype.changeXPosition = function (a){ this.gotoXY(this.xPosition() + a, this.yPosition()); }
+SpriteMorph.prototype.setXPosition = function (a){ this.gotoXY(a, this.yPosition()); }
+SpriteMorph.prototype.changeYPosition = function (a){ this.gotoXY(this.xPosition(), this.yPosition() + a); }
+SpriteMorph.prototype.setYPosition = function (a){ this.gotoXY(this.xPosition(), a); }
+SpriteMorph.prototype.faceTowards = function (a){ this.getProcess().doFaceTowards(a); }
+SpriteMorph.prototype.gotoObject = function (a){ this.getProcess().doGotoObject(a); }
+SpriteMorph.prototype.switchToCostume = function(a){ this.wearCostume(this.getCostumeByName(a));}
+SpriteMorph.prototype.wearNextCostume = function(){ this.doWearNextCostume();}
+SpriteMorph.prototype.getCostumeId = function(){ this.getCostumeIdx();}
+SpriteMorph.prototype.sayFor = function(say, sec){ this.getProcess().doSayFor(say, sec);}
+SpriteMorph.prototype.bubble = function(say){ this.bubble(say, false, false);}
+SpriteMorph.prototype.thinkFor = function(think, sec){this.getProcess().doThinkFor(think, sec);}
+SpriteMorph.prototype.think = function(think){ this.doThink(thnk);}
 
 // SpriteHighlightMorph /////////////////////////////////////////////////
 
@@ -4245,11 +4258,11 @@ StageMorph.prototype.codeMappings = {
 
 // Motion
     forward: "this.forward(<#1>);",
-    turn: "this.turn(<#1>);",
-    turnLeft: "this.turn(0 - <#1>);",
-    setHeading: "this.setHeading(parseFloat(<#1>) % 360);",
+    turn: "this.turnRight(<#1>);",
+    turnLeft: "this.turnLeft(<#1>);",
+    setHeading: "this.setHeading(parseFloat(<#1>));",
     gotoXY: "this.gotoXY(<#1>, <#2>);",
-    doGlide: "this.getProcess().doGlide(<#1>, <#2>, <#3>);",
+    doGlide: "this.glide(<#1>, <#2>, <#3>);",
     changeXPosition: "this.gotoXY(this.xPosition() + <#1>, this.yPosition());",
     setXPosition: "this.gotoXY(<#1>, this.yPosition());",
     changeYPosition: "this.gotoXY(this.xPosition(), this.yPosition() + <#1>);",
@@ -4258,18 +4271,20 @@ StageMorph.prototype.codeMappings = {
     xPosition: "this.xPosition()",
     yPosition: "this.yPosition()",
     direction: "this.heading",
-    doFaceTowards: "this.getProcess().doFaceTowards(<#1>);",
-    doGotoObject: "this.getProcess().doGotoObject(<#1>);",
+    doFaceTowards: "this.faceTowards(<#1>);",
+    doGotoObject: "this.gotoObject(<#1>);",
 
 // Looks
-    doSwitchToCostume: "this.wearCostume(this.getCostumeByName(<#1>));",
-    doWearNextCostume: "this.doWearNextCostume();",
-    getCostumeIdx: "this.getCostumeIdx();",
-    doSayFor: "this.getProcess().doSayFor(<#1>, <#2>);",
+    doSwitchToCostume: "this.switchToCostume(<#1>));",
+    doWearNextCostume: "this.wearNextCostume();",
+    getCostumeIdx: "this.getCostumeId();",
+    doSayFor: "this.sayFor(<#1>, <#2>);",
     bubble: "this.bubble(<#1>, false, false);",
-    doThinkFor: "this.getProcess().doThinkFor(<#1>, <#2>);",
-    doThink: "this.doThink(<#1>);",
-    changeEffect: "this.changeEffect(['<#1>''], <#2>);",
+    doThinkFor: "this.thinkFor(<#1>, <#2>);",
+    doThink: "this.think(<#1>);",
+
+    // new functions up to here.
+    changeEffect: "this.changeEffect(['<#1>'], <#2>);",
     setEffect: "this.setEffect(['<#1>'], <#2>);",
     clearEffects: "this.clearEffects();",
     changeScale: "this.changeScale(<#1>);",
