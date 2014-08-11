@@ -4210,6 +4210,14 @@ SpriteMorph.prototype.say = function(say){ this.bubble(say, false, false);}
 SpriteMorph.prototype.thinkFor = function(think, sec){this.getProcess().doThinkFor(think, sec);}
 SpriteMorph.prototype.think = function(think){ this.doThink(think);}
 
+SpriteMorph.prototype.playSoundUntilDone = function(snd){ this.getProcess().doPlaySoundUntilDone(snd);}
+SpriteMorph.prototype.stopAllSounds = function() { this.getProcess().doStopAllSounds();}
+SpriteMorph.prototype.rest = function(sec) { this.getProcess().doRest(sec);}
+SpriteMorph.prototype.playNote = function(note, sec) { this.getProcess().doPlayNote(note, sec);}
+SpriteMorph.prototype.changeTempo = function(tmp) { this.getStage().changeTempo(tmp);}
+SpriteMorph.prototype.setTempo = function(tmp) { this.getStage().setTempo(tmp);}
+SpriteMorph.prototype.getTempo = function() { return this.getStage().getTempo();}
+
 // SpriteHighlightMorph /////////////////////////////////////////////////
 
 // SpriteHighlightMorph inherits from Morph:
@@ -4282,8 +4290,6 @@ StageMorph.prototype.codeMappings = {
     bubble: "this.bubble(<#1>, false, false);",
     doThinkFor: "this.thinkFor(<#1>, <#2>);",
     doThink: "this.think(<#1>);",
-
-    // new functions up to here.
     changeEffect: "this.changeEffect(['<#1>'], <#2>);",
     setEffect: "this.setEffect(['<#1>'], <#2>);",
     clearEffects: "this.clearEffects();",
@@ -4298,13 +4304,13 @@ StageMorph.prototype.codeMappings = {
 
 // Sound
     playSound: "this.playSound(<#1>);",
-    doPlaySoundUntilDone: "this.getProcess().doPlaySoundUntilDone(<#1>);",
-    doStopAllSounds: "this.getProcess().doStopAllSounds();",
-    doRest: "this.getProcess().doRest(<#1>);",
-    doPlayNote: "this.getProcess().doPlayNote(<#1>, <#2>);",
-    doChangeTempo: "this.getStage().changeTempo(<#1>);",
-    doSetTempo: "this.getStage().setTempo(<#1>);",
-    getTempo: "this.getStage().getTempo(<#1>);",
+    doPlaySoundUntilDone: "this.playSoundUntilDone(<#1>);",
+    doStopAllSounds: "this.stopAllSounds();",
+    doRest: "this.rest(<#1>);",
+    doPlayNote: "this.playNote(<#1>, <#2>);",
+    doChangeTempo: "this.changeTempo(<#1>);",
+    doSetTempo: "this.setTempo(<#1>);",
+    getTempo: "this.getTempo()",
 
 // Pen
     clear: "this.clear();",
