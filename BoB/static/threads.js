@@ -1723,7 +1723,7 @@ Process.prototype.doGlide = function (secs, endX, endY) {
         this.blockReceiver().gotoXY(endX, endY);
         return null;
     }
-    this.blockReceiver().glide(
+    this.blockReceiver().doGlide(
         secs * 1000,
         endX,
         endY,

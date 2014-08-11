@@ -3391,7 +3391,7 @@ SpriteMorph.prototype.changeYPosition = function (delta) {
     this.setYPosition(this.yPosition() + (+delta || 0));
 };
 
-SpriteMorph.prototype.glide = function (
+SpriteMorph.prototype.doGlide = function (
     duration,
     endX,
     endY,
@@ -4194,7 +4194,7 @@ SpriteMorph.prototype.getProcess = function() {
 
 // Cleaner SpriteMorph functions for code editing
 SpriteMorph.prototype.turnRight = function(degrees) { this.turn(degrees);}
-SpriteMorph.prototype.turnLeft = function (degrees) { this.setHeading(this.heading - (+degrees || 0)); };
+SpriteMorph.prototype.turnLeft = function (degrees) { this.setHeading(this.heading - (+degrees || 0)); }
 SpriteMorph.prototype.glide = function(a, b, c) { this.getProcess().doGlide(a, b, c); }
 SpriteMorph.prototype.changeXPosition = function (a){ this.gotoXY(this.xPosition() + a, this.yPosition()); }
 SpriteMorph.prototype.setXPosition = function (a){ this.gotoXY(a, this.yPosition()); }
@@ -4206,7 +4206,7 @@ SpriteMorph.prototype.switchToCostume = function(a){ this.wearCostume(this.getCo
 SpriteMorph.prototype.wearNextCostume = function(){ this.doWearNextCostume();}
 SpriteMorph.prototype.getCostumeId = function(){ this.getCostumeIdx();}
 SpriteMorph.prototype.sayFor = function(say, sec){ this.getProcess().doSayFor(say, sec);}
-SpriteMorph.prototype.bubble = function(say){ this.bubble(say, false, false);}
+SpriteMorph.prototype.say = function(say){ this.bubble(say, false, false);}
 SpriteMorph.prototype.thinkFor = function(think, sec){this.getProcess().doThinkFor(think, sec);}
 SpriteMorph.prototype.think = function(think){ this.doThink(thnk);}
 
