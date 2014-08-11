@@ -142,7 +142,7 @@ SnapStudy.cmDialog = function (title, inCode, saveCallback) {
 		width: width,
 		height: height,
 		title: title,
-		modal: true,
+		modal: true, 
 		buttons: dialogButtons,
 		close: SnapStudy.cleanUpJSHints
 	});

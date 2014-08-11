@@ -4204,11 +4204,11 @@ SpriteMorph.prototype.faceTowards = function (a){ this.getProcess().doFaceToward
 SpriteMorph.prototype.gotoObject = function (a){ this.getProcess().doGotoObject(a); }
 SpriteMorph.prototype.switchToCostume = function(a){ this.wearCostume(this.getCostumeByName(a));}
 SpriteMorph.prototype.wearNextCostume = function(){ this.doWearNextCostume();}
-SpriteMorph.prototype.getCostumeId = function(){ this.getCostumeIdx();}
+SpriteMorph.prototype.getCostumeId = function(){ return this.getCostumeIdx();}
 SpriteMorph.prototype.sayFor = function(say, sec){ this.getProcess().doSayFor(say, sec);}
 SpriteMorph.prototype.say = function(say){ this.bubble(say, false, false);}
 SpriteMorph.prototype.thinkFor = function(think, sec){this.getProcess().doThinkFor(think, sec);}
-SpriteMorph.prototype.think = function(think){ this.doThink(thnk);}
+SpriteMorph.prototype.think = function(think){ this.doThink(think);}
 
 // SpriteHighlightMorph /////////////////////////////////////////////////
 
