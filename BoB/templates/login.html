@@ -15,6 +15,11 @@
 	
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
+	<!--
+		<script src="http://localhost/~dweintrop/jquery.min.js"></script>
+    <script src="http://localhost/~dweintrop/jquery-ui.min.js"></script> 
+-->
+
 		<script type="text/javascript" src="{% static "selectBoxIt.min.js"%}"></script>
 
 		<link rel="stylesheet" href="{% static "css/selectBoxIt.css"%}" type="text/css">
@@ -88,6 +93,16 @@
 			   text-align: center;
 			}
 
+			ul {
+		    list-style-type: none;
+			}
+
+			.project-radio {
+				margin-left: -44px;
+				margin-top: -18px;
+				font-size: 16px;
+			}
+
 		</style>
 
 <script type="text/javascript">
@@ -133,6 +148,8 @@
 					
 
 					<div class="input-label">Programming I Section: {{form.class_period}}</div>
+					
+					<div class="input-label project-radio">{{form.project_choice}}</div>
 					
 					<input class="submit-button" type="submit" value="Let's Go ►"/>
 				</form>

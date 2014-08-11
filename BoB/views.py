@@ -13,7 +13,13 @@ def snap(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
-			return render(request, 'snap.html', {'form': form})
+			projectXML = '';
+			if (request.POST['project_choice'] == 'continue'):
+				projects = SnapRun.objects.filter(StudentID=request.POST['student_id'], PairID=request.POST['pair_id'], RunType='projectClose').order_by("-TimeStamp")
+				if (projects):
+					projectXML = projects[0].ProjectXML
+
+			return render(request, 'snap.html', {'form': form, 'projectXML': projectXML})
 		else:
 			return render(request, 'login.html', {'form': form})
 	        # return HttpResponse(form.errors)

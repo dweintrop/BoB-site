@@ -8,8 +8,14 @@
 
 		{% load staticfiles %}
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
+<!--
+		<script src="http://localhost/~dweintrop/jquery.min.js"></script>
+    <script src="http://localhost/~dweintrop/jquery-ui.min.js"></script> 
+-->
+
+
 		<script type="text/javascript" src="{% static "snapStudy.js"%}"></script>
 
 
@@ -56,6 +62,13 @@
 				new IDE_Morph().openIn(world);
 				setInterval(loop, 1);
 
+
+				// console.log({{projectXML}});
+				var projectXML = '{{projectXML}}';
+				if (projectXML) {
+					world.children[0].openProjectString(new XML_Element().unescape(projectXML));
+				}
+
 				// setup javascript editor
 				var cmDiv = document.getElementById('cmDiv');
 				myCodeMirror = CodeMirror(cmDiv, {
@@ -92,5 +105,6 @@
 			<pre class="cm-s-default function-structure" style="margin-bottom:0px;margin-left:9px;margin-top:0px;">}</pre>
     </div>
 		<canvas id="world" tabindex="1" style="position: absolute;z-index:0;" />
+		{{projectXML}}
   </body>
 </html>
