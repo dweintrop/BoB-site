@@ -1363,13 +1363,12 @@ StageMorph.prototype.toXML = function (serializer) {
         return serializer.format(
             '<project name="@" app="@" version="@">' +
                 '<notes>$</notes>' +
-                '<stage name="@" width="@" height="@" ' +
+                '<stage name="@" ' +
                 'scheduled="@" ~>' +
                 '<variables>%</variables>' +
                 '<blocks>%</blocks>' +
                 '<scripts>%</scripts><sprites>%</sprites>' +
                 '</stage>' +
-                '<hidden>$</hidden>' +
                 '<blocks>%</blocks>' +
                 '<variables>%</variables>' +
                 '</project>',
@@ -1378,17 +1377,11 @@ StageMorph.prototype.toXML = function (serializer) {
             serializer.version,
             (ide && ide.projectNotes) ? ide.projectNotes : '',
             this.name,
-            Math.round(StageMorph.prototype.dimensions.x),
-            Math.round(StageMorph.prototype.dimensions.y),
             StageMorph.prototype.frameRate !== 0,
             serializer.store(this.variables),
             serializer.store(this.customBlocks),
             serializer.store(this.scripts),
             serializer.store(this.children),
-            Object.keys(StageMorph.prototype.hiddenPrimitives).reduce(
-                    function (a, b) {return a + ' ' + b; },
-                    ''
-                ),
             serializer.store(this.globalBlocks),
             (ide && ide.globalVariables) ?
                         serializer.store(ide.globalVariables) : ''
@@ -1432,8 +1425,6 @@ StageMorph.prototype.toXML = function (serializer) {
             this.enableCodeMapping,
             StageMorph.prototype.frameRate !== 0,
             this.trailsCanvas.toDataURL('image/png'),
-
-            // TODO: a possible place to shrink the size of xml sent across the wire
             serializer.store(this.costumes, this.name + '_cst'),
             serializer.store(this.sounds, this.name + '_snd'),
             serializer.store(this.variables),
@@ -1460,16 +1451,13 @@ SpriteMorph.prototype.toXML = function (serializer) {
     
     if (serializer.scriptsOnly) {
        return serializer.format(
-                '<sprite name="@" idx="@" x="@" y="@"' +
+                '<sprite name="@" idx="@" ' +
                     '<variables>%</variables>' +
                     '<blocks>%</blocks>' +
                     '<scripts>%</scripts>' +
                     '</sprite>',
                 this.name,
-                idx,
-                Math.round(this.xPosition()),
-                Math.round(this.yPosition()),
-                
+                idx,                
                 serializer.store(this.variables),
                 !this.customBlocks ? '' : serializer.store(this.customBlocks),
                 serializer.store(this.scripts)
@@ -1534,10 +1522,8 @@ Costume.prototype[XML_Serializer.prototype.mediaDetectionProperty] = true;
 Costume.prototype.toXML = function (serializer) {
     if (serializer.scriptsOnly) {
         return serializer.format(
-            '<costume name="@" center-x="@" center-y="@" ~/>',
-            this.name,
-            Math.round(this.rotationCenter.x),
-            Math.round(this.rotationCenter.y)
+            '<costume name="@" ~/>',
+            this.name
         );
     } else {
         return serializer.format(
