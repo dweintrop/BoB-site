@@ -15,9 +15,9 @@ def snap(request):
 		if form.is_valid():
 			projectXML = '';
 			if (request.POST['project_choice'] == 'continue'):
-				projects = SnapRun.objects.filter(StudentID=request.POST['student_id'], PairID=request.POST['pair_id'], RunType='projectClose').order_by("-TimeStamp")
-				if (projects):
-					projectXML = projects[0].ProjectXML
+				project = SnapRun.objects.filter(StudentID=request.POST['student_id'], PairID=request.POST['pair_id'], RunType='projectClose').order_by("-TimeStamp").first()
+				if (project):
+					projectXML = project.ProjectXML
 
 			return render(request, 'snap.html', {'form': form, 'projectXML': projectXML})
 		else:
@@ -37,10 +37,20 @@ def snapRun(request):
 			Condition = request.POST['condition'],
 			RunType = request.POST['run_type'],
 			ScriptXML = request.POST['scriptXML'],
-			ProjectXML = request.POST['projectXML']
+			ProjectXML = request.POST['projectXML'],
+			NumRuns = 1
 			)
-		snapRun.save()
+
+		# only save new record when edits have been made - else increment the NumRuns field
+		previousRunCount = SnapRun.objects.filter(StudentID=snapRun.StudentID, PairID=snapRun.PairID, ScriptXML=snapRun.ScriptXML).count()
+		if (previousRunCount > 0):
+			previousRun = SnapRun.objects.filter(StudentID=snapRun.StudentID, PairID=snapRun.PairID, ScriptXML=snapRun.ScriptXML).order_by("-TimeStamp").first()
+			previousRun.NumRuns += 1
+			previousRun.save()
+		else:
+			snapRun.save()
 		return HttpResponse('success')
+
 	return HttpResponse('faliure')
 
 # store a user viewing/editing code

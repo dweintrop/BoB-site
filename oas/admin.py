@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from oas.models import SnapRun, TextInteraction
 
 class SnapRunAdmin(admin.ModelAdmin):
-  list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition')
+  list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition', 'NumRuns')
   list_filter = ('TimeStamp', 'Condition')
   actions = ['export_snapRuns']
 
@@ -14,10 +14,10 @@ class SnapRunAdmin(admin.ModelAdmin):
 		response = HttpResponse(content_type='text/csv')
 
 		writer = UnicodeWriter(response)
-		writer.writerow(['SnapRun DB ID', 'Student ID', 'Pair ID', 'Project Name', 'TimeStamp', 'RunType', 'Condition', 'ScriptXML', 'ProjectXML'])
+		writer.writerow(['SnapRun DB ID', 'Student ID', 'Pair ID', 'Project Name', 'TimeStamp', 'RunType', 'Condition', 'ScriptXML', 'ProjectXML', 'NumRuns'])
 
 		for run in queryset:
-			run_info = [run.id, run.StudentID, run.PairID, run.ProjectName, run.TimeStamp, run.RunType, run.Condition, run.ScriptXML, run.ProjectXML]
+			run_info = [run.id, run.StudentID, run.PairID, run.ProjectName, run.TimeStamp, run.RunType, run.Condition, run.ScriptXML, run.ProjectXML, run.NumRuns]
 			writer.writerow(run_info)
 
 		response['Content-Disposition'] = 'attachment; filename="snapruns.csv"'

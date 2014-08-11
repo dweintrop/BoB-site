@@ -10,6 +10,7 @@ class SnapRun(models.Model):
   Condition = models.CharField(max_length=20)
   ScriptXML = models.TextField()
   ProjectXML = models.TextField()
+  NumRuns = models.IntegerField()
 
   # Not going to do this for now, but could look into Amazon s3 backend
   # docs here: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html
