@@ -77,9 +77,10 @@ SnapStudy.openViewer = function(inCode) {
 	SnapStudy.TextInteraction('read', inCode);
 }
 
-SnapStudy.openEditor = function(inCode, block) {
-	// if is not a custom block - open as viewer
-	if (!(block instanceof CustomCommandBlockMorph || block instanceof CustomReporterBlockMorph)) {
+SnapStudy.openEditor = function(inCode, blockDefinition) {
+	// if is not a custom blockDefinition - open as viewer
+	// if (!(block instanceof CustomCommandBlockMorph || block instanceof CustomReporterBlockMorph)) {
+	if (!(blockDefinition instanceof CustomBlockDefinition)) {
 		SnapStudy.openViewer(inCode);
 		return;
 	}
@@ -88,11 +89,11 @@ SnapStudy.openEditor = function(inCode, block) {
 	$('.function-structure').show();
 
 	// populate function name
-	$('#function-name').empty().append(block.definition.helpSpec());
+	$('#function-name').empty().append(blockDefinition.helpSpec());
 	
 	// populate function args
 	var args_list = [];
-	$.each(block.definition.inputNames(), function (ind, name) {
+	$.each(blockDefinition.inputNames(), function (ind, name) {
 		args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
 	});
 	$('#arg-list').empty().append(args_list.join(", "));
@@ -101,7 +102,7 @@ SnapStudy.openEditor = function(inCode, block) {
 	myCodeMirror.setOption('readOnly', false);
 	myCodeMirror.setOption('cursorBlinkRate', 530);
 	SnapStudy.cmDialog("Javascript Editor", inCode, function(){
-		block.definition.codeMapping = myCodeMirror.getValue();
+		blockDefinition.codeMapping = myCodeMirror.getValue();
 
 		SnapStudy.TextInteraction('write', myCodeMirror.getValue());
 	});
@@ -118,6 +119,7 @@ SnapStudy.cmDialog = function (title, inCode, saveCallback) {
 
 	if (myCodeMirror.options['readOnly']) {
 		dialogButtons.Ok = function() {
+			myCodeMirror.setValue('');
 			$( this ).dialog( "close" );
 		}
 	} else {
@@ -130,10 +132,12 @@ SnapStudy.cmDialog = function (title, inCode, saveCallback) {
 			}
 			clearInterval(SnapStudy.jsHintsInterval);
 			saveCallback();
+			myCodeMirror.setValue('');
 			$( this ).dialog( "close" );
 		};
 		dialogButtons.Cancel = function() {
 			SnapStudy.cleanUpJSHints();
+			myCodeMirror.setValue('');
 			$( this ).dialog( "close" );
 		}
 	}

@@ -1695,7 +1695,11 @@ BlockEditorMorph.prototype.init = function (definition, target) {
 
     this.addBody(scriptsFrame);
     this.addButton('ok', 'OK');
-    this.addButton('updateDefinition', 'Apply');
+    if (SnapStudy.getCondition() == 'graph_write') {
+        this.addButton('writeJS', 'Define Behavior');
+    } else {
+        this.addButton('updateDefinition', 'Apply');
+    }
     this.addButton('cancel', 'Cancel');
 
     this.setExtent(new Point(375, 300));
@@ -1810,6 +1814,12 @@ BlockEditorMorph.prototype.refreshAllBlockInstances = function () {
         template.refreshDefaults();
     }
 };
+
+BlockEditorMorph.prototype.writeJS = function () {
+    this.updateDefinition();
+    SnapStudy.openEditor(this.definition.codeMapping, this.definition);
+    this.close();
+}
 
 BlockEditorMorph.prototype.updateDefinition = function () {
     var head, ide,

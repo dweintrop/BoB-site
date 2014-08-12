@@ -2443,7 +2443,7 @@ BlockMorph.prototype.launchJSWindow = function() {
     if (SnapStudy.getCondition() == "graph_read") {
         SnapStudy.openViewer(this.mappedCode());
     } else if (SnapStudy.getCondition() == "graph_write") {
-        SnapStudy.openEditor(this.mappedCode(), this);
+        SnapStudy.openEditor(this.mappedCode(), this.definition);
     } 
 }
 

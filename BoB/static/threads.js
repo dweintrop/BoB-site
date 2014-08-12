@@ -2717,7 +2717,7 @@ Process.prototype.writeMappedCmd = function (aContext) {
     if (aContext instanceof Context) {
         if (aContext.expression instanceof SyntaxElementMorph) {
             var mappedCode = aContext.expression.mappedCode();
-            var newMappedCode = SnapStudy.openEditor(mappedCode, aContext.expression);
+            var newMappedCode = SnapStudy.openEditor(mappedCode, aContext.expression.definition);
             return newMappedCode;
         }
     }
