@@ -4218,6 +4218,31 @@ SpriteMorph.prototype.changeTempo = function(tmp) { this.getStage().changeTempo(
 SpriteMorph.prototype.setTempo = function(tmp) { this.getStage().setTempo(tmp);}
 SpriteMorph.prototype.getTempo = function() { return this.getStage().getTempo();}
 
+// function to make it possible to call one custom function from another (also makes recursion possible)
+SpriteMorph.prototype.callFunction = function(name, args) {
+    var globalBlocks = this.parentThatIsA(StageMorph).globalBlocks;
+
+    for (var i = 0; i < globalBlocks.length; i++) {
+        var block = globalBlocks[i];
+        var blockName = block.parseSpec(block.spec)[0];
+        if (blockName == name) {
+            if (args && args.length != block.inputNames().length) {
+                throw new Error('Number of inputs must match! Called ' + name + ' with ' + args.length 
+                    + ' arg(s), but expected ' + block.inputNames().length);
+            }
+
+            if (!args || args.length == 0) {
+                eval(block.codeMapping);
+            } else {
+                var jsFunc = Function.apply(
+                    Object.create(Function.prototype),
+                    block.inputNames().concat([block.codeMapping]));
+                this.getProcess().evaluate(jsFunc, new List(args), true, true);
+            }
+        }
+    }
+}
+
 // SpriteHighlightMorph /////////////////////////////////////////////////
 
 // SpriteHighlightMorph inherits from Morph:
