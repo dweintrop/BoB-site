@@ -1703,6 +1703,11 @@ BlockEditorMorph.prototype.init = function (definition, target) {
     this.addButton('cancel', 'Cancel');
 
     this.setExtent(new Point(375, 300));
+
+    if (SnapStudy.getCondition() == 'graph_write') {
+        this.setHeight(220);
+    }
+
     this.fixLayout();
     proto.children[0].fixLayout();
     scripts.fixMultiArgs();
