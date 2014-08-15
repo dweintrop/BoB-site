@@ -1363,6 +1363,7 @@ SpriteMorph.prototype.fullCopy = function () {
     var c = SpriteMorph.uber.fullCopy.call(this),
         myself = this,
         arr = [],
+        dp,
         cb;
 
     c.stopTalking();
@@ -1396,12 +1397,29 @@ SpriteMorph.prototype.fullCopy = function () {
     });
     c.sounds = new List(arr);
 
-    c.parts = [];
     c.anchor = null;
+    c.parts = [];
+    this.parts.forEach(function (part) {
+        dp = part.fullCopy();
+        dp.nestingScale = part.nestingScale;
+        dp.rotatesWithAnchor = part.rotatesWithAnchor;
+        c.attachPart(dp);
+    });
     c.nestingScale = 1;
     c.rotatesWithAnchor = true;
 
     return c;
+};
+
+SpriteMorph.prototype.appearIn = function (ide) {
+    // private - used in IDE_Morph.duplicateSprite()
+    this.name = ide.newSpriteName(this.name);
+    ide.stage.add(this);
+    ide.sprites.add(this);
+    ide.corral.addSprite(this);
+    this.parts.forEach(function (part) {
+        part.appearIn(ide);
+    });
 };
 
 // SpriteMorph versioning
@@ -2706,23 +2724,26 @@ SpriteMorph.prototype.remove = function () {
 // SpriteMorph cloning (experimental)
 
 SpriteMorph.prototype.createClone = function () {
-    var clone,
-        hats,
-        stage = this.parentThatIsA(StageMorph);
-    if (stage) {
-        if (stage.cloneCount > 300) {return; }
-        stage.cloneCount += 1;
-        clone = this.fullCopy();
-        clone.isClone = true;
-        clone.name = '';
-        clone.cloneOriginName = this.isClone ?
-                this.cloneOriginName : this.name;
-        stage.add(clone);
-        hats = clone.allHatBlocksFor('__clone__init__');
-        hats.forEach(function (block) {
-            stage.threads.startProcess(block, stage.isThreadSafe);
-        });
+    var stage = this.parentThatIsA(StageMorph);
+     if (stage && stage.cloneCount <= 300) {
+         this.fullCopy().clonify(stage);
     }
+};
+
+SpriteMorph.prototype.clonify = function (stage) {
+    var hats;
+    this.parts.forEach(function (part) {
+        part.clonify(stage);
+    });
+    stage.cloneCount += 1;
+    this.cloneOriginName = this.isClone ? this.cloneOriginName : this.name;
+    this.isClone = true;
+    this.name = '';
+    stage.add(this);
+    hats = this.allHatBlocksFor('__clone__init__');
+    hats.forEach(function (block) {
+        stage.threads.startProcess(block, stage.isThreadSafe);
+    });
 };
 
 SpriteMorph.prototype.removeClone = function () {

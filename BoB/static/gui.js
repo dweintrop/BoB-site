@@ -1820,12 +1820,9 @@ IDE_Morph.prototype.paintNewSprite = function () {
 IDE_Morph.prototype.duplicateSprite = function (sprite) {
     var duplicate = sprite.fullCopy();
 
-    duplicate.name = this.newSpriteName(sprite.name);
     duplicate.setPosition(this.world().hand.position());
-    this.stage.add(duplicate);
+    duplicate.appearIn(this);
     duplicate.keepWithin(this.stage);
-    this.sprites.add(duplicate);
-    this.corral.addSprite(duplicate);
     this.selectSprite(duplicate);
 };
 
