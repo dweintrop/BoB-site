@@ -141,6 +141,7 @@ ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
     //   read/write code blocks as those are recorded elsewhere
     if (block.blockSpec.indexOf("when I receive") == -1 && 
         block.blockSpec.indexOf("write code for") == -1 &&
+        block.blockSpec.indexOf("when I start as a clone") == -1 &&
         block.blockSpec.indexOf("see code of") == -1 ){
         SnapStudy.SnapRun(world.children[0],'threadStart');
     }
