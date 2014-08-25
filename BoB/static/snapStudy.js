@@ -70,7 +70,7 @@ SnapStudy.openViewer = function(inCode, blockMorph) {
 	var blockDefinition = blockMorph.definition;
 
 	// if viewing a custom block - show the function header, else hide it
-	if (blockDefinition instanceof CustomBlockDefinition && blockMorph.children.length < 2) {
+	if (blockDefinition instanceof CustomBlockDefinition && !(blockMorph.nextBlock()) ) {
 		// show function structure
 		$('.function-structure').show();
 
@@ -97,10 +97,9 @@ SnapStudy.openViewer = function(inCode, blockMorph) {
 SnapStudy.openEditor = function(inCode, blockMorph) {
 	var blockDefinition = blockMorph.definition;
 
-	// if is not a custom blockDefinition - open as viewer
-	// if (!(block instanceof CustomCommandBlockMorph || block instanceof CustomReporterBlockMorph)) {
-	if ((!(blockDefinition instanceof CustomBlockDefinition)) || (blockMorph.children.length > 1) ) {
-		SnapStudy.openViewer(inCode, blockDefinition);
+	// if is not a custom blockDefinition or is a script - open as viewer
+	if ((!(blockDefinition instanceof CustomBlockDefinition)) || (blockMorph.nextBlock()) ) {
+		SnapStudy.openViewer(inCode, blockMorph);
 		return;
 	}
 
