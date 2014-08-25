@@ -66,9 +66,26 @@ SnapStudy.TextInteraction = function(interactionType, code) {
 	});
 }
 
-SnapStudy.openViewer = function(inCode) {
-	// hide function structure
-	$('.function-structure').hide();
+SnapStudy.openViewer = function(inCode, blockMorph) {
+	var blockDefinition = blockMorph.definition;
+
+	// if viewing a custom block - show the function header, else hide it
+	if (blockDefinition instanceof CustomBlockDefinition && blockMorph.children.length < 2) {
+		// show function structure
+		$('.function-structure').show();
+
+		// populate function name
+		$('#function-name').empty().append(blockDefinition.helpSpec());
+		
+		// populate function args
+		var args_list = [];
+		$.each(blockDefinition.inputNames(), function (ind, name) {
+			args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
+		});
+		$('#arg-list').empty().append(args_list.join(", "));
+	} else {
+		$('.function-structure').hide();
+	}
 
 	myCodeMirror.setOption('readOnly', true);
 	myCodeMirror.setOption('cursorBlinkRate', -1);
@@ -77,11 +94,13 @@ SnapStudy.openViewer = function(inCode) {
 	SnapStudy.TextInteraction('read', inCode);
 }
 
-SnapStudy.openEditor = function(inCode, blockDefinition) {
+SnapStudy.openEditor = function(inCode, blockMorph) {
+	var blockDefinition = blockMorph.definition;
+
 	// if is not a custom blockDefinition - open as viewer
 	// if (!(block instanceof CustomCommandBlockMorph || block instanceof CustomReporterBlockMorph)) {
-	if (!(blockDefinition instanceof CustomBlockDefinition)) {
-		SnapStudy.openViewer(inCode);
+	if ((!(blockDefinition instanceof CustomBlockDefinition)) || (blockMorph.children.length > 1) ) {
+		SnapStudy.openViewer(inCode, blockDefinition);
 		return;
 	}
 

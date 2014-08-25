@@ -1863,6 +1863,10 @@ BlockEditorMorph.prototype.updateDefinition = function () {
     this.definition.body = this.context(head);
     this.refreshAllBlockInstances();
 
+    if (SnapStudy.getCondition() == 'graph_read' && this.definition.body){
+        this.definition.codeMapping = this.definition.body.expression.mappedCode();
+    }
+
     ide = this.target.parentThatIsA(IDE_Morph);
     ide.flushPaletteCache();
     ide.refreshPalette();

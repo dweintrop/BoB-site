@@ -1067,6 +1067,7 @@ var JSHINT = (function () {
 
             // If smarttabs option is used check for spaces followed by tabs only.
             // Otherwise check for any occurence of mixed tabs and spaces.
+/*            
             if (option.smarttabs)
                 at = s.search(/ \t/);
             else
@@ -1074,7 +1075,7 @@ var JSHINT = (function () {
 
             if (at >= 0)
                 warningAt("Mixed spaces and tabs.", line, at + 1);
-
+*/
             s = s.replace(/\t/g, tab);
             at = s.search(cx);
 

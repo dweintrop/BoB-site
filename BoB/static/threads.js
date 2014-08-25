@@ -140,7 +140,7 @@ ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
     //   when I recieve thread runs as we will have already recorded the state on the inital broadcast
     //   read/write code blocks as those are recorded elsewhere
     if (block.blockSpec.indexOf("when I receive") == -1 && 
-        block.blockSpec.indexOf("write code for") == -1 &&
+        block.blockSpec.indexOf("edit code of") == -1 &&
         block.blockSpec.indexOf("when I start as a clone") == -1 &&
         block.blockSpec.indexOf("see code of") == -1 ){
         SnapStudy.SnapRun(world.children[0],'threadStart');
@@ -2703,7 +2703,7 @@ Process.prototype.reportMappedCmd = function (aContext) {
     if (aContext instanceof Context) {
         if (aContext.expression instanceof SyntaxElementMorph) {
             var mappedCode = aContext.expression.mappedCode();
-            SnapStudy.openViewer(mappedCode);
+            SnapStudy.openViewer(mappedCode, aContext.expression);
             return mappedCode;
         }
     }
@@ -2718,7 +2718,7 @@ Process.prototype.writeMappedCmd = function (aContext) {
     if (aContext instanceof Context) {
         if (aContext.expression instanceof SyntaxElementMorph) {
             var mappedCode = aContext.expression.mappedCode();
-            var newMappedCode = SnapStudy.openEditor(mappedCode, aContext.expression.definition);
+            var newMappedCode = SnapStudy.openEditor(mappedCode, aContext.expression);
             return newMappedCode;
         }
     }

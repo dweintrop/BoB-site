@@ -1186,7 +1186,7 @@ SpriteMorph.prototype.initBlocks = function () {
         writeMappedCmd: { // experimental
             type: 'reporter',
             category: 'other',
-            spec: 'write code for %cmdRing'
+            spec: 'edit code of %cmdRing'
         },        
         reportMappedRep: { // experimental
             type: 'reporter',
@@ -1196,7 +1196,7 @@ SpriteMorph.prototype.initBlocks = function () {
         writeMappedRep: { // experimental
             type: 'reporter',
             category: 'other',
-            spec: 'write code for %repRing'
+            spec: 'edit code of %repRing'
         }
     };
 };

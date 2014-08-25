@@ -2441,9 +2441,9 @@ BlockMorph.prototype.mapToHeader = function () {
 
 BlockMorph.prototype.launchJSWindow = function() {
     if (SnapStudy.getCondition() == "graph_read") {
-        SnapStudy.openViewer(this.mappedCode());
+        SnapStudy.openViewer(this.mappedCode(), this);
     } else if (SnapStudy.getCondition() == "graph_write") {
-        SnapStudy.openEditor(this.mappedCode(), this.definition);
+        SnapStudy.openEditor(this.mappedCode(), this);
     } 
 }
 
