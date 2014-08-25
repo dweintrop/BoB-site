@@ -2762,6 +2762,11 @@ SpriteMorph.prototype.removeClone = function () {
 SpriteMorph.prototype.setColor = function (aColor) {
     var x = this.xPosition(),
         y = this.yPosition();
+
+    // if called from text - convert text to Color object    
+    if (typeof aColor === 'string') {
+        aColor = eval(aColor.replace('rgba', 'new Color'));
+    }
     if (!this.color.eq(aColor)) {
         this.color = aColor;
         this.drawNew();
@@ -4363,7 +4368,7 @@ StageMorph.prototype.codeMappings = {
     down: "this.down();",
     up: "this.up();",
     // not sure how to do pallete as text input
-    // setColor: 
+    setColor: "this.setColor('<#1>');",
     changeHue: "this.changeHue(<#1>);",
     setHue: "this.setHue(<#1>);",
     changeBrightness: "this.changeBrightness(<#1>);",
