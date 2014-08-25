@@ -4243,6 +4243,7 @@ SpriteMorph.prototype.playNote = function(note, sec) { this.getProcess().doPlayN
 SpriteMorph.prototype.changeTempo = function(tmp) { this.getStage().changeTempo(tmp);}
 SpriteMorph.prototype.setTempo = function(tmp) { this.getStage().setTempo(tmp);}
 SpriteMorph.prototype.getTempo = function() { return this.getStage().getTempo();}
+SpriteMorph.prototype.stamp = function() { return this.doStamp();}
 
 // function to make it possible to call one custom function from another (also makes recursion possible)
 SpriteMorph.prototype.callFunction = function(name, args) {
@@ -4367,15 +4368,14 @@ StageMorph.prototype.codeMappings = {
     clear: "this.clear();",
     down: "this.down();",
     up: "this.up();",
-    // not sure how to do pallete as text input
     setColor: "this.setColor('<#1>');",
     changeHue: "this.changeHue(<#1>);",
     setHue: "this.setHue(<#1>);",
     changeBrightness: "this.changeBrightness(<#1>);",
     setBrightness: "this.setBrightness(<#1>);",
     changeSize: "this.changeSize(<#1>);",
-    setSize: "this.changeSize(<#1>);",
-    doStamp: "this.doStamp();",
+    setSize: "this.setSize(<#1>);",
+    doStamp: "this.stamp();",
     
 // Control
     /* I'm not yet sure what the code for these should look like - since you can't put them inside the code of block
