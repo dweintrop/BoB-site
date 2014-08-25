@@ -1822,7 +1822,7 @@ BlockEditorMorph.prototype.refreshAllBlockInstances = function () {
 
 BlockEditorMorph.prototype.writeJS = function () {
     this.updateDefinition();
-    SnapStudy.openEditor(this.definition.codeMapping, this.definition);
+    SnapStudy.openEditor(this.definition.codeMapping || "", this);
     this.close();
 }
 

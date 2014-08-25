@@ -98,7 +98,7 @@ SnapStudy.openEditor = function(inCode, blockMorph) {
 	var blockDefinition = blockMorph.definition;
 
 	// if is not a custom blockDefinition or is a script - open as viewer
-	if ((!(blockDefinition instanceof CustomBlockDefinition)) || (blockMorph.nextBlock()) ) {
+	if ((!(blockDefinition instanceof CustomBlockDefinition)) || (blockMorph.nextBlock && blockMorph.nextBlock()) ) {
 		SnapStudy.openViewer(inCode, blockMorph);
 		return;
 	}
