@@ -15,6 +15,7 @@
 	
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
+
 	<!--
 		<script src="http://localhost/~dweintrop/jquery.min.js"></script>
     <script src="http://localhost/~dweintrop/jquery-ui.min.js"></script> 
@@ -38,7 +39,7 @@
 		    padding-top: 31px;
 			}
 
-			.input-label{
+			.input-label, h3{
 		    color: #006600;
 		    font: 18px Georgia,"Times New Roman",Times,serif;
 		    letter-spacing: 1px;
@@ -103,6 +104,25 @@
 				font-size: 16px;
 			}
 
+			.form_list{ 
+				background-color: #fff;border: 1px solid #006600;
+		    border-radius: 4px;
+		    color: #006600;
+		    font-family: sans-serif;
+		    font-size: 12pt;
+		    margin: 9px;
+		    padding: 7px;"
+		  }
+
+			a:link, a:visited, a:hover, a:active {
+			    color: #006600;
+			    cursor: pointer;
+			    text-decoration: none;
+			}
+			a:hover {
+				text-decoration: underline;	
+			}
+
 		</style>
 
 <script type="text/javascript">
@@ -111,13 +131,19 @@
       $("select").selectBoxIt({
       	autoWidth: false
       });
+
+      $( "#student_surveys" ).accordion({
+				collapsible: true,
+				active: false,
+				activate: function( event, ui) {
+					$('#survey-arrow').html( $('#survey-arrow').html() == '►' ? '▼' : '►');
+					}
+			});
     });
 </script>
 
 	</head>
 	<body style="margin: 0;">
-
-
 		<div class="page">
 			<div style="display:none;">
 			  {% if form.errors %}
@@ -152,6 +178,15 @@
 					<div class="input-label project-radio">{{form.project_choice}}</div>
 					
 					<input class="submit-button" type="submit" value="Let's Go ►"/>
+
+					<div id="student_surveys" style="line-height:18pt">
+						<h3 style="cursor:pointer; margin-bottom: 0; padding: 0;"><span id="survey-arrow" style="font-size:16px;">►</span>&nbsp;Student Online Forms</h3>
+						<div class="form_list">
+							<a href="https://docs.google.com/forms/d/1s-yF3hoWAOJkWaCfu2i2deg4ljxPvvSjorifU-TA7B8/viewform" target="_blank"> Student Questionnaire</a> <br/>							
+							<a href="#" target="_blank"> CS Content Questions</a> <br/>
+						</div>
+					</div>
+
 				</form>
 				
 				<!-- 
