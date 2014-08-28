@@ -4316,7 +4316,7 @@ StageMorph.prototype.codeMappings = {
     forward: "this.forward(<#1>);",
     turn: "this.turnRight(<#1>);",
     turnLeft: "this.turnLeft(<#1>);",
-    setHeading: "this.setHeading(parseFloat(<#1>));",
+    setHeading: "this.setHeading(<#1>);",
     gotoXY: "this.gotoXY(<#1>, <#2>);",
     doGlide: "this.glide(<#1>, <#2>, <#3>);",
     changeXPosition: "this.changeXPosition(<#1>);",
