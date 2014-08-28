@@ -4222,10 +4222,6 @@ SpriteMorph.prototype.getProcess = function() {
 SpriteMorph.prototype.turnRight = function(degrees) { this.turn(degrees);}
 SpriteMorph.prototype.turnLeft = function (degrees) { this.setHeading(this.heading - (+degrees || 0)); }
 SpriteMorph.prototype.glide = function(a, b, c) { this.getProcess().doGlide(a, b, c); }
-SpriteMorph.prototype.changeXPosition = function (a){ this.gotoXY(this.xPosition() + a, this.yPosition()); }
-SpriteMorph.prototype.setXPosition = function (a){ this.gotoXY(a, this.yPosition()); }
-SpriteMorph.prototype.changeYPosition = function (a){ this.gotoXY(this.xPosition(), this.yPosition() + a); }
-SpriteMorph.prototype.setYPosition = function (a){ this.gotoXY(this.xPosition(), a); }
 SpriteMorph.prototype.faceTowards = function (a){ this.getProcess().doFaceTowards(a); }
 SpriteMorph.prototype.gotoObject = function (a){ this.getProcess().doGotoObject(a); }
 SpriteMorph.prototype.switchToCostume = function(a){ this.wearCostume(this.getCostumeByName(a));}
@@ -4323,10 +4319,10 @@ StageMorph.prototype.codeMappings = {
     setHeading: "this.setHeading(parseFloat(<#1>));",
     gotoXY: "this.gotoXY(<#1>, <#2>);",
     doGlide: "this.glide(<#1>, <#2>, <#3>);",
-    changeXPosition: "this.gotoXY(this.xPosition() + <#1>, this.yPosition());",
-    setXPosition: "this.gotoXY(<#1>, this.yPosition());",
-    changeYPosition: "this.gotoXY(this.xPosition(), this.yPosition() + <#1>);",
-    setYPosition: "this.gotoXY(this.xPosition(), <#1>);",
+    changeXPosition: "this.changeXPosition(<#1>);",
+    setXPosition: "this.setXPosition(<#1>);",
+    changeYPosition: "this.changeYPosition(<#1>);",
+    setYPosition: "this.setYPosition(<#1>);",
     bounceOffEdge: "this.bounceOffEdge();",
     xPosition: "this.xPosition()",
     yPosition: "this.yPosition()",
