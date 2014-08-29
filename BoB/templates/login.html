@@ -135,7 +135,7 @@
       $( "#student_surveys" ).accordion({
 				collapsible: true,
 				active: false,
-				activate: function( event, ui) {
+				beforeActivate: function( event, ui) {
 					$('#survey-arrow').html( $('#survey-arrow').html() == '►' ? '▼' : '►');
 					}
 			});
@@ -183,7 +183,7 @@
 						<h3 style="cursor:pointer; margin-bottom: 0; padding: 0;"><span id="survey-arrow" style="font-size:16px;">►</span>&nbsp;Student Online Forms</h3>
 						<div class="form_list">
 							<a href="https://docs.google.com/forms/d/1s-yF3hoWAOJkWaCfu2i2deg4ljxPvvSjorifU-TA7B8/viewform" target="_blank"> Student Questionnaire</a> <br/>							
-							<a href="#" target="_blank"> CS Content Questions</a> <br/>
+							<a href="https://docs.google.com/a/u.northwestern.edu/forms/d/1Ch36OAeRWRgt6nSzYjWC1bB0a6G6YtZHRdfJPp6qM0k/viewform" target="_blank"> Programming Concepts Questions</a> <br/>
 						</div>
 					</div>
 
