@@ -3,7 +3,7 @@ from django import forms
 class LoginForm(forms.Form):
 		def __init__(self, *args, **kwargs):
 			super(LoginForm, self).__init__(*args, **kwargs)
-			self.fields['class_period'] = forms.ChoiceField(choices = [ ('graph_read', 'Mr. Law - Period 5'), ('graph_write', 'Mrs. Roscoe - Period 7'), ('graph', 'Mrs. Roscoe - Period 8')])
+			self.fields['class_period'] = forms.ChoiceField(choices = [ ('', 'Sections'), ('graph_read', 'Mr. Law - Period 5'), ('graph_write', 'Mrs. Roscoe - Period 7'), ('graph', 'Mrs. Roscoe - Period 8')])
 			self.fields['class_period'].widget.attrs['class'] = 'selectBoxIt'
 			# self.fields['project_choice'] = forms.ChoiceField(choices = [('new', 'New Project'), ('continue', 'Resume Project')])
 			self.fields['project_choice'].widget.attrs['class'] = 'radio'

@@ -127,6 +127,13 @@
 
 <script type="text/javascript">
 
+	function validate() {
+		if (!$('#student_id').val()) {
+			alert('Please select your name from the Student dropdown,\nor select "I\'m not listed" then enter your ID.');
+			return false;
+		}
+	}
+
 	var data = { 
         graph: [
 	        {name: "Student 1", id:"1"},
@@ -134,9 +141,41 @@
 	        {name: "Student 3", id:"3"}
 	        ], 
         graph_read: [
-	        {name: "Student 4", id:"4"},
-	        {name: "Student 5", id:"5"},
-	        {name: "Student 6", id:"6"}
+			{id:"13", name: "Mr. Law"},
+			{id:"11", name: "Mr. Weintrop"},
+			{id:"43443038", name: "Beltran, Anthony"},
+			{id:"43342657", name: "Birova, Maria"},
+			{id:"42708763", name: "Castro, Jonathan"},
+			{id:"42692239", name: "Cuevas, Angela"},
+			{id:"43029584", name: "Domingo, Thomas"},
+			{id:"50088771", name: "Forte, Ethan"},
+			{id:"42591017", name: "Guerrero, Christopher"},
+			{id:"44023679", name: "Gulizia-Cowing, Benjamin"},
+			{id:"42708666", name: "Haidari, Aman"},
+			{id:"42300705", name: "Henderson, Caresse"},
+			{id:"43381474", name: "Hernandez, Leslie"},
+			{id:"50295250", name: "Hubbell, Fox"},
+			{id:"43038729", name: "Keeling, Justin"},
+			{id:"43301659", name: "Keshk, Omar"},
+			{id:"41714875", name: "Klima, Nicol"},
+			{id:"42758663", name: "Liberto, Thomas"},
+			{id:"40008713", name: "Lopez, Cynthia"},
+			{id:"43295853", name: "Morales, Elliott"},
+			{id:"43032453", name: "Munoz, Marco"},
+			{id:"44635267", name: "Murphy, Charlie"},
+			{id:"41410833", name: "Pagan, Adam"},
+			{id:"50398286", name: "Rice, Tiarnan"},
+			{id:"42396613", name: "Rula, Konrad"},
+			{id:"43390872", name: "Sanchez, Jorge"},
+			{id:"42158828", name: "Tallen, Joseph"},
+			{id:"50313523", name: "Timoteo, Gaudwin"},
+			{id:"41092777", name: "Torres, Tony"},
+			{id:"43347519", name: "Tran, Vincent"},
+			{id:"42368822", name: "Trinidad, Rafael"},
+			{id:"42653276", name: "Uvena, Sofia"},
+			{id:"43308009", name: "Vega, Andrea"},
+			{id:"43315188", name: "Young, Kyra"},
+			{id:"41498315", name: "Zapatero, Erick"}
 	        ], 
         graph_write: [
 	        {name: "Student 7", id:"7"},
@@ -144,8 +183,6 @@
 	        {name: "Student 9", id:"9"}
 	        ] 
     };      
-
-    var student_data = Object.keys(data);
 
     $(function() {
 	    //Calls the selectBoxIt method on your HTML select box.
@@ -164,23 +201,32 @@
 		$("#id_class_period").change(function(){
             var period = $(this).val();
 
-            // clear/initialize student dropdowns
-            var student_dropdown_data = $("#student_dropdown").data("selectBox-selectBoxIt");
-            var pair_dropdown_data = $("#pair_dropdown").data("selectBox-selectBoxIt");
+            var student_dropdown = $("#student_dropdown").data("selectBox-selectBoxIt");
+            var pair_dropdown = $("#pair_dropdown").data("selectBox-selectBoxIt");
 
-            student_dropdown_data.remove();
-        	student_dropdown_data.add({ value: '0', text: 'Select Name'});
-            
-            pair_dropdown_data.remove();
-        	pair_dropdown_data.add({ value: '0', text: 'Select Pair\'s Name'});
-
-            for (var i = 0; i < data[period].length; i++) {
-            	student_dropdown_data.add({ value: data[period][i].id, text: data[period][i].name });
-            	pair_dropdown_data.add({ value: data[period][i].id, text: data[period][i].name });
+            if (period != '') {
+            	student_dropdown.enable();
+            	pair_dropdown.enable();
+            } else {
+            	student_dropdown.disable();
+            	pair_dropdown.disable(); 
+            	return;           	
             }
 
-        	student_dropdown_data.add({ value: '', text: 'Other'});
-        	pair_dropdown_data.add({ value: '', text: 'Other'});
+            // clear/initialize student dropdowns
+            student_dropdown.remove();
+        	student_dropdown.add({ value: '0', text: 'Select Name'});
+            
+            pair_dropdown.remove();
+        	pair_dropdown.add({ value: '0', text: 'Select Pair\'s Name'});
+
+            for (var i = 0; i < data[period].length; i++) {
+            	student_dropdown.add({ value: data[period][i].id, text: data[period][i].name });
+            	pair_dropdown.add({ value: data[period][i].id, text: data[period][i].name });
+            }
+
+        	student_dropdown.add({ value: '', text: 'I\'m not listed'});
+        	pair_dropdown.add({ value: '', text: 'I\'m not listed'});
         });
 
         $("#student_dropdown").change(function() {
@@ -221,8 +267,8 @@
 					<div class="input-label">Programming I Section: {{form.class_period}}</div>
 
 					<div class="input-label">Student:
-			            <select class="selectBoxIt" id="student_dropdown" name="student_dropdown" class="form-control">
-			            	<option>Select Section</option>
+			            <select class="selectBoxIt" id="student_dropdown" name="student_dropdown" class="form-control" disabled>
+			            	<option>Please Select Section</option>
 			            </select>
 
 						<div id="studentId-div" style="margin-left: 47px;margin-top: 11px;display:none;">
@@ -236,8 +282,8 @@
 			        </div>
 
 					<div class="input-label">Pair:
-			            <select class="selectBoxIt" id="pair_dropdown" name="pair_dropdown" class="form-control">
-			            	<option>Select Section</option>
+			            <select class="selectBoxIt" id="pair_dropdown" name="pair_dropdown" class="form-control" disabled>
+			            	<option>Please Select Section</option>
 			            </select>
 
 				        <div id="pairId-div" style="margin-left: 13px;margin-top: 11px;display:none;">
@@ -247,7 +293,7 @@
 
 					<div class="input-label project-radio">{{form.project_choice}}</div>
 					
-					<input class="submit-button" type="submit" value="Let's Go ►"/>
+					<input onclick="return validate();"class="submit-button" type="submit" value="Let's Go ►"/>
 
 					<div id="student_surveys" style="line-height:18pt">
 						<h3 style="cursor:pointer; margin-bottom: 0; padding: 0;"><span id="survey-arrow" style="font-size:16px;">►</span>&nbsp;Student Online Forms</h3>

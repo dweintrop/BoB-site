@@ -13,7 +13,7 @@
 .selectboxit-container {
   position: relative;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 /* Styles that apply to all SelectBoxIt elements */
