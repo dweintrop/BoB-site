@@ -2044,10 +2044,11 @@ BlockMorph.prototype.userMenu = function () {
                 // );
             if (SnapStudy.getCondition() != 'graph') {
                 menu.addLine();
-                menu.addItem(
-                    'view/edit code',
-                    'launchJSWindow'
-                );
+                if (SnapStudy.getCondition() == 'graph_read') {
+                    menu.addItem('view code', 'launchJSWindow');
+                } else {
+                    menu.addItem('view/edit code', 'launchJSWindow');
+                }
             }
             // }
         }
@@ -2144,10 +2145,12 @@ BlockMorph.prototype.userMenu = function () {
         // );
     if (SnapStudy.getCondition() != 'graph') {
         menu.addLine();
-        menu.addItem(
-            'view/edit code',
-            'launchJSWindow'
-        );
+        if (SnapStudy.getCondition() == 'graph_read') {
+            menu.addItem('view code', 'launchJSWindow');
+        } else {
+            menu.addItem('view/edit code', 'launchJSWindow');
+        }
+
     }
     // }
     return menu;
