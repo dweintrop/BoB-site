@@ -1998,10 +1998,10 @@ loop:   for (;;) {
                 left = token.nud();
             } else {
                 if (nexttoken.type === '(number)' && token.id === '.') {
-                    warning("A leading decimal point can be confused with a dot: '.{a}'.",
-                            token, nexttoken.value);
+                    // warning("A leading decimal point can be confused with a dot: '.{a}'.",
+                    //         token, nexttoken.value);
                     advance();
-                    return token;
+                    // return token;
                 } else {
                     error("Expected an identifier and instead saw '{a}'.",
                             token, token.id);
