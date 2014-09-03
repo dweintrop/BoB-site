@@ -1016,7 +1016,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTextSplit: {
             type: 'reporter',
             category: 'operators',
-            spec: 'split %s by %delim',
+            spec: 'split %s by %s',
             defaults: [localize('hello') + ' ' + localize('world'), " "]
         },
         
@@ -4253,9 +4253,6 @@ SpriteMorph.prototype.isTurboModeOn = function() {return this.getProcess().repor
 SpriteMorph.prototype.setTurboMode = function(spd) {this.getProcess().doSetFastTracking(spd);}
 SpriteMorph.prototype.getDate = function(attr) {return this.getProcess().reportDate(attr);}
 
-SpriteMorph.prototype.joinWords = function(wrds) {return this.getProcess().reportJoinWords(wrds);}
-SpriteMorph.prototype.split = function(wrd, by) {return this.getProcess().reportTextSplit(wrd, by);}
-SpriteMorph.prototype.getLetter = function(indx, wrd) {return this.getProcess().reportLetter(ind, wrd);}
 SpriteMorph.prototype.isA = function(a, b) {return this.getProcess().reportIsA(a, b)}
 
 // function to make it possible to call one custom function from another (also makes recursion possible)
@@ -4462,9 +4459,9 @@ StageMorph.prototype.codeMappings = {
     reportTrue: "true",
     reportFalse: "false",
     // reportJoinWords: "(<#1>, <#2>)",
-    reportJoinWords: "this.joinWords(<#1>)",
-    reportTextSplit: "this.split(<#1>, <#2>)",
-    reportLetter: "this.getLetter(<#1>, <#2>)",
+    reportJoinWords: "[<#1>].join('')",
+    reportTextSplit: "new List(<#1>.split(<#2>))",
+    reportLetter: "<#2>[<#1> - 1]",
     reportStringSize: "(<#1>.length)",
     reportIsA: "this.isA(<#1>, '<#2>')",
     reportIsIdentical: "<#1> === <#2>",
@@ -4480,7 +4477,7 @@ StageMorph.prototype.codeMappings = {
     // Lists
     reportNewList: "[<#1>]",
     reportListItem: "<#2>[<#1> - 1]",
-    reportListLength: "(<#1>.length)",
+    reportListLength: "<#1>.length",
     doAddToList: "<#2>.push(<#1>);",
     reportCONS: "new List().cons(<#1>, <#2>)",
     reportCDR: "<#1>.cdr()",
