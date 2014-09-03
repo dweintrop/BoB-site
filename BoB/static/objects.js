@@ -4430,7 +4430,7 @@ StageMorph.prototype.codeMappings = {
     reportMouseX: "this.getMouseX()",
     reportMouseY: "this.getMouseY()",
     reportMouseDown: "this.isMouseDown()",
-    reportKeyPressed: "this.isKeyPressed(<#1>)",
+    reportKeyPressed: "this.isKeyPressed('<#1>')",
     reportDistanceTo: "this.getDistanceTo(<#1>)",
     doResetTimer: "this.resetTimer();",
     reportTimer: "this.getTimer()",
