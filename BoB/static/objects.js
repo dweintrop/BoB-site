@@ -4237,7 +4237,7 @@ SpriteMorph.prototype.stopThis = function(thrd) {this.getProcess().doStopThis(th
 SpriteMorph.prototype.stopOthers = function(thrd) {this.getProcess().doStopOthers(thrd);}
 SpriteMorph.prototype.warp = function(thrd) {this.getProcess().doWarp(thrd);}
 
-SpriteMorph.prototype.isTouching = function(obj) {return this.getProcess().objectTouchingObject(this, obj);}
+SpriteMorph.prototype.isTouchingObject = function(obj) {return this.getProcess().objectTouchingObject(this, obj);}
 SpriteMorph.prototype.isTouchingColor = function(clr) {return this.getProcess().reportTouchingColor(this, clr);}
 SpriteMorph.prototype.istColorTouchingColor = function(clr1, clr2) {this.getProcess().reportColorIsTouchingColor(clr1, clr2);}
 SpriteMorph.prototype.ask = function(question) {this.getProcess().doAsk(question);}
@@ -4422,7 +4422,7 @@ StageMorph.prototype.codeMappings = {
     removeClone: "this.removeClone();",
 
 // Sensing
-    reportTouchingObject: "this.isTouching(<#1>)",
+    reportTouchingObject: "this.isTouchingObject(<#1>)",
     reportTouchingColor: "this.isTouchingColor(<#1>)",
     reportColorIsTouchingColor: "this.istColorTouchingColor(<#1>, <#2>)",
     doAsk: "this.ask(<#1>);",
