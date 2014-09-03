@@ -2423,6 +2423,10 @@ Process.prototype.reportTouchingColor = function (aColor) {
     var thisObj = this.homeContext.receiver,
         stage;
 
+    if (typeof aColor === 'string') {
+        aColor = eval(aColor.replace('rgba', 'new Color'));
+    }  
+
     if (thisObj) {
         stage = thisObj.parentThatIsA(StageMorph);
         if (stage) {
@@ -2443,6 +2447,13 @@ Process.prototype.reportColorIsTouchingColor = function (color1, color2) {
     // also check for any parts (subsprites)
     var thisObj = this.homeContext.receiver,
         stage;
+
+    if (typeof color1 === 'string') {
+        color1 = eval(color1.replace('rgba', 'new Color'));
+    }    
+    if (typeof color2 === 'string') {
+        color2 = eval(color2.replace('rgba', 'new Color'));
+    }
 
     if (thisObj) {
         stage = thisObj.parentThatIsA(StageMorph);

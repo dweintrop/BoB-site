@@ -4238,8 +4238,8 @@ SpriteMorph.prototype.stopOthers = function(thrd) {this.getProcess().doStopOther
 SpriteMorph.prototype.warp = function(thrd) {this.getProcess().doWarp(thrd);}
 
 SpriteMorph.prototype.isTouchingObject = function(obj) {return this.getProcess().objectTouchingObject(this, obj);}
-SpriteMorph.prototype.isTouchingColor = function(clr) {return this.getProcess().reportTouchingColor(this, clr);}
-SpriteMorph.prototype.istColorTouchingColor = function(clr1, clr2) {this.getProcess().reportColorIsTouchingColor(clr1, clr2);}
+SpriteMorph.prototype.isTouchingColor = function(clr) {return this.getProcess().reportTouchingColor(clr);}
+SpriteMorph.prototype.isColorTouchingColor = function(clr1, clr2) {return this.getProcess().reportColorIsTouchingColor(clr1, clr2);}
 SpriteMorph.prototype.ask = function(question) {this.getProcess().doAsk(question);}
 SpriteMorph.prototype.getMouseX = function() {return this.reportMouseX();}
 SpriteMorph.prototype.getMouseY = function() {return this.reportMouseY();}
@@ -4256,7 +4256,7 @@ SpriteMorph.prototype.getDate = function(attr) {return this.getProcess().reportD
 SpriteMorph.prototype.joinWords = function(wrds) {return this.getProcess().reportJoinWords(wrds);}
 SpriteMorph.prototype.split = function(wrd, by) {return this.getProcess().reportTextSplit(wrd, by);}
 SpriteMorph.prototype.getLetter = function(indx, wrd) {return this.getProcess().reportLetter(ind, wrd);}
-SpriteMorph.prototype.isA = function(a, b) {this.getProcess().reportIsA(a, b)}
+SpriteMorph.prototype.isA = function(a, b) {return this.getProcess().reportIsA(a, b)}
 
 // function to make it possible to call one custom function from another (also makes recursion possible)
 SpriteMorph.prototype.callFunction = function(name, args) {
@@ -4423,8 +4423,8 @@ StageMorph.prototype.codeMappings = {
 
 // Sensing
     reportTouchingObject: "this.isTouchingObject(<#1>)",
-    reportTouchingColor: "this.isTouchingColor(<#1>)",
-    reportColorIsTouchingColor: "this.istColorTouchingColor(<#1>, <#2>)",
+    reportTouchingColor: "this.isTouchingColor('<#1>')",
+    reportColorIsTouchingColor: "this.isColorTouchingColor('<#1>', '<#2>')",
     doAsk: "this.ask(<#1>);",
     getLastAnswer: "this.getLastAnswer()",
     reportMouseX: "this.getMouseX()",
