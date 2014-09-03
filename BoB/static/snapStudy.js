@@ -83,6 +83,31 @@ SnapStudy.openViewer = function(inCode, blockMorph) {
 			args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
 		});
 		$('#arg-list').empty().append(args_list.join(", "));
+	} else if (blockMorph instanceof HatBlockMorph) {
+		// show function structure
+		$('.function-structure').show();
+		$('#arg-list').empty();
+
+		var functionName = "Event";
+		switch (blockMorph.selector) {
+			case "receiveGo":
+				functionName = "whenGreenFlagClicked";
+				break;
+			case "receiveKey":
+				functionName = "whenKeyPressed";
+				break;
+			case "receiveClick":
+				functionName = "whenIamClicked";
+				break;
+			case "receiveMessage":
+				functionName = "whenMessageReceived";
+				break;
+		}
+			
+		// chop off leading \n that comes from not having hatBlock defined
+		inCode = inCode.substr(1)
+		// populate function name
+		$('#function-name').empty().append(functionName);
 	} else {
 		$('.function-structure').hide();
 	}

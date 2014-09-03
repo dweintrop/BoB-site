@@ -2129,20 +2129,21 @@ BlockMorph.prototype.userMenu = function () {
         menu.addItem("ringify", 'ringify');
         return menu;
     }
-    if (this.parent instanceof ReporterSlotMorph
+
+    if (!(this.parent instanceof ReporterSlotMorph
             || (this.parent instanceof CommandSlotMorph)
             || (this instanceof HatBlockMorph)
             || (this instanceof CommandBlockMorph
-                && (this.topBlock() instanceof HatBlockMorph))) {
-        return menu;
+                && (this.topBlock() instanceof HatBlockMorph)))) {
+        menu.addLine();
+        menu.addItem("ringify", 'ringify');
     }
-    menu.addLine();
-    menu.addItem("ringify", 'ringify');
     // if (StageMorph.prototype.enableCodeMapping) {
         // menu.addItem(
         //     'header mapping...',
         //     'mapToHeader'
         // );
+
     if (SnapStudy.getCondition() != 'graph') {
         menu.addLine();
         if (SnapStudy.getCondition() == 'graph_read') {

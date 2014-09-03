@@ -4388,7 +4388,8 @@ StageMorph.prototype.codeMappings = {
     doStamp: "this.stamp();",
     
 // Control
-    /* I'm not yet sure what the code for these should look like - since you can't put them inside the code of block
+    receiveGo: "",
+    /* These are handled specially in SnapStudy's openViewer method
     receiveGo: "this.getStage().fireGreenFlagEvent();",
     receiveKey: "this.allHatBlocksForKey(<#1>);",
     receiveClick: 
