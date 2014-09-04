@@ -10066,6 +10066,17 @@ WorldMorph.prototype.doOneCycle = function () {
 };
 
 WorldMorph.prototype.fillPage = function () {
+
+    var ctx = this.worldCanvas.getContext("2d"),
+        dpr = window.devicePixelRatio || 1,
+        bsr = ctx.webkitBackingStorePixelRatio ||
+              ctx.mozBackingStorePixelRatio ||
+              ctx.msBackingStorePixelRatio ||
+              ctx.oBackingStorePixelRatio ||
+              ctx.backingStorePixelRatio || 1;
+
+     var PIXEL_RATIO =  dpr / bsr;
+
     var pos = getDocumentPositionOf(this.worldCanvas),
         clientHeight = window.innerHeight,
         clientWidth = window.innerWidth,
@@ -10090,14 +10101,24 @@ WorldMorph.prototype.fillPage = function () {
         // scrolled left b/c of viewport scaling
         clientWidth = document.documentElement.clientWidth;
     }
+    
+
     if (this.worldCanvas.width !== clientWidth) {
-        this.worldCanvas.width = clientWidth;
         this.setWidth(clientWidth);
+
+        this.worldCanvas.width = clientWidth * PIXEL_RATIO;
+        this.worldCanvas.style.width = clientWidth + "px";
+        
     }
     if (this.worldCanvas.height !== clientHeight) {
-        this.worldCanvas.height = clientHeight;
         this.setHeight(clientHeight);
+
+        this.worldCanvas.height = clientHeight * PIXEL_RATIO;
+        this.worldCanvas.style.height = clientHeight + "px";
     }
+
+    this.worldCanvas.getContext("2d").scale(PIXEL_RATIO, PIXEL_RATIO);
+
     this.children.forEach(function (child) {
         if (child.reactToWorldResize) {
             child.reactToWorldResize(myself.bounds.copy());
