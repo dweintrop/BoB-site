@@ -4252,6 +4252,8 @@ SpriteMorph.prototype.getURL = function(url) {return this.getProcess().reportURL
 SpriteMorph.prototype.isTurboModeOn = function() {return this.getProcess().reportIsFastTracking();}
 SpriteMorph.prototype.setTurboMode = function(spd) {this.getProcess().doSetFastTracking(spd);}
 SpriteMorph.prototype.getDate = function(attr) {return this.getProcess().reportDate(attr);}
+SpriteMorph.prototype.showVar = function(inVar) {this.getProcess().doShowVar(inVar);}
+SpriteMorph.prototype.hideVar = function(inVar) {this.getProcess().doHideVar(inVar);}
 
 SpriteMorph.prototype.isA = function(a, b) {return this.getProcess().reportIsA(a, b)}
 
@@ -4322,10 +4324,7 @@ StageMorph.prototype.paletteTextColor = SpriteMorph.prototype.paletteTextColor;
 
 StageMorph.prototype.hiddenPrimitives = {};
 
-
-//TODO: fill in all blocks (as best as possible)
 StageMorph.prototype.codeMappings = {
-
 // Motion
     forward: "this.forward(<#1>);",
     turn: "this.turnRight(<#1>);",
@@ -4471,8 +4470,8 @@ StageMorph.prototype.codeMappings = {
 // Variables
     doSetVar: "<#1> = <#2>;",
     doChangeVar: "<#1> += <#2>;",
-    doShowVar: "this.getProcess().doShowVar(<#1>);",
-    doHideVar: "this.getProcess().doHideVar(<#1>);",
+    doShowVar: "this.showVar('<#1>');",
+    doHideVar: "this.hideVar('<#1>');",
     doDeclareVariables: "var <#1>;",
 
     // Lists
