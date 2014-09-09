@@ -4252,6 +4252,11 @@ SpriteMorph.prototype.getURL = function(url) {return this.getProcess().reportURL
 SpriteMorph.prototype.isTurboModeOn = function() {return this.getProcess().reportIsFastTracking();}
 SpriteMorph.prototype.setTurboMode = function(spd) {this.getProcess().doSetFastTracking(spd);}
 SpriteMorph.prototype.getDate = function(attr) {return this.getProcess().reportDate(attr);}
+
+SpriteMorph.prototype.callMathFunc = function(func, arg) {return this.getProcess().reportMonadic(func, arg);}
+SpriteMorph.prototype.getRandom = function(min, max) {return this.getProcess().reportRandom(min, max);}
+    
+
 SpriteMorph.prototype.showVar = function(inVar) {this.getProcess().doShowVar(inVar);}
 SpriteMorph.prototype.hideVar = function(inVar) {this.getProcess().doHideVar(inVar);}
 
@@ -4448,8 +4453,8 @@ StageMorph.prototype.codeMappings = {
     reportQuotient: "(<#1> / <#2>)",
     reportRound: "Math.round(<#1)",
     reportModulus: "(<#1> % <#2>)",
-    reportMonadic: "this.getProcess().reportMonadic('<#1>', <#2>)",
-    reportRandom: "this.getProcess().reportRandom(<#1>, <#2>)",
+    reportMonadic: "this.callMathFunc('<#1>', <#2>)",
+    reportRandom: "this.getRandom(<#1>, <#2>)",
     reportLessThan: "(<#1> < <#2>)",
     reportEquals: "(<#1> == <#2>)",
     reportGreaterThan: "(<#1> > <#2>)",
