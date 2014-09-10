@@ -2705,7 +2705,7 @@ IDE_Morph.prototype.newProject = function () {
     this.sprites = new List([this.currentSprite]);
     StageMorph.prototype.dimensions = new Point(480, 360);
     StageMorph.prototype.hiddenPrimitives = {};
-    StageMorph.prototype.codeMappings = {};
+    StageMorph.prototype.codeMappings = SnapStudy.codeMappings;
     StageMorph.prototype.codeHeaders = {};
     StageMorph.prototype.enableCodeMapping = true;
     SpriteMorph.prototype.useFlatLineEnds = false;
@@ -2921,7 +2921,7 @@ IDE_Morph.prototype.rawOpenProjectString = function (str) {
     this.toggleAppMode(false);
     this.spriteBar.tabBar.tabTo('scripts');
     StageMorph.prototype.hiddenPrimitives = {};
-    StageMorph.prototype.codeMappings = {};
+    StageMorph.prototype.codeMappings = SnapStudy.codeMappings;
     StageMorph.prototype.codeHeaders = {};
     StageMorph.prototype.enableCodeMapping = true;
     if (Process.prototype.isCatchingErrors) {
@@ -2955,7 +2955,7 @@ IDE_Morph.prototype.openCloudDataString = function (str) {
 IDE_Morph.prototype.rawOpenCloudDataString = function (str) {
     var model;
     StageMorph.prototype.hiddenPrimitives = {};
-    StageMorph.prototype.codeMappings = {};
+    StageMorph.prototype.codeMappings = SnapStudy.codeMappings;
     StageMorph.prototype.codeHeaders = {};
     StageMorph.prototype.enableCodeMapping = true;
     if (Process.prototype.isCatchingErrors) {
