@@ -1451,7 +1451,7 @@ SpriteMorph.prototype.toXML = function (serializer) {
     
     if (serializer.scriptsOnly) {
        return serializer.format(
-                '<sprite name="@" idx="@" ' +
+                '<sprite name="@" idx="@" >' +
                     '<variables>%</variables>' +
                     '<blocks>%</blocks>' +
                     '<scripts>%</scripts>' +
