@@ -7,7 +7,7 @@ from oas.models import SnapRun, TextInteraction
 
 class SnapRunAdmin(admin.ModelAdmin):
   list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition', 'NumRuns')
-  list_filter = ('TimeStamp', 'Condition')
+  list_filter = ('TimeStamp', 'Condition', 'StudentID', 'RunType')
   actions = ['export_snapRuns']
 
   def export_snapRuns(studentadmin, request, queryset):
