@@ -10414,6 +10414,7 @@ WorldMorph.prototype.initEventListeners = function () {
     );
 
     window.onbeforeunload = function (evt) {
+        // log project close here even though it might not close
         SnapStudy.SnapRun(world.children[0],'projectClose');
 
         var e = evt || window.event,
