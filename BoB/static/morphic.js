@@ -10414,6 +10414,8 @@ WorldMorph.prototype.initEventListeners = function () {
     );
 
     window.onbeforeunload = function (evt) {
+        SnapStudy.SnapRun(world.children[0],'projectClose');
+
         var e = evt || window.event,
             msg = "Are you sure you want to leave?";
         // For IE and Firefox
@@ -10424,9 +10426,11 @@ WorldMorph.prototype.initEventListeners = function () {
         return msg;
     };    
 
-    window.onunload = function(){
-        SnapStudy.SnapRun(world.children[0],'projectClose');
-    }
+// this doesn't work in Safari - which I'm lucky to be using!
+// so I'm going to log in the onbeforeunload becuase it actually works in safari
+    // window.onunload = function(){
+    //     SnapStudy.SnapRun(world.children[0],'projectClose');
+    // }
 };
 
 WorldMorph.prototype.mouseDownLeft = function () {
