@@ -1023,8 +1023,11 @@ Process.prototype.evaluateCustomBlock = function () {
         upvars,
         outer;
 
-    // if custom block has mapped code (i.e. what written in editor) then run the JS and exit
-    if (this.context.expression.mappedCode()) {
+    // if your'e in the graph_write condition (i.e. you write javascript to define functions)
+    // and the custom block has mapped code (i.e. what written in editor) then run the JS and exit
+
+    // note: figure out a smarter way to decide when to execute js vs. blocks for custom written js blocks
+    if (SnapStudy.getCondition() == 'graph_write' && this.context.expression.mappedCode()) {
         var jsFunc = Function.apply(
             Object.create(Function.prototype),
             this.context.expression.definition.inputNames().concat([this.context.expression.mappedCode()]));
