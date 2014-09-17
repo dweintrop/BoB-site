@@ -57,7 +57,7 @@
 			var myCodeMirror;
 
 			window.onload = function () {
-				world = new WorldMorph(document.getElementById('world'), true); // second arg sets fillPage
+				world = new WorldMorph(document.getElementById('world1'), false); // second arg sets fillPage
                 world.worldCanvas.focus();
 				new IDE_Morph().openIn(world);
 				setInterval(loop, 1);
@@ -105,7 +105,12 @@
 			<div id="cmDiv"></div>
 			<pre class="cm-s-default function-structure" style="margin-bottom:0px;margin-left:9px;margin-top:0px;">}</pre>
     </div>
-		<canvas id="world" tabindex="1" style="position: absolute;z-index:0;" />
+
+			 <canvas id="world1" tabindex="1" width="600" height="400">
+                <p>Your browser doesn't support canvas.</p>
+            </canvas>
+
+		<!-- <canvas id="world" tabindex="1" style="position: absolute;z-index:0;" /> -->
 		{{projectXML}}
   </body>
 </html>

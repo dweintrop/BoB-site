@@ -49,7 +49,7 @@ def snapRun(request):
 			previousRun.save()
 		else:
 			snapRun.save()
-		return HttpResponse('success')
+		return render(request, 'blah.html')
 
 	return HttpResponse('faliure')
 
@@ -78,3 +78,6 @@ def sounds(request):
     return render(request, 'sounds.html')
 def backgrounds(request):
     return render(request, 'backgrounds.html')
+
+def blah(request):
+    return render(request, 'blah.html')
