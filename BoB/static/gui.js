@@ -3363,7 +3363,10 @@ IDE_Morph.prototype.createNewProject = function () {
     this.confirm(
         'Replace the current project with a new one?',
         'New Project',
-        function () {myself.newProject(); }
+        function () {
+            SnapStudy.SnapRun(world.children[0],'projectClose');
+            myself.newProject(); 
+        }
     );
 };
 
