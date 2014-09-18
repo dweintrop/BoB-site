@@ -2,26 +2,59 @@
 <html>
  <head>
   <title>Index of /~dweintrop/snap/help</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
  </head>
  <body>
 
- <form action="/snapRun/" method="POST">
 
 
-<input type="text" name='student_id' value="123"/><br/>
-<input type="text" name='project_name' value="test1"/><br/>
-<input type="text" name='condition' value="test2"/><br/>
-<input type="text" name='run_type' value="graph"/><br/>
-<input type="text" name='pair_id' value="1"/><br/>
-<input type="text" name='projectXML' value="project xml"/><br/>
+ <form id="theForm" action="/snapRun/" method="POST">
 
 
- <textarea name="scriptXML"> hey </textarea>
+student id <input type="text" name='student_id' id="id_student_id" value="123"/><br/>
+proj name <input type="text" name='project_name' id="proj_name" value="test1"/><br/>
+cond <input type="text" name='condition' id="id_condition" value="test2"/><br/>
+run type<input type="text" name='run_type' id="runType" value="graph"/><br/>
+pair id<input type="text" name='pair_id' id="id_pair_id" value="1"/><br/>
+
+
+script xml <textarea name="scriptXML" id="script"> new Date().getTime(); </textarea><br/>
+proj xml<textarea name='projectXML' id="proj">blah</textarea>
 
 <input type="submit" value="Submit">
 
  </form>
 
+<button onclick="for(var c = 0; c < 30; c++) {ajaxSubmit();}" name="submit 30" value="submit 30"> run 30 times</button>
+
+
+<script type="text/javascript">
+	function ajaxSubmit() {
+
+	var jsonData = {
+		'student_id' : $('#id_student_id').val(),
+		'pair_id' : $('#id_pair_id').val(),
+		'project_name' : $('#proj_name').val(),
+		'condition' : $('#id_condition').val(),
+		'run_type' : $('#runType').val(),
+		'scriptXML' : $('#script').val() + new Date().getTime(),
+		'projectXML' : $('#proj').val(),
+	}
+
+
+	$.ajax({
+		type: "POST",
+		url: "/snapRun/",
+		data: jsonData,
+	}).done(function( msg ) {
+		// console.log(msg);
+	});
+
+	}
+
+
+</script>
 
  </body>
  </html>
