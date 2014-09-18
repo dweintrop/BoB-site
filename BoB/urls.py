@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^snapRun/$', views.snapRun ),
     url(r'^snapTextInteraction/$', views.snapTextInteraction ),
 
-    url(r'^blah/', views.blah),
+    url(r'^loadTest/', views.loadTest),
 
     url(r'^admin/', include(admin.site.urls)),
 
