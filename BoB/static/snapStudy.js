@@ -322,8 +322,8 @@ SnapStudy.codeMappings = {
     doIf: "if (<#1>) {\n  <#2>\n}",
     doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",
     doReport: "return <#1>;",
-    doStopThis: "this.stopThis(<#1>);",
-    doStopOthers: "this.stopOthers(<#1>);",
+    doStopThis: "this.stopThis('<#1>');",
+    doStopOthers: "this.stopOthers('<#1>');",
     doRun: "eval(<#1>);",
     // fork:
     evaluate: "eval(<#1>);",

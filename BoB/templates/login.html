@@ -258,6 +258,14 @@
 				}
 		});
 
+	    $( "#student_resources" ).accordion({
+			collapsible: true,
+			active: false,
+			beforeActivate: function( event, ui) {
+				$('#resource-arrow').html( $('#resource-arrow').html() == '►' ? '▼' : '►');
+				}
+		});
+
 		$("#id_class_period").change(function(){
             var period = $(this).val();
 
@@ -366,6 +374,13 @@
 							<a href="https://docs.google.com/a/u.northwestern.edu/forms/d/1fHZMBGWS5XrNPpQCduih0s6_MB6ymLSOE3HC6enks_w/viewform" target="_blank"> Exploring Computer Science Questionnaire</a> <br/>							
 
 							
+						</div>
+					</div>
+
+					<div id="student_resources" style="line-height:18pt">
+						<h3 style="cursor:pointer; margin-bottom: 0; padding: 0;"><span id="resource-arrow" style="font-size:16px;">►</span>&nbsp;Resources</h3>
+						<div class="form_list">
+							<a href="http://javaseer.herokuapp.com/setup/">Java Setup File</a><br/>
 						</div>
 					</div>
 
