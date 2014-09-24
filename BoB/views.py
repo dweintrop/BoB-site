@@ -41,9 +41,7 @@ def snapRun(request):
 			NumRuns = 1
 			)
 
-		# only save new record when edits have been made - else increment the NumRuns field
-		last25hours = datetime.datetime.now() - datetime.timedelta(hours = 25)
-		previousRunCount = SnapRun.objects.filter(StudentID=snapRun.StudentID, PairID=snapRun.PairID, TimeStamp__gte=last25hours, ScriptXML=snapRun.ScriptXML).count()
+		previousRunCount = SnapRun.objects.filter(StudentID=snapRun.StudentID, PairID=snapRun.PairID, ScriptXML=snapRun.ScriptXML).count()
 		if (previousRunCount > 0 and snapRun.RunType != 'projectClose'):
 			previousRun = SnapRun.objects.filter(StudentID=snapRun.StudentID, PairID=snapRun.PairID, ScriptXML=snapRun.ScriptXML).order_by("-TimeStamp").first()
 			previousRun.NumRuns += 1
