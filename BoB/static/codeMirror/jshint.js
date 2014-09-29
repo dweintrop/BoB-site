@@ -2241,9 +2241,9 @@ loop:   for (;;) {
                 nobreaknonadjacent(prevtoken, token);
                 nonadjacent(token, nexttoken);
             }
-            if (s === "in" && left.id === "!") {
-                warning("Confusing use of '{a}'.", left, '!');
-            }
+            // if (s === "in" && left.id === "!") {
+            //     warning("Confusing use of '{a}'.", left, '!');
+            // }
             if (typeof f === 'function') {
                 return f(left, this);
             } else {
@@ -2267,12 +2267,12 @@ loop:   for (;;) {
             } else if (f) {
                 f.apply(this, [left, right]);
             }
-            if (left.id === '!') {
-                warning("Confusing use of '{a}'.", left, '!');
-            }
-            if (right.id === '!') {
-                warning("Confusing use of '{a}'.", right, '!');
-            }
+            // if (left.id === '!') {
+            //     warning("Confusing use of '{a}'.", left, '!');
+            // }
+            // if (right.id === '!') {
+            //     warning("Confusing use of '{a}'.", right, '!');
+            // }
             this.left = left;
             this.right = right;
             return this;
@@ -2929,12 +2929,12 @@ loop:   for (;;) {
     relation('==', function (left, right) {
         var eqnull = option.eqnull && (left.value === 'null' || right.value === 'null');
 
-        if (!eqnull && option.eqeqeq)
-            warning("Expected '{a}' and instead saw '{b}'.", this, '===', '==');
-        else if (isPoorRelation(left))
-            warning("Use '{a}' to compare with '{b}'.", this, '===', left.value);
-        else if (isPoorRelation(right))
-            warning("Use '{a}' to compare with '{b}'.", this, '===', right.value);
+        // if (!eqnull && option.eqeqeq)
+        //     warning("Expected '{a}' and instead saw '{b}'.", this, '===', '==');
+        // else if (isPoorRelation(left))
+        //     warning("Use '{a}' to compare with '{b}'.", this, '===', left.value);
+        // else if (isPoorRelation(right))
+        //     warning("Use '{a}' to compare with '{b}'.", this, '===', right.value);
 
         return this;
     });
@@ -2943,16 +2943,16 @@ loop:   for (;;) {
         var eqnull = option.eqnull &&
                 (left.value === 'null' || right.value === 'null');
 
-        if (!eqnull && option.eqeqeq) {
-            warning("Expected '{a}' and instead saw '{b}'.",
-                    this, '!==', '!=');
-        } else if (isPoorRelation(left)) {
-            warning("Use '{a}' to compare with '{b}'.",
-                    this, '!==', left.value);
-        } else if (isPoorRelation(right)) {
-            warning("Use '{a}' to compare with '{b}'.",
-                    this, '!==', right.value);
-        }
+        // if (!eqnull && option.eqeqeq) {
+        //     warning("Expected '{a}' and instead saw '{b}'.",
+        //             this, '!==', '!=');
+        // } else if (isPoorRelation(left)) {
+        //     warning("Use '{a}' to compare with '{b}'.",
+        //             this, '!==', left.value);
+        // } else if (isPoorRelation(right)) {
+        //     warning("Use '{a}' to compare with '{b}'.",
+        //             this, '!==', right.value);
+        // }
         return this;
     });
     relation('!==');
@@ -3037,9 +3037,9 @@ loop:   for (;;) {
     prefix('!', function () {
         this.right = expression(150);
         this.arity = 'unary';
-        if (bang[this.right.id] === true) {
-            warning("Confusing use of '{a}'.", this, '!');
-        }
+        // if (bang[this.right.id] === true) {
+        //     warning("Confusing use of '{a}'.", this, '!');
+        // }
         return this;
     });
     prefix('typeof', 'typeof');
