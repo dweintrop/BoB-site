@@ -2599,7 +2599,10 @@ SpriteMorph.prototype.doSwitchToCostume = function (id) {
             this.doWearPreviousCostume();
             return;
         }
-        costume = this.getCostumeByName(id);
+        costume = detect(arr, function (cst) {
+            return cst.name === id;
+        });
+        // costume = this.getCostumeByName(id);
         if (costume === null) {
             num = parseFloat(id);
             if (num === 0) {

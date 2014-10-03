@@ -170,7 +170,10 @@ SnapStudy.cmDialog = function (title, inCode, saveCallback) {
 			SnapStudy.updateHints();
 			if (SnapStudy.errorWidgets.length > 0) {
 				clearInterval(SnapStudy.jsHintsInterval);
-			  SnapStudy.jsHintsInterval = setInterval(SnapStudy.updateHints, 1551);
+                SnapStudy.jsHintsInterval = setInterval(SnapStudy.updateHints, 1551);
+
+                // TODO: add logic to record attempts to save that contain errors
+                // saveCallback();
 				return;
 			}
 			clearInterval(SnapStudy.jsHintsInterval);
@@ -260,7 +263,7 @@ SnapStudy.codeMappings = {
     doGotoObject: "this.gotoObject(<#1>);",
 
 // Looks
-    doSwitchToCostume: "this.switchToCostume(<#1>));",
+    doSwitchToCostume: "this.switchToCostume(<#1>);",
     doWearNextCostume: "this.wearNextCostume();",
     getCostumeIdx: "this.getCostumeId();",
     doSayFor: "this.sayFor(<#1>, <#2>);",
