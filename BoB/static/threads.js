@@ -1028,9 +1028,24 @@ Process.prototype.evaluateCustomBlock = function () {
 
     // note: figure out a smarter way to decide when to execute js vs. blocks for custom written js blocks
     if (SnapStudy.getCondition() == 'graph_write' && this.context.expression.mappedCode()) {
+
+        var vars = this.context.variables;
+        var varsToPutInScope = "";
+        if (vars.allNames().length > 0) {
+            var varsList = [];
+            $(vars.allNames()).each(function(ind, el) {
+                if (typeof vars.getVar(el) === "string") {
+                    varsList.push(el + " = " + "'" + vars.getVar(el) + "'");
+                } else {
+                    varsList.push(el + " = " + vars.getVar(el));
+                }
+            });
+            varsToPutInScope = "var " + varsList.join(', ') + ";";
+        }
+
         var jsFunc = Function.apply(
             Object.create(Function.prototype),
-            this.context.expression.definition.inputNames().concat([this.context.expression.mappedCode()]));
+            this.context.expression.definition.inputNames().concat([varsToPutInScope +  this.context.expression.mappedCode()]));
 
         return this.evaluate(jsFunc, args, true, true);
 
