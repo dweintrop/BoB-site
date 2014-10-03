@@ -444,7 +444,7 @@ Process.prototype.evaluateContext = function () {
     if (exp instanceof ArgLabelMorph) {
         return this.evaluateArgLabel(exp);
     }
-    if (exp instanceof ArgMorph || exp.bindingID) {
+    if (exp instanceof ArgMorph || (exp && exp.bindingID)) {
         return this.evaluateInput(exp);
     }
     if (exp instanceof BlockMorph) {
@@ -1023,8 +1023,11 @@ Process.prototype.evaluateCustomBlock = function () {
         upvars,
         outer;
 
-    // if custom block has mapped code (i.e. what written in editor) then run the JS and exit
-    if (this.context.expression.mappedCode()) {
+    // if your'e in the graph_write condition (i.e. you write javascript to define functions)
+    // and the custom block has mapped code (i.e. what written in editor) then run the JS and exit
+
+    // note: figure out a smarter way to decide when to execute js vs. blocks for custom written js blocks
+    if (SnapStudy.getCondition() == 'graph_write' && this.context.expression.mappedCode()) {
         var jsFunc = Function.apply(
             Object.create(Function.prototype),
             this.context.expression.definition.inputNames().concat([this.context.expression.mappedCode()]));
@@ -2423,6 +2426,10 @@ Process.prototype.reportTouchingColor = function (aColor) {
     var thisObj = this.homeContext.receiver,
         stage;
 
+    if (typeof aColor === 'string') {
+        aColor = eval(aColor.replace('rgba', 'new Color'));
+    }  
+
     if (thisObj) {
         stage = thisObj.parentThatIsA(StageMorph);
         if (stage) {
@@ -2443,6 +2450,13 @@ Process.prototype.reportColorIsTouchingColor = function (color1, color2) {
     // also check for any parts (subsprites)
     var thisObj = this.homeContext.receiver,
         stage;
+
+    if (typeof color1 === 'string') {
+        color1 = eval(color1.replace('rgba', 'new Color'));
+    }    
+    if (typeof color2 === 'string') {
+        color2 = eval(color2.replace('rgba', 'new Color'));
+    }
 
     if (thisObj) {
         stage = thisObj.parentThatIsA(StageMorph);

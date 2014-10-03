@@ -4,7 +4,7 @@ from django.db import models
 class SnapRun(models.Model):
   StudentID = models.CharField(max_length=30)
   PairID = models.CharField(max_length=30, null=True)
-  ProjectName = models.CharField(max_length=50)
+  ProjectName = models.CharField(max_length=100)
   TimeStamp = models.DateTimeField()
   RunType = models.CharField(max_length=20)
   Condition = models.CharField(max_length=20)

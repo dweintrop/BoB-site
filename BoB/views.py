@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from forms import LoginForm
 from oas.models import SnapRun, TextInteraction
 
-import datetime
+import datetime 
 
 def login(request):
     return render(request, 'login.html', {'form': LoginForm()})
@@ -41,7 +41,6 @@ def snapRun(request):
 			NumRuns = 1
 			)
 
-		# only save new record when edits have been made - else increment the NumRuns field
 		previousRunCount = SnapRun.objects.filter(StudentID=snapRun.StudentID, PairID=snapRun.PairID, ScriptXML=snapRun.ScriptXML).count()
 		if (previousRunCount > 0 and snapRun.RunType != 'projectClose'):
 			previousRun = SnapRun.objects.filter(StudentID=snapRun.StudentID, PairID=snapRun.PairID, ScriptXML=snapRun.ScriptXML).order_by("-TimeStamp").first()

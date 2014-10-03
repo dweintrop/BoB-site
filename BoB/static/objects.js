@@ -806,12 +806,6 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'ask %s and wait',
             defaults: [localize('what\'s your name?')]
         },
-        reportLastAnswer: { // retained for legacy compatibility
-            dev: true,
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'answer'
-        },
         getLastAnswer: {
             type: 'reporter',
             category: 'sensing',
@@ -846,12 +840,6 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'command',
             category: 'sensing',
             spec: 'reset timer'
-        },
-        reportTimer: { // retained for legacy compatibility
-            dev: true,
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'timer'
         },
         getTimer: {
             type: 'reporter',
@@ -1028,7 +1016,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTextSplit: {
             type: 'reporter',
             category: 'operators',
-            spec: 'split %s by %delim',
+            spec: 'split %s by %s',
             defaults: [localize('hello') + ' ' + localize('world'), " "]
         },
         
@@ -1964,9 +1952,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportLetter'));
         blocks.push(block('reportStringSize'));
         blocks.push('-');
-        blocks.push(block('reportUnicode'));
-        blocks.push(block('reportUnicodeAsLetter'));
-        blocks.push('-');
+        // blocks.push(block('reportUnicode'));
+        // blocks.push(block('reportUnicodeAsLetter'));
+        // blocks.push('-');
         blocks.push(block('reportIsA'));
         /*
         blocks.push(block('reportIsIdentical'));
@@ -4215,6 +4203,7 @@ SpriteMorph.prototype.getStage = function() {
 
 SpriteMorph.prototype.getProcess = function() {
     // return the last process in the collection
+    console.log(this.getStage().threads.processes.length);
     return this.getStage().threads.processes[this.getStage().threads.processes.length - 1];
 }
 
@@ -4238,8 +4227,40 @@ SpriteMorph.prototype.rest = function(sec) { this.getProcess().doRest(sec);}
 SpriteMorph.prototype.playNote = function(note, sec) { this.getProcess().doPlayNote(note, sec);}
 SpriteMorph.prototype.changeTempo = function(tmp) { this.getStage().changeTempo(tmp);}
 SpriteMorph.prototype.setTempo = function(tmp) { this.getStage().setTempo(tmp);}
-SpriteMorph.prototype.getTempo = function() { return this.getStage().getTempo();}
 SpriteMorph.prototype.stamp = function() { return this.doStamp();}
+
+SpriteMorph.prototype.broadcast = function(msg) {this.getProcess().doBroadcast(msg);}
+SpriteMorph.prototype.broadcastAndWait = function(msg) {this.getProcess().doBroadcastAndWait(msg);}
+SpriteMorph.prototype.wait = function(sec) {this.getProcess().doWait(sec);}
+SpriteMorph.prototype.waitUntil = function(cond) {this.getProcess().doWaitUntil(cond);}
+SpriteMorph.prototype.stopThis = function(thrd) {this.getProcess().doStopThis(thrd);}
+SpriteMorph.prototype.stopOthers = function(thrd) {this.getProcess().doStopOthers(thrd);}
+SpriteMorph.prototype.warp = function(thrd) {this.getProcess().doWarp(thrd);}
+
+SpriteMorph.prototype.isTouchingObject = function(obj) {return this.getProcess().objectTouchingObject(this, obj);}
+SpriteMorph.prototype.isTouchingColor = function(clr) {return this.getProcess().reportTouchingColor(clr);}
+SpriteMorph.prototype.isColorTouchingColor = function(clr1, clr2) {return this.getProcess().reportColorIsTouchingColor(clr1, clr2);}
+SpriteMorph.prototype.ask = function(question) {this.getProcess().doAsk(question);}
+SpriteMorph.prototype.getMouseX = function() {return this.reportMouseX();}
+SpriteMorph.prototype.getMouseY = function() {return this.reportMouseY();}
+SpriteMorph.prototype.isMouseDown = function() {return this.getProcess().reportMouseDown();}
+SpriteMorph.prototype.isKeyPressed = function(key) {return this.getProcess().reportKeyPressed(key);}
+SpriteMorph.prototype.getDistanceTo = function(obj) {return this.getProcess().reportDistanceTo(obj);}
+SpriteMorph.prototype.resetTimer = function() {this.getProcess().doResetTimer();}
+SpriteMorph.prototype.getAttributeOf = function(attrs, obj) {return this.getProcess().reportAttributeOf(attrs, obj);}
+SpriteMorph.prototype.getURL = function(url) {return this.getProcess().reportURL(url);}
+SpriteMorph.prototype.isTurboModeOn = function() {return this.getProcess().reportIsFastTracking();}
+SpriteMorph.prototype.setTurboMode = function(spd) {this.getProcess().doSetFastTracking(spd);}
+SpriteMorph.prototype.getDate = function(attr) {return this.getProcess().reportDate(attr);}
+
+SpriteMorph.prototype.callMathFunc = function(func, arg) {return this.getProcess().reportMonadic(func, arg);}
+SpriteMorph.prototype.getRandom = function(min, max) {return this.getProcess().reportRandom(min, max);}
+    
+
+SpriteMorph.prototype.showVar = function(inVar) {this.getProcess().doShowVar(inVar);}
+SpriteMorph.prototype.hideVar = function(inVar) {this.getProcess().doHideVar(inVar);}
+
+SpriteMorph.prototype.isA = function(a, b) {return this.getProcess().reportIsA(a, b)}
 
 // function to make it possible to call one custom function from another (also makes recursion possible)
 SpriteMorph.prototype.callFunction = function(name, args) {
@@ -4308,187 +4329,7 @@ StageMorph.prototype.paletteTextColor = SpriteMorph.prototype.paletteTextColor;
 
 StageMorph.prototype.hiddenPrimitives = {};
 
-
-//TODO: fill in all blocks (as best as possible)
-StageMorph.prototype.codeMappings = {
-
-// Motion
-    forward: "this.forward(<#1>);",
-    turn: "this.turnRight(<#1>);",
-    turnLeft: "this.turnLeft(<#1>);",
-    setHeading: "this.setHeading(<#1>);",
-    gotoXY: "this.gotoXY(<#1>, <#2>);",
-    doGlide: "this.glide(<#1>, <#2>, <#3>);",
-    changeXPosition: "this.changeXPosition(<#1>);",
-    setXPosition: "this.setXPosition(<#1>);",
-    changeYPosition: "this.changeYPosition(<#1>);",
-    setYPosition: "this.setYPosition(<#1>);",
-    bounceOffEdge: "this.bounceOffEdge();",
-    xPosition: "this.xPosition()",
-    yPosition: "this.yPosition()",
-    direction: "this.heading",
-    doFaceTowards: "this.faceTowards(<#1>);",
-    doGotoObject: "this.gotoObject(<#1>);",
-
-// Looks
-    doSwitchToCostume: "this.switchToCostume(<#1>));",
-    doWearNextCostume: "this.wearNextCostume();",
-    getCostumeIdx: "this.getCostumeId();",
-    doSayFor: "this.sayFor(<#1>, <#2>);",
-    bubble: "this.bubble(<#1>, false, false);",
-    doThinkFor: "this.thinkFor(<#1>, <#2>);",
-    doThink: "this.think(<#1>);",
-    changeEffect: "this.changeEffect(['<#1>'], <#2>);",
-    setEffect: "this.setEffect(['<#1>'], <#2>);",
-    clearEffects: "this.clearEffects();",
-    changeScale: "this.changeScale(<#1>);",
-    setScale: "this.setScale(<#1>);",
-    getScale: "(this.scale * 100)",
-    show: "this.show();",
-    hide: "this.hide();",
-    comeToFront: "this.comeToFront();",
-    goBack: "this.goBack(<#1>);",
-    doScreenshot: "this.doScreenshot(<#1>, <#2>);",
-
-// Sound
-    playSound: "this.playSound(<#1>);",
-    doPlaySoundUntilDone: "this.playSoundUntilDone(<#1>);",
-    doStopAllSounds: "this.stopAllSounds();",
-    doRest: "this.rest(<#1>);",
-    doPlayNote: "this.playNote(<#1>, <#2>);",
-    doChangeTempo: "this.changeTempo(<#1>);",
-    doSetTempo: "this.setTempo(<#1>);",
-    getTempo: "this.getTempo()",
-
-// Pen
-    clear: "this.clear();",
-    down: "this.down();",
-    up: "this.up();",
-    setColor: "this.setColor('<#1>');",
-    changeHue: "this.changeHue(<#1>);",
-    setHue: "this.setHue(<#1>);",
-    changeBrightness: "this.changeBrightness(<#1>);",
-    setBrightness: "this.setBrightness(<#1>);",
-    changeSize: "this.changeSize(<#1>);",
-    setSize: "this.setSize(<#1>);",
-    doStamp: "this.stamp();",
-    
-// Control
-    /* I'm not yet sure what the code for these should look like - since you can't put them inside the code of block
-    receiveGo: "this.getStage().fireGreenFlagEvent();",
-    receiveKey: "this.allHatBlocksForKey(<#1>);",
-    receiveClick: 
-    receiveMessage: 
-    */  
-    doBroadcast: "this.getProcess().doBroadcast(<#1>);",
-    doBroadcastAndWait: "this.getProcess().doBroadcastAndWait(<#1>);",
-    getLastMessage:"this.getStage().getLastMessage()",
-    doWait: "this.getProcess().doWait(<#1>);",
-    doWaitUntil: "this.getProcess().doWaitUntil(<#1>);",
-    doForever: "while (true) {\n  <#1>\n}",
-    doRepeat: "for (var i = 0; i < <#1>; i++) {\n  <#2>\n}",
-    doWhile: "while (<#1>) {\n  <#2>\n}",
-    doUntil: "do {\n  <#2>\n} while (!(<#1>));",
-    doIf: "if (<#1>) {\n  <#2>\n}",
-    doIfElse: "if (<#1>) {\n  <#2>\n} else {\n  <#3>\n}",
-    doReport: "return <#1>;",
-    doStopThis: "this.getProcess().doStopThis(<#1>);",
-    doStopOthers: "this.getProcess().doStopOthers(<#1>);",
-    doRun: "eval(<#1>);",
-    // fork:
-    evaluate: "eval(<#1>);",
-    doCallCC: "eval(<#1>);",
-    reportCallCC: "eval(<#1>);",
-    doWarp:  "this.getProcess().doWarp(<#1>);",
-    // receiveOnClone: {
-    createClone: "this.createClone(<#1>);",
-    removeClone: "this.removeClone();",
-
-// Sensing
-    reportTouchingObject: "this.getProcess().objectTouchingObject(this, <#1>)",
-    reportTouchingColor: "this.getProcess().reportTouchingColor(this, <#1>)",
-    reportColorIsTouchingColor: "this.getProcess().reportColorIsTouchingColor(<#1>, <#2>)",
-    doAsk: "this.getProcess().doAsk(<#1>);",
-    reportLastAnswer: "this.getLastAnswer()",
-    getLastAnswer: "this.getLastAnswer()",
-    reportMouseX: "this.reportMouseX()",
-    reportMouseY: "this.reportMouseY()",
-    reportMouseDown: "this.getProcess().reportMouseDown()",
-    reportKeyPressed: "this.getProcess().reportKeyPressed(<#1>)",
-    reportDistanceTo: "this.getProcess().reportDistanceTo(<#1>)",
-    doResetTimer: "this.getProcess().doResetTimer();",
-    reportTimer: "this.getStage().getTimer()",
-    getTimer: "this.getStage().getTimer()",
-    reportAttributeOf: "this.getProcess().reportAttributeOf(['<#1>'], <#2>)",
-    reportURL: "this.getProcess().reportURL()",
-    reportIsFastTracking: "this.getProcess().reportIsFastTracking()",
-    doSetFastTracking: "this.getProcess().doSetFastTracking(<#1>)",
-    reportDate: "this.getProcess().reportDate('<#1>')",
-    
-// Operators
-    reifyScript: "this.getProcess().reifyScript(<#1>, <#2>);",
-    reifyReporter: "this.getProcess().reifyReporter(<#1>, <#2>);",
-    reifyPredicate: "this.getProcess().reifyPredicate(<#1>, <#2>);",
-    reportSum: "(<#1> + <#2>)",
-    reportDifference: "(<#1> - <#2>)",
-    reportProduct: "(<#1> * <#2>)",
-    reportQuotient: "(<#1> / <#2>)",
-    reportRound: "Math.round(<#1)",
-    reportModulus: "(<#1> % <#2>)",
-    reportMonadic: "this.getProcess().reportMonadic('<#1>', <#2>)",
-    reportRandom: "this.getProcess().reportRandom(<#1>, <#2>)",
-    reportLessThan: "(<#1> < <#2>)",
-    reportEquals: "(<#1> === <#2>)",
-    reportGreaterThan: "(<#1> > <#2>)",
-    reportAnd: "(<#1> && <#2>)",
-    reportOr: "(<#1> || <#2>)",
-    reportNot: "(!<#1>)",
-    reportTrue: "true",
-    reportFalse: "false",
-    // reportJoinWords: "(<#1>, <#2>)",
-    reportJoinWords: "this.getProcess().reportJoinWords(<#1>)",
-    reportTextSplit: "this.getProcess().reportTextSplit(<#1>, <#2>)",
-    reportLetter: "this.getProcess().reportLetter(<#1>, <#2>)",
-    reportStringSize: "(<#1>.length)",
-    reportUnicode: "<#1>.charCodeAt(0)",
-    reportUnicodeAsLetter: "String.fromCharCode(<#1>)",
-    reportIsA: "this.getProcess().reportIsA(<#1>, '<#2>')",
-    reportIsIdentical: "<#1> === <#2>",
-    // reportJSFunction: 
-
-// Variables
-    doSetVar: "<#1> = <#2>;",
-    doChangeVar: "<#1> += <#2>;",
-    doShowVar: "this.getProcess().doShowVar(<#1>);",
-    doHideVar: "this.getProcess().doHideVar(<#1>);",
-    doDeclareVariables: "var <#1>;",
-
-    // Lists
-    reportNewList: "[<#1>]",
-    reportListItem: "<#2>[<#1> - 1]",
-    reportListLength: "(<#1>.length)",
-    doAddToList: "<#2>.push(<#1>);",
-    reportCONS: "new List().cons(<#1>, <#2>)",
-    reportCDR: "<#1>.cdr()",
-    reportListContainsItem: "<#1>.contains(<#2>)",
-    doDeleteFromList: "<#2>.remove(<#1>)",
-    doInsertInList: "<#3>.add(<#1>, <#2>)",
-    doReplaceInList: "<#2>.put(<#3>, <#1>)",
-
-    // MAP 
-    reportMap: "this.getProcess().reportMap(<#1>, <#2>);",
-    doMapCodeOrHeader: "this.doMapCodeOrHeader(<#1>, <#2>, <#3>);",
-    doMapListCode: "this.getProcess().doMapListCode(<#1>, <#2>, <#3>);",
-    reportMappedCode: "this.getProcess().reportMappedCode(<#1>);",
-
-    // operators
-    // unclear what to do with these three
-    string: "'<#1>'",
-    tempvars_delim: ",",
-    delim: ","
-
-};
-
+StageMorph.prototype.codeMappings = SnapStudy.codeMappings;
 StageMorph.prototype.codeHeaders = {};
 StageMorph.prototype.enableCodeMapping = true;
 
@@ -5317,9 +5158,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportLetter'));
         blocks.push(block('reportStringSize'));
         blocks.push('-');
-        blocks.push(block('reportUnicode'));
-        blocks.push(block('reportUnicodeAsLetter'));
-        blocks.push('-');
+        // blocks.push(block('reportUnicode'));
+        // blocks.push(block('reportUnicodeAsLetter'));
+        // blocks.push('-');
         blocks.push(block('reportIsA'));
         /*
         blocks.push(block('reportIsIdentical'));
@@ -5725,8 +5566,7 @@ StageMorph.prototype.showingWatcher
 StageMorph.prototype.watcherFor =
     SpriteMorph.prototype.watcherFor;
 
-StageMorph.prototype.getLastAnswer
-    = SpriteMorph.prototype.getLastAnswer;
+StageMorph.prototype.getLastAnswer = SpriteMorph.prototype.getLastAnswer;
 
 // StageMorph message broadcasting
 

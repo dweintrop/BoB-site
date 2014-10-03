@@ -10066,6 +10066,7 @@ WorldMorph.prototype.doOneCycle = function () {
 };
 
 WorldMorph.prototype.fillPage = function () {
+
     var pos = getDocumentPositionOf(this.worldCanvas),
         clientHeight = window.innerHeight,
         clientWidth = window.innerWidth,
@@ -10090,14 +10091,17 @@ WorldMorph.prototype.fillPage = function () {
         // scrolled left b/c of viewport scaling
         clientWidth = document.documentElement.clientWidth;
     }
+    
+
     if (this.worldCanvas.width !== clientWidth) {
         this.worldCanvas.width = clientWidth;
-        this.setWidth(clientWidth);
+        this.setWidth(clientWidth);        
     }
     if (this.worldCanvas.height !== clientHeight) {
         this.worldCanvas.height = clientHeight;
         this.setHeight(clientHeight);
     }
+
     this.children.forEach(function (child) {
         if (child.reactToWorldResize) {
             child.reactToWorldResize(myself.bounds.copy());
@@ -10410,6 +10414,9 @@ WorldMorph.prototype.initEventListeners = function () {
     );
 
     window.onbeforeunload = function (evt) {
+        // log project close here even though it might not close
+        SnapStudy.SnapRun(world.children[0],'projectClose');
+
         var e = evt || window.event,
             msg = "Are you sure you want to leave?";
         // For IE and Firefox
@@ -10420,9 +10427,11 @@ WorldMorph.prototype.initEventListeners = function () {
         return msg;
     };    
 
-    window.onunload = function(){
-        SnapStudy.SnapRun(world.children[0],'projectClose');
-    }
+// this doesn't work in Safari - which I'm lucky to be using!
+// so I'm going to log in the onbeforeunload becuase it actually works in safari
+    // window.onunload = function(){
+    //     SnapStudy.SnapRun(world.children[0],'projectClose');
+    // }
 };
 
 WorldMorph.prototype.mouseDownLeft = function () {

@@ -1451,7 +1451,7 @@ SpriteMorph.prototype.toXML = function (serializer) {
     
     if (serializer.scriptsOnly) {
        return serializer.format(
-                '<sprite name="@" idx="@" ' +
+                '<sprite name="@" idx="@" >' +
                     '<variables>%</variables>' +
                     '<blocks>%</blocks>' +
                     '<scripts>%</scripts>' +
@@ -1552,7 +1552,7 @@ VariableFrame.prototype.toXML = function (serializer) {
     return Object.keys(this.vars).reduce(function (vars, v) {
         var val = myself.vars[v],
             dta;
-        if (val === undefined || val === null) {
+        if (val === undefined || val === null || serializer.scriptsOnly) {
             dta = serializer.format('<variable name="@"/>', v);
         } else {
             dta = serializer.format(

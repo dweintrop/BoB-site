@@ -1,1 +1,1 @@
-web: gunicorn BoB.wsgi --log-file -
+web: newrelic-admin run-program gunicorn BoB.wsgi --log-file -
