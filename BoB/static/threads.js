@@ -1035,9 +1035,9 @@ Process.prototype.evaluateCustomBlock = function () {
             var varsList = [];
             $(vars.allNames()).each(function(ind, el) {
                 if (typeof vars.getVar(el) === "string") {
-                    varsList.push(el + " = " + "'" + vars.getVar(el) + "'");
+                    varsList.push(el.replace(/\s+/g, '') + " = " + "'" + vars.getVar(el) + "'");
                 } else {
-                    varsList.push(el + " = " + vars.getVar(el));
+                    varsList.push(el.replace(/\s+/g, '') + " = " + vars.getVar(el));
                 }
             });
             varsToPutInScope = "var " + varsList.join(', ') + ";";
