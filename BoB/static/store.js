@@ -1354,9 +1354,6 @@ StageMorph.prototype.toXML = function (serializer) {
         return str;
     }
 
-    this.removeAllClones();
-
-
     // alternative (and hopefully smaller) exporter
     if (serializer.scriptsOnly) {
 
@@ -1388,6 +1385,9 @@ StageMorph.prototype.toXML = function (serializer) {
         );
 
     } else {
+
+        this.removeAllClones();
+
         return serializer.format(
             '<project name="@" app="@" version="@">' +
                 '<notes>$</notes>' +
@@ -1450,7 +1450,12 @@ SpriteMorph.prototype.toXML = function (serializer) {
         idx = ide ? ide.sprites.asArray().indexOf(this) + 1 : 0;
     
     if (serializer.scriptsOnly) {
-       return serializer.format(
+        if (this.isClone) {
+            console.log('clone');
+            return "";
+        }
+
+        return serializer.format(
                 '<sprite name="@" idx="@" >' +
                     '<variables>%</variables>' +
                     '<blocks>%</blocks>' +
