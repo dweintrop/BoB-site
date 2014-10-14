@@ -11,10 +11,14 @@ SnapStudy.getCondition = function() {
 	return $('#id_condition').val();
 }
 
+SnapStudy.lastDitchExport = function() {
+    SnapStudy.SnapRun(world.children[0],'manual');
+}
+
 SnapStudy.SnapRun = function(ide, clickSource) {
 
 	var projectXML = '';
-	if (clickSource == 'projectClose' && ide) {
+	if ((clickSource == 'projectClose' || clickSource == 'manual') && ide) {
 		projectXML = ide.serializer.serialize(ide.stage);
 	} 
 
