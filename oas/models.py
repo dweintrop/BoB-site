@@ -28,6 +28,7 @@ class TextInteraction(models.Model):
   InteractionType = models.CharField(max_length=10)
   Condition = models.CharField(max_length=20)
   Text = models.TextField()
+  # Errors = models.TextField()
 
   # Not going to do this for now, but could look into Amazon s3 backend
   # docs here: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html
