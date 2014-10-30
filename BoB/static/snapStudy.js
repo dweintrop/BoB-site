@@ -8,7 +8,7 @@
 var SnapStudy = {}
 
 SnapStudy.getCondition = function() {
-	return $('#id_condition').val();
+    return $('#id_condition').val();
 }
 
 SnapStudy.lastDitchExport = function() {
@@ -17,195 +17,251 @@ SnapStudy.lastDitchExport = function() {
 
 SnapStudy.SnapRun = function(ide, clickSource) {
 
-	var projectXML = '';
-	if ((clickSource == 'projectClose' || clickSource == 'manual') && ide) {
-		projectXML = ide.serializer.serialize(ide.stage);
-	} 
+    var projectXML = '';
+    if ((clickSource == 'projectClose' || clickSource == 'manual') && ide) {
+        projectXML = ide.serializer.serialize(ide.stage);
+    } 
 
-	var scriptXML = SnapStudy.ScriptsXML(ide);
-	
-	var jsonData = {
-		'student_id' : $('#id_student_id').val(),
-		'pair_id' : $('#id_pair_id').val(),
-		'project_name' : (ide.projectName) ? ide.projectName : 'Untitled',
-		'condition' : $('#id_condition').val(),
-		'run_type' : clickSource,
-		'scriptXML' : scriptXML,
-		'projectXML' : projectXML
-	}
+    var scriptXML = SnapStudy.ScriptsXML(ide);
+    
+    var jsonData = {
+        'student_id' : $('#id_student_id').val(),
+        'pair_id' : $('#id_pair_id').val(),
+        'project_name' : (ide.projectName) ? ide.projectName : 'Untitled',
+        'condition' : $('#id_condition').val(),
+        'run_type' : clickSource,
+        'scriptXML' : scriptXML,
+        'projectXML' : projectXML
+    }
 
-	$.ajax({
-		type: "POST",
-		url: "/snapRun/",
-		data: jsonData
-	}).done(function( msg ) {
-		console.log(msg);
-	});
+    $.ajax({
+        type: "POST",
+        url: "/snapRun/",
+        data: jsonData
+    }).done(function( msg ) {
+        console.log(msg);
+    });
 
-	// console.log(jsonData);
+    // console.log(jsonData);
 }
 
 SnapStudy.ScriptsXML = function (ide) {
-	ide.serializer.scriptsOnly = true;
-	var xml = ide.serializer.serialize(ide.stage);
-	ide.serializer.scriptsOnly = false;
-	return xml;
+    ide.serializer.scriptsOnly = true;
+    var xml = ide.serializer.serialize(ide.stage);
+    ide.serializer.scriptsOnly = false;
+    return xml;
 }
 
 SnapStudy.TextInteraction = function(interactionType, code) {
-		var jsonData = {
-		'student_id' : $('#id_student_id').val(),
-		'pair_id' : $('#id_pair_id').val(),
-		'condition' : $('#id_condition').val(),
-		'interactionType' : interactionType, // read or write
-		'text' : code
-	}
+    var jsonData = {
+        'student_id' : $('#id_student_id').val(),
+        'pair_id' : $('#id_pair_id').val(),
+        'condition' : $('#id_condition').val(),
+        'interactionType' : interactionType, // read or write
+        'text' : code
+    }
 
-	$.ajax({
-		type: "POST",
-		url: "/snapTextInteraction/",
-		data: jsonData
-	}).done(function( msg ) {
-		console.log(msg);
-	});
+    $.ajax({
+        type: "POST",
+        url: "/snapTextInteraction/",
+        data: jsonData
+    }).done(function( msg ) {
+        console.log(msg);
+    });
 }
 
 SnapStudy.openViewer = function(inCode, blockMorph) {
-	var blockDefinition = blockMorph.definition;
+    var blockDefinition = blockMorph.definition;
 
-	// if viewing a custom block - show the function header, else hide it
-	if (blockDefinition instanceof CustomBlockDefinition && !(blockMorph.nextBlock()) ) {
-		// show function structure
-		$('.function-structure').show();
+    // if viewing a custom block - show the function header, else hide it
+    if (blockDefinition instanceof CustomBlockDefinition && !(blockMorph.nextBlock()) ) {
+        // show function structure
+        $('.function-structure').show();
 
-		// populate function name
-		$('#function-name').empty().append(blockDefinition.helpSpec());
-		
-		// populate function args
-		var args_list = [];
-		$.each(blockDefinition.inputNames(), function (ind, name) {
-			args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
-		});
-		$('#arg-list').empty().append(args_list.join(", "));
-	} else if (blockMorph instanceof HatBlockMorph) {
-		// show function structure
-		$('.function-structure').show();
-		$('#arg-list').empty();
+        // populate function name
+        $('#function-name').empty().append(blockDefinition.helpSpec());
+        
+        // populate function args
+        var args_list = [];
+        $.each(blockDefinition.inputNames(), function (ind, name) {
+            args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
+        });
+        $('#arg-list').empty().append(args_list.join(", "));
+    } else if (blockMorph instanceof HatBlockMorph) {
+        // show function structure
+        $('.function-structure').show();
+        $('#arg-list').empty();
 
-		var functionName = "Event";
-		switch (blockMorph.selector) {
-			case "receiveGo":
-				functionName = "whenGreenFlagClicked";
-				break;
-			case "receiveKey":
-				functionName = "whenKeyPressed";
-				break;
-			case "receiveClick":
-				functionName = "whenIamClicked";
-				break;
-			case "receiveMessage":
-				functionName = "whenMessageReceived";
-				break;
-		}
-			
-		// chop off leading \n that comes from not having hatBlock defined
-		inCode = inCode.substr(1)
-		// populate function name
-		$('#function-name').empty().append(functionName);
-	} else {
-		$('.function-structure').hide();
-	}
+        var functionName = "Event";
+        switch (blockMorph.selector) {
+            case "receiveGo":
+                functionName = "whenGreenFlagClicked";
+                break;
+            case "receiveKey":
+                functionName = "whenKeyPressed";
+                break;
+            case "receiveClick":
+                functionName = "whenIamClicked";
+                break;
+            case "receiveMessage":
+                functionName = "whenMessageReceived";
+                break;
+        }
+            
+        // chop off leading \n that comes from not having hatBlock defined
+        inCode = inCode.substr(1)
+        // populate function name
+        $('#function-name').empty().append(functionName);
+    } else {
+        $('.function-structure').hide();
+    }
 
-	myCodeMirror.setOption('readOnly', true);
-	myCodeMirror.setOption('cursorBlinkRate', -1);
-	SnapStudy.cmDialog("Javascript Viewer", inCode, function(){});
+    myCodeMirror.setOption('readOnly', true);
+    myCodeMirror.setOption('cursorBlinkRate', -1);
+    SnapStudy.cmDialog("Javascript Viewer", inCode, function(){});
 
-	SnapStudy.TextInteraction('read', inCode);
+    SnapStudy.TextInteraction('read', inCode);
 }
 
 SnapStudy.openEditor = function(inCode, blockMorph) {
-	var blockDefinition = blockMorph.definition;
+    var blockDefinition = blockMorph.definition;
 
-	// if is not a custom blockDefinition or is a script - open as viewer
-	if ((!(blockDefinition instanceof CustomBlockDefinition)) || (blockMorph.nextBlock && blockMorph.nextBlock()) ) {
-		SnapStudy.openViewer(inCode, blockMorph);
-		return;
-	}
+    // if is not a custom blockDefinition or is a script - open as viewer
+    if ((!(blockDefinition instanceof CustomBlockDefinition)) || (blockMorph.nextBlock && blockMorph.nextBlock()) ) {
+        SnapStudy.openViewer(inCode, blockMorph);
+        return;
+    }
 
-	// show function structure
-	$('.function-structure').show();
+    // show function structure
+    $('.function-structure').show();
 
-	// populate function name
-	$('#function-name').empty().append(blockDefinition.helpSpec());
-	
-	// populate function args
-	var args_list = [];
-	$.each(blockDefinition.inputNames(), function (ind, name) {
-		args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
-	});
-	$('#arg-list').empty().append(args_list.join(", "));
+    // populate function name
+    $('#function-name').empty().append(blockDefinition.helpSpec());
+    
+    // populate function args
+    var args_list = [];
+    $.each(blockDefinition.inputNames(), function (ind, name) {
+        args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
+    });
+    $('#arg-list').empty().append(args_list.join(", "));
 
 
-	myCodeMirror.setOption('readOnly', false);
-	myCodeMirror.setOption('cursorBlinkRate', 530);
-	SnapStudy.cmDialog("Javascript Editor", inCode, function(){
-		blockDefinition.codeMapping = myCodeMirror.getValue();
+    myCodeMirror.setOption('readOnly', false);
+    myCodeMirror.setOption('cursorBlinkRate', 530);
+    SnapStudy.cmDialog("Javascript Editor", inCode, function(){
+        blockDefinition.codeMapping = myCodeMirror.getValue();
 
-		SnapStudy.TextInteraction('write', myCodeMirror.getValue());
-	});
+        SnapStudy.TextInteraction('write', myCodeMirror.getValue());
+    });
 }
 
 SnapStudy.jsHintsInterval = {};
 
 SnapStudy.cmDialog = function (title, inCode, saveCallback) {
-	var width = $(window).width() * .44;
-	var height = $(window).height() * .66;
+    var width = $(window).width() * .44,
+        height = $(window).height() * .66,
+        openDialogs = $('.ui-dialog').length;
 
+    var dialogButtons = {};
 
-	var dialogButtons = {};
+    console.log();
 
-	if (myCodeMirror.options['readOnly']) {
-		dialogButtons.Ok = function() {
-			myCodeMirror.setValue('');
-			$( this ).dialog( "close" );
-		}
-	} else {
-		dialogButtons.Save = function() {
-			SnapStudy.updateHints();
-			if (SnapStudy.errorWidgets.length > 0) {
-				clearInterval(SnapStudy.jsHintsInterval);
+    if (myCodeMirror.options['readOnly']) {
+        dialogButtons.Ok = function() {
+            myCodeMirror.setValue('');
+            $( this ).dialog( "close" );
+        }
+    } else {
+        dialogButtons.Save = function() {
+            SnapStudy.updateHints();
+            if (SnapStudy.errorWidgets.length > 0) {
+                clearInterval(SnapStudy.jsHintsInterval);
                 SnapStudy.jsHintsInterval = setInterval(SnapStudy.updateHints, 1551);
 
                 // TODO: add logic to record attempts to save that contain errors
                 // saveCallback();
-				return;
-			}
-			clearInterval(SnapStudy.jsHintsInterval);
-			saveCallback();
-			myCodeMirror.setValue('');
-			$( this ).dialog( "close" );
-		};
-		dialogButtons.Cancel = function() {
-			SnapStudy.cleanUpJSHints();
-			myCodeMirror.setValue('');
-			$( this ).dialog( "close" );
-		}
-	}
+                return;
+            }
+            clearInterval(SnapStudy.jsHintsInterval);
+            saveCallback();
+            myCodeMirror.setValue('');
+            $( this ).dialog( "close" );
+        };
+        dialogButtons.Cancel = function() {
+            SnapStudy.cleanUpJSHints();
+            myCodeMirror.setValue('');
+            $( this ).dialog( "close" );
+        }
+        dialogButtons.Run = function() {
+            SnapStudy.cleanUpJSHints();
+            myCodeMirror.setValue('');
+            $( this ).dialog( "close" );
+        }
+    }
 
-	$( "#cmDiv-wrapper" ).dialog({
-		width: width,
-		height: height,
-		title: title,
-		modal: true, 
-		buttons: dialogButtons,
-		close: SnapStudy.cleanUpJSHints
-	});
+    // perform a check to see if a dialog is already present.
+    // if one doesn't exist, continue normally
+    // else, clone it and insert the new information
+    if (openDialogs == 0) {
+        $( "#cmDiv-wrapper" ).dialog({
+            width: width,
+            height: height,
+            title: title, 
+            buttons: dialogButtons,
+            close: SnapStudy.cleanUpJSHints
+        });
 
-	// fill it with the code from the clicked box
-	myCodeMirror.setValue(inCode);
+        // fill it with the code from the clicked box
+        myCodeMirror.setValue(inCode);
+    }
+    else {
+        var i = openDialogs + 1,
+            clone = $("#cmDiv-wrapper").clone().appendTo('body'),
+            myNewCodeMirror;
+        
+        clone.find('#cmDiv').attr("id", "cmDiv"+i).empty();
+        
+        clone.dialog({
+            width: width,
+            height: height,
+            title: title, 
+            buttons: dialogButtons,
+            close: function (e, ui) {
+                $(this).dialog('destroy').remove();
+                SnapStudy.cleanUpJSHints
+            }
+        });
 
-	// hide the text bubble
-	world.hand.destroyTemporaries();
+        // setup javascript editor
+        var cm = document.getElementById('cmDiv'+i);
+        myNewCodeMirror = CodeMirror(cm, {
+            mode: "javascript",
+            lineNumbers:true, 
+            tabSize:2,
+            matchBrackets: true,
+            extraKeys: {"Ctrl-Space": "autocomplete"}
+        });
+
+        if (title == "Javascript Viewer") {
+            myNewCodeMirror.setOption('readOnly', true);
+            myNewCodeMirror.setOption('cursorBlinkRate', -1);
+        } else {
+            myNewCodeMirror.setOption('readOnly', false);
+            myNewCodeMirror.setOption('cursorBlinkRate', 530);
+        }
+        // try and remove the code bubble from the code of block
+        myNewCodeMirror.on('focus', hideCodeBubble);
+        myNewCodeMirror.on('blur', hideCodeBubble);
+        // myNewCodeMirror.setValue("");
+        // console.log(inCode);
+        myNewCodeMirror.setValue(inCode);
+    }
+
+
+    
+
+    // hide the text bubble
+    world.hand.destroyTemporaries();
 }
 
 SnapStudy.errorWidgets = [];
@@ -218,7 +274,7 @@ SnapStudy.updateHints = function() {
     SnapStudy.errorWidgets.length = 0;
 
     JSHINT(myCodeMirror.getValue(), {
-    	evil: true
+        evil: true
     });
 
     for (var i = 0; i < JSHINT.errors.length; ++i) {
