@@ -1,0 +1,5 @@
+master plan for year 2:
+
+After talking w/ Bryan, it sounds like the way to go is to figure out how to parse the text then create a blocks-based object model in memory and feed it to the ThreadManager.
+
+One idea is to parse the AST and at each node instantiate a BlockMorph of that type through some sort of factory thing. I expect this will be messy and complicated, especially when it comes to for control structures. But hopefully, working upwards step-by-step we can fill in the peices. I suspect there is an elegant solution to this, it's just goign to be a matter of finding it.
