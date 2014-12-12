@@ -63,10 +63,10 @@ SnapStudy.TextInteraction = function(interactionType, code) {
 
     $.ajax({
         type: "POST",
-        url: "/snapTextInteraction/",
+        url: "/snap/TextInteraction/",
         data: jsonData
     }).done(function( msg ) {
-        console.log(msg);
+        console.log('success');
     });
 }
 
@@ -118,7 +118,9 @@ SnapStudy.openViewer = function(inCode, blockMorph) {
 
     myCodeMirror.setOption('readOnly', true);
     myCodeMirror.setOption('cursorBlinkRate', -1);
-    SnapStudy.cmDialog("Javascript Viewer", inCode, function(){});
+
+    var none = "";
+    SnapStudy.cmDialog("Javascript Viewer", inCode, none, function(){});
 
     SnapStudy.TextInteraction('read', inCode);
 }
@@ -148,30 +150,29 @@ SnapStudy.openEditor = function(inCode, blockMorph) {
 
     myCodeMirror.setOption('readOnly', false);
     myCodeMirror.setOption('cursorBlinkRate', 530);
-    SnapStudy.cmDialog("Javascript Editor", inCode, function(){
+    SnapStudy.cmDialog("Javascript Editor", inCode, blockMorph, function(){
         blockDefinition.codeMapping = myCodeMirror.getValue();
-
         SnapStudy.TextInteraction('write', myCodeMirror.getValue());
     });
 }
 
 SnapStudy.jsHintsInterval = {};
 
-SnapStudy.cmDialog = function (title, inCode, saveCallback) {
+SnapStudy.cmDialog = function (title, inCode, blockMorph, saveCallback) {
     var width = $(window).width() * .44,
         height = $(window).height() * .66,
         openDialogs = $('.ui-dialog').length;
 
     var dialogButtons = {};
 
-    console.log();
-
     if (myCodeMirror.options['readOnly']) {
         dialogButtons.Ok = function() {
             myCodeMirror.setValue('');
             $( this ).dialog( "close" );
         }
-    } else {
+    } 
+
+    else {
         dialogButtons.Save = function() {
             SnapStudy.updateHints();
             if (SnapStudy.errorWidgets.length > 0) {
@@ -193,9 +194,9 @@ SnapStudy.cmDialog = function (title, inCode, saveCallback) {
             $( this ).dialog( "close" );
         }
         dialogButtons.Run = function() {
-            SnapStudy.cleanUpJSHints();
-            myCodeMirror.setValue('');
-            $( this ).dialog( "close" );
+            if (blockMorph != "") {
+                blockMorph.mouseClickLeft();
+            }
         }
     }
 
@@ -257,9 +258,96 @@ SnapStudy.cmDialog = function (title, inCode, saveCallback) {
         myNewCodeMirror.setValue(inCode);
     }
 
+    // else if (title == "Javascript Editor") {
+    //     var name = blockDefinition.helpSpec();
+    //     console.log(name);
+    //     // first check if a window already exists for the function
+    //     if ($('#cmDiv-'+name).length) {
+    //         console.log("it's a match!");
+    //         // show function structure
+    //         $(this).find('.function-structure').show();
 
+    //         // populate function name
+    //         $(this).find('#function-name').empty().append(blockDefinition.helpSpec());
+
+    //         // populate function args
+    //         var args_list = [];
+    //         $.each(blockDefinition.inputNames(), function (ind, name) {
+    //             args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
+    //         });
+    //         $(this).find('#arg-list').empty().append(args_list.join(", "));
+            
+    //         return;
+    //     }
+
+    //     else {
+    //         // otherwise, create a new div and add it there
+    //         console.log("can't find it");
+
+    //         var clone = $("#cmDiv-wrapper").clone().appendTo('body'),
+    //             myNewCodeMirror;
+            
+    //         // clone.addClass('cmEditor-wrapper').find('#cmDiv').empty();
+    //         clone.find('#cmDiv').attr("id", "cmDiv-"+name).empty();
+            
+    //         clone.dialog({
+    //             width: width,
+    //             height: height,
+    //             title: title, 
+    //             buttons: dialogButtons,
+    //             close: function (e, ui) {
+    //                 SnapStudy.cleanUpJSHints
+    //             }
+    //         });
+
+    //         // setup javascript editor
+    //         var cm = document.getElementById('cmDiv-'+name);
+    //         myNewCodeMirror = CodeMirror(cm, {
+    //             mode: "javascript",
+    //             lineNumbers:true, 
+    //             tabSize:2,
+    //             matchBrackets: true,
+    //             extraKeys: {"Ctrl-Space": "autocomplete"}
+    //         });
+
+    //         myNewCodeMirror.setOption('readOnly', false);
+    //         myNewCodeMirror.setOption('cursorBlinkRate', 530);
+
+    //         // try and remove the code bubble from the code of block
+    //         myNewCodeMirror.on('focus', hideCodeBubble);
+    //         myNewCodeMirror.on('blur', hideCodeBubble);
+    //         // myNewCodeMirror.setValue("");
+    //         // console.log(inCode);
+    //         myNewCodeMirror.setValue(inCode);
+
+    //         // show function structure
+    //         clone.find('.function-structure').show();
+
+    //         // populate function name
+    //         clone.find('#function-name').empty().append(blockDefinition.helpSpec());
+
+    //         // populate function args
+    //         var args_list = [];
+    //         $.each(blockDefinition.inputNames(), function (ind, name) {
+    //             args_list.push('<span class="cm-def">' + name + '<span class="cm-def">');
+    //         });
+    //         clone.find('#arg-list').empty().append(args_list.join(", "));
+
+            
+    //     }
+    // }
     
-
+    // jquery ui dialog fixes
+    if (!MorphicPreferences.isFlat) {
+        $('.ui-dialog.ui-widget-content').css('border', '1px solid #717171');
+        $('.ui-dialog-buttonpane.ui-widget-content').css('border-top', '1px solid #717171');
+        $('.ui-button.ui-state-default').css({'border': '1px solid #d3d3d3', 'background': '#e6e6e6 url(/static/css/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x','font-weight': 'normal','color': '#4a6cd4'});
+        $('.ui-button.ui-state-hover').css({'border': '1px solid #999999', 'background': '#e6e6e6 url(/static/css/images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x','font-weight': 'normal','color': '#212121'});
+        $('.ui-widget-header').css({'border': '1px solid #aaaaaa', 'background': '#cccccc url(/static/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x','font-weight': 'bold','color': '#222222'});
+        $('.ui-icon-closethick').css({'background-position':'-96px -128px', 'background-image':'url(/static/css/images/ui-icons_888888_256x240.png)'});
+        $('.CodeMirror-sizer').css('background-color','#F5F5F5');
+    }
+    
     // hide the text bubble
     world.hand.destroyTemporaries();
 }

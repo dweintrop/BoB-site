@@ -69,7 +69,7 @@
 					world.children[0].openProjectString(new XML_Element().unescape(projectXML));
 				}
 
-				// setup javascript editor
+				// setup javascript viewer
 				var cmDiv = document.getElementById('cmDiv');
 				myCodeMirror = CodeMirror(cmDiv, {
 					mode: "javascript",
@@ -93,6 +93,7 @@
 			}
 		</script>
 	</head>
+
 	<body style="margin: 0;">
 		<div style="display:none;">
 			{{form.student_id}}
@@ -100,12 +101,14 @@
 			<input id="id_condition" value="{{form.class_period.value}}"/>
 		</div>
 
-    <div id="cmDiv-wrapper" title="Javascript {% if form.class_period.value == 'graph_write'%}Editor{% else %}Viewer{%endif%}" style="display:none;position:aboslute;z-index:-1;width:55%;height:44%;">
+	    <div id="cmDiv-wrapper" title="Javascript {% if form.class_period.value == 'graph_write'%}Editor{% else %}Viewer{%endif%}" style="display:none;position:aboslute;z-index:-1;width:55%;height:44%;">
 			<pre class="cm-s-default function-structure" style="margin-bottom:0px;margin-left:9px;margin-top:5px;"><span class="cm-keyword">function </span><span id="function-name" class="cm-variable">hey</span>(<span id="arg-list"></span>) {</pre>
 			<div id="cmDiv"></div>
 			<pre class="cm-s-default function-structure" style="margin-bottom:0px;margin-left:9px;margin-top:0px;">}</pre>
-    </div>
+	    </div>
+
 		<canvas id="world" tabindex="1" style="position: absolute;z-index:0;" />
+		
 		{{projectXML}}
   </body>
 </html>
