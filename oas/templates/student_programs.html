@@ -1,0 +1,32 @@
+
+<h2> Programs for Student: {{studentID}} </h2>
+
+
+<table border=1>
+	<tr>
+		<th>ID</th>
+		<th>Project Name</th>
+		<th>TimeStamp</th>
+		<th>Script Link</th>
+		<th>Project Link</th>
+	</tr>
+{% for p in programs %}
+	<tr>
+    	<td>{{ p.id }} </td>
+    	<td>{{p.ProjectName}}</td>
+    	<td>{{p.TimeStamp}}</td>
+    	<td>
+    		<a href="/program_viewer/?ProgramID={{p.id}}" target="_blank">Load Scritps</a>
+    		
+    		(<a href="/admin/view_xml/?ProgramID={{p.id}}" target="_blank">xml</a>)
+    		</td>
+    	<td>
+    		{% if p.ProjectXML %}
+    		<a href="/program_viewer/?ProgramID={{p.id}}&fullProject=true" target="_blank"> Load Project 
+    		(<a href="/admin/view_xml/?ProgramID={{p.id}}&fullProject=true" target="_blank">xml</a>)
+    		
+    		{% endif %}
+    	</td>
+    </tr>
+{% endfor %}
+</table>

@@ -2,8 +2,11 @@ import csv, codecs, cStringIO
 
 from django.contrib import admin
 from django.http import HttpResponse
+from django.conf.urls import patterns
 
 from oas.models import SnapRun, TextInteraction
+from oas.views import view_students, view_student_programs, view_xml
+
 
 class SnapRunAdmin(admin.ModelAdmin):
   list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition', 'NumRuns')
@@ -45,6 +48,20 @@ class TextInteractionAdmin(admin.ModelAdmin):
 
 admin.site.register(SnapRun, SnapRunAdmin)
 admin.site.register(TextInteraction, TextInteractionAdmin)
+
+# add custom admin pages here
+def get_admin_urls(urls):
+    def get_urls():
+        my_urls = patterns('',
+            (r'^students/$', admin.site.admin_view(view_students)),
+            (r'^student_programs/$', admin.site.admin_view(view_student_programs)),
+            (r'^view_xml/$', admin.site.admin_view(view_xml))
+        )
+        return my_urls + urls
+    return get_urls
+
+admin_urls = get_admin_urls(admin.site.get_urls())
+admin.site.get_urls = admin_urls
 
 class UnicodeWriter:
     """

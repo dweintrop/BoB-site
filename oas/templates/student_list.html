@@ -1,0 +1,17 @@
+
+<h2> Student Links by Condition </h2>
+
+<h3>Graphical:</h3>
+{% for s in graphs %}
+&nbsp;&nbsp;<a href="/admin/student_programs/?StudentID={{s}}" target="_blank">{{ s }}</a><br/>
+{% endfor %}
+
+<h3>Read-Only:</h3>
+{% for s in reads %}
+&nbsp;&nbsp;<a href="/admin/student_programs/?StudentID={{s}}" target="_blank">{{ s }}</a><br/>
+{% endfor %}
+
+<h3>Write-Only:</h3>
+{% for s in writes %}
+&nbsp;&nbsp;<a href="/admin/student_programs/?StudentID={{s}}" target="_blank">{{ s }}</a><br/>
+{% endfor %}

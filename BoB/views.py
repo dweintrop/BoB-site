@@ -26,6 +26,17 @@ def snap(request):
 	else:
 		return render(request, 'login.html', {'form': LoginForm()})
 
+def program_viewer(request):
+	programID = request.GET['ProgramID']
+	run = SnapRun.objects.get(id=programID)
+
+	if (request.GET.get('fullProject') is not None):
+		xml = run.ProjectXML
+	else:
+		xml = run.ScriptXML
+
+	return render(request, 'snap.html', {'projectXML': xml})
+
 # store run 
 def snapRun(request):
 	if request.method == 'POST':
