@@ -30,12 +30,15 @@ def program_viewer(request):
 	programID = request.GET['ProgramID']
 	run = SnapRun.objects.get(id=programID)
 
+	# dummy login form to denote that this project is being opened for analysis
+	form = LoginForm(initial={'student_id': 111, 'pair_id': programID, 'class_period' : 'analysis'})
+	
 	if (request.GET.get('fullProject') is not None):
 		xml = run.ProjectXML
 	else:
 		xml = run.ScriptXML
 
-	return render(request, 'snap.html', {'projectXML': xml})
+	return render(request, 'snap.html', {'projectXML': xml, 'form': form})
 
 # store run 
 def snapRun(request):
