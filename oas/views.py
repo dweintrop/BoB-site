@@ -27,4 +27,4 @@ def view_xml(request):
 		xml = run.ProjectXML
 	else:
 		xml = run.ScriptXML
-	return HttpResponse(' ' + xml)
+	return HttpResponse(xml, content_type="application/xhtml+xml")
