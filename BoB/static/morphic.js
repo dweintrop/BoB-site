@@ -10414,6 +10414,12 @@ WorldMorph.prototype.initEventListeners = function () {
     );
 
     window.onbeforeunload = function (evt) {
+
+        // just close if in analysis mode
+        if (SnapStudy.getCondition() == 'analysis') {
+            return;
+        }
+
         // log project close here even though it might not close
         SnapStudy.SnapRun(world.children[0],'projectClose');
 
