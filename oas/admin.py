@@ -16,14 +16,14 @@ class SnapRunAdmin(admin.ModelAdmin):
 
 
   def view_scripts(self, obj):
-      return '<a href="/program_viewer/?ProgramID=%s" target="_blank">view</a>' % (obj.id)
+      return '<a href="/program_viewer/?ProgramID=%s" target="_blank">view</a> (<a href="/admin/view_xml/?ProgramID=%s" target="_blank">xml</a>)' % (obj.id, obj.id)
   view_scripts.allow_tags = True
   view_scripts.short_description = 'Load Scripts'
 
   def view_project(self, obj):
     url = ' '
     if (obj.RunType == 'projectClose'):
-      url = '<a href="/program_viewer/?ProgramID=%s&fullProject=true" target="_blank">view</a>' % (obj.id)
+      url = '<a href="/program_viewer/?ProgramID=%s&fullProject=true" target="_blank">view</a> (<a href="/admin/view_xml/?ProgramID=%s&fullProject=true" target="_blank">xml</a>)' % (obj.id, obj.id)
     return url
   view_project.allow_tags = True
   view_project.short_description = 'Load Project'
