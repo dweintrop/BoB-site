@@ -14,7 +14,7 @@ class SnapRunParser:
 
 	@staticmethod
 	def getRowMetaLabels():
-		return ['id', 'ProjectName', 'TimeStamp', 'RunType', 'NumRuns']
+		return ['id', 'ProjectName', 'TimeStamp', 'RunType', 'NumRuns', 'TotalBlocks']
 
 	def getRowMetaInfo(self):
 		return [self.snapRun.id, self.snapRun.ProjectName, self.snapRun.TimeStamp, self.snapRun.RunType, self.snapRun.NumRuns]
@@ -49,5 +49,4 @@ class SnapRunParser:
 		if (customblocks):
 			self.blockDict['custom-blocks'] = len(customblocks)
 			
-
-		return self.blockDict.values()
+		return [sum(self.blockDict.values())] + self.blockDict.values()
