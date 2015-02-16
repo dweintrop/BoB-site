@@ -9,10 +9,25 @@ from oas.views import view_students, view_student_programs, view_xml
 
 
 class SnapRunAdmin(admin.ModelAdmin):
-  list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition', 'NumRuns')
+  list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition', 'NumRuns', 'view_scripts', 'view_project')
   search_fields = ('StudentID', 'ProjectName', 'RunType')
   list_filter = ('TimeStamp', 'Condition', 'StudentID', 'RunType')
   actions = ['export_snapRuns']
+
+
+  def view_scripts(self, obj):
+      return '<a href="/program_viewer/?ProgramID=%s" target="_blank">view</a>' % (obj.id)
+  view_scripts.allow_tags = True
+  view_scripts.short_description = 'Load Scripts'
+
+  def view_project(self, obj):
+    url = ' '
+    if (obj.RunType == 'projectClose'):
+      url = '<a href="/program_viewer/?ProgramID=%s&fullProject=true" target="_blank">view</a>' % (obj.id)
+    return url
+  view_project.allow_tags = True
+  view_project.short_description = 'Load Project'
+
 
   def export_snapRuns(studentadmin, request, queryset):
 		response = HttpResponse(content_type='text/csv')
