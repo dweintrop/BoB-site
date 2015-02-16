@@ -6,13 +6,14 @@ from django.conf.urls import patterns
 
 from oas.models import SnapRun, TextInteraction
 from oas.views import view_students, view_student_programs, view_xml
+from oas.SnapRunParser import SnapRunParser
 
 
 class SnapRunAdmin(admin.ModelAdmin):
   list_display = ('StudentID', 'PairID', 'ProjectName', 'TimeStamp', 'RunType', 'Condition', 'NumRuns', 'view_scripts', 'view_project')
   search_fields = ('StudentID', 'ProjectName', 'RunType')
   list_filter = ('TimeStamp', 'Condition', 'StudentID', 'RunType')
-  actions = ['export_snapRuns']
+  actions = ['export_snapRuns', 'parse_snapRuns']
 
 
   def view_scripts(self, obj):
@@ -28,8 +29,7 @@ class SnapRunAdmin(admin.ModelAdmin):
   view_project.allow_tags = True
   view_project.short_description = 'Load Project'
 
-
-  def export_snapRuns(studentadmin, request, queryset):
+  def export_snapRuns(snapRunAdmin, request, queryset):
 		response = HttpResponse(content_type='text/csv')
 
 		writer = UnicodeWriter(response)
@@ -42,13 +42,26 @@ class SnapRunAdmin(admin.ModelAdmin):
 		response['Content-Disposition'] = 'attachment; filename="snapruns.csv"'
 		return response
 
+  def parse_snapRuns(snapRunAdmin, request, queryset):
+    response = HttpResponse(content_type='text/csv')
+
+    writer = UnicodeWriter(response)
+    writer.writerow(SnapRunParser.getRowMetaLabels() + SnapRunParser.getBlockCountsLabels())
+
+    # write data
+    for row in queryset:
+      run = SnapRunParser(row)
+      writer.writerow(run.getRowMetaInfo() + run.getBlockCounts())
+
+    response['Content-Disposition'] = 'attachment; filename="snapruns.csv"'
+    return response
 
 class TextInteractionAdmin(admin.ModelAdmin):
   list_display = ('StudentID', 'PairID', 'TimeStamp', 'InteractionType', 'Condition')
   list_filter = ('TimeStamp', 'InteractionType')
   actions = ['export_snapTextInteractions']
 
-  def export_snapTextInteractions(studentadmin, request, queryset):
+  def export_snapTextInteractions(textInteractionAdmin, request, queryset):
         response = HttpResponse(content_type='text/csv')
 
         writer = UnicodeWriter(response)
