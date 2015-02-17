@@ -28,3 +28,13 @@ def view_xml(request):
 	else:
 		xml = run.ScriptXML
 	return HttpResponse(xml, content_type="application/xhtml+xml")
+
+def fix_bad_xml(request):
+	count = 0
+	allRuns = SnapRun.objects.all()
+	for run in allRuns:
+		if '" <variables' in run.ScriptXML:
+			run.ScriptXML = run.ScriptXML.replace('" <variables', '"><variables') 
+			run.save()
+			count += 1
+	return HttpResponse("upated " + str(count))

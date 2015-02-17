@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.conf.urls import patterns
 
 from oas.models import SnapRun, TextInteraction
-from oas.views import view_students, view_student_programs, view_xml
+from oas.views import view_students, view_student_programs, view_xml, fix_bad_xml
 from oas.SnapRunParser import SnapRunParser
 
 
@@ -83,7 +83,8 @@ def get_admin_urls(urls):
         my_urls = patterns('',
             (r'^students/$', admin.site.admin_view(view_students)),
             (r'^student_programs/$', admin.site.admin_view(view_student_programs)),
-            (r'^view_xml/$', admin.site.admin_view(view_xml))
+            (r'^view_xml/$', admin.site.admin_view(view_xml)),
+            (r'^fix_bad_xml/$', admin.site.admin_view(fix_bad_xml))
         )
         return my_urls + urls
     return get_urls
