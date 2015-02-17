@@ -31,7 +31,7 @@ def view_xml(request):
 
 def fix_bad_xml(request):
 	count = 0
-	allRuns = SnapRun.objects.all()[3500:6500]
+	allRuns = SnapRun.objects.all()[3500:5500]
 	for run in allRuns:
 		if '" <variables' in run.ScriptXML:
 			run.ScriptXML = run.ScriptXML.replace('" <variables', '"><variables') 
