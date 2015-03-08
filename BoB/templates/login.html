@@ -16,10 +16,10 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script> 
 
-	<!--
+<!-- 	
 		<script src="http://localhost/~dweintrop/jquery.min.js"></script>
 	    <script src="http://localhost/~dweintrop/jquery-ui.min.js"></script> 
--->
+ -->
 
 		<script type="text/javascript" src="{% static "selectBoxIt.min.js"%}"></script>
 
@@ -29,14 +29,9 @@
 		<style type="text/css">
 			.header {
 		    color: #006600;
-		    font: 33px Georgia,"Times New Roman",Times,serif;
+		    font: Georgia,"Times New Roman",Times,serif;
 		    letter-spacing: 2px;
-			}
-
-			.header-label {
-		    float: right;
-		    padding-right: 74px;
-		    padding-top: 31px;
+		    text-align: center;
 			}
 
 			.input-label, h3{
@@ -127,123 +122,6 @@
 
 <script type="text/javascript">
 
-	function validate() {
-		if (!$('#student_id').val()) {
-			alert('Please select your name from the Student dropdown,\nor select "I\'m not listed" then enter your ID.');
-			return false;
-		}
-	}
-
-	var data = { 
-        graph: [
-			{id:"15", name: "Mrs. Roscoe"},
-			{id:"11", name: "Mr. Weintrop"},
-			{id:"42580937", name: "Arroyo, Dalia"},
-			{id:"42640174", name: "Besic, Denis"},
-			{id:"50019945", name: "Buchak, Aleksander"},
-			{id:"41751223", name: "Brika, Rime"},
-			{id:"44624923", name: "Calpino, Benjamin"},
-			{id:"42105724", name: "Causevic, Diana"},
-			{id:"42374385", name: "Ciriaco, Ashley"},
-			{id:"50054097", name: "Cygielski, Eryk"},
-			{id:"42313521", name: "Dang, Nathanlown M."},
-			{id:"43978810", name: "Ehrlich, Jordan Payton"},
-			{id:"42180599", name: "Flores, Janet"},
-			{id:"50235500", name: "Francis, Christian Nicholas"},
-			{id:"42760056", name: "Hamor, Michael Samuel"},
-			{id:"42359335", name: "Hu, Vincent"},
-			{id:"41919051", name: "Kasper, Ryan M."},
-			{id:"42477621", name: "Katich, Zak"},
-			{id:"41714921", name: "Kolodziej, Gregory M."},
-			{id:"42002526", name: "Lin, Nathan Jianhung"},
-			{id:"43498541", name: "Lopez, Estefania"},
-			{id:"43937189", name: "Maloney, Nigel Emanual"},
-			{id:"42754900", name: "Medina, Andres"},
-			{id:"43337823", name: "Mock, Laura Edith"},
-			{id:"41067020", name: "Nino, Eduardo"},
-			{id:"41807024", name: "Pereira, Erica"},
-			{id:"43439812", name: "Perez, Marco Antonio"},
-			{id:"42359556", name: "Poljak, Irfan"},
-			{id:"43273221", name: "Rincon, Joseph Bryan"},
-			{id:"42887641", name: "Rivera, Daniel"},
-			{id:"41712384", name: "Rosado, Javier Daniel"},
-			{id:"41805412", name: "Sandoval, Gabriel"},
-			{id:"41817836", name: "Ullah, Muhammud Rehman"},
-			{id:"43427636", name: "Walasik, Kamil"}
-	        ], 
-        graph_read: [
-			{id:"13", name: "Mr. Law"},
-			{id:"11", name: "Mr. Weintrop"},
-			{id:"43443038", name: "Beltran, Anthony"},
-			{id:"43342657", name: "Birova, Maria"},
-			{id:"42708763", name: "Castro, Jonathan"},
-			{id:"42692239", name: "Cuevas, Angela"},
-			{id:"43029584", name: "Domingo, Thomas"},
-			{id:"50088771", name: "Forte, Ethan"},
-			{id:"42591017", name: "Guerrero, Christopher"},
-			{id:"44023679", name: "Gulizia-Cowing, Benjamin"},
-			{id:"42708666", name: "Haidari, Aman"},
-			{id:"42300705", name: "Henderson, Caresse"},
-			{id:"43381474", name: "Hernandez, Leslie"},
-			{id:"50295250", name: "Hubbell, Fox"},
-			{id:"43038729", name: "Keeling, Justin"},
-			{id:"43301659", name: "Keshk, Omar"},
-			{id:"41714875", name: "Klima, Nicol"},
-			{id:"42758663", name: "Liberto, Thomas"},
-			{id:"40008713", name: "Lopez, Cynthia"},
-			{id:"43295853", name: "Morales, Elliott"},
-			{id:"43032453", name: "Munoz, Marco"},
-			{id:"44635267", name: "Murphy, Charlie"},
-			{id:"41410833", name: "Pagan, Adam"},
-			{id:"50398286", name: "Rice, Tiarnan"},
-			{id:"43390872", name: "Sanchez, Jorge"},
-			{id:"42158828", name: "Tallen, Joseph"},
-			{id:"50313523", name: "Timoteo, Gaudwin"},
-			{id:"41092777", name: "Torres, Tony"},
-			{id:"43347519", name: "Tran, Vincent"},
-			{id:"42368822", name: "Trinidad, Rafael"},
-			{id:"42653276", name: "Uvena, Sofia"},
-			{id:"43308009", name: "Vega, Andrea"},
-			{id:"43315188", name: "Young, Kyra"},
-			{id:"41498315", name: "Zapatero, Erick"}
-	        ], 
-        graph_write: [
-			{id:"15", name: "Mrs. Roscoe"},
-			{id:"11", name: "Mr. Weintrop"},
-			{id:"43660632", name: "Arellano, Concepcion"},
-			{id:"44087596", name: "Arica, Kenan Selim"},
-			{id:"43057847", name: "Asghar, Ali"},
-			{id:"50256691", name: "Basler, Erik"},
-			{id:"50062276", name: "Boachie, Bright Arhin"},
-			{id:"43922718", name: "Bolotin, Aleksandr"},
-			{id:"43129546", name: "Carlson, Casey Curtis"},
-			{id:"43380230", name: "Casimiro, Melissa"},
-			{id:"43030418", name: "Cervantes, Marcos"},
-			{id:"42810185", name: "Dacruz, Lucas"},
-			{id:"43760483", name: "Hadgu, Elias Dawit"},
-			{id:"43287672", name: "Khan, Farhaad"},
-			{id:"45267768", name: "Kotskyy, Yuriy"},
-			{id:"50028924", name: "Krasnicki, Patryk"},
-			{id:"50313664", name: "Lang, Mikayla"},
-			{id:"43451812", name: "Martinez, Adriana"},
-			{id:"50010323", name: "Mccarrell-Bradley, Emmanuel"},
-			{id:"43002856", name: "Nowak, Rose"},
-			{id:"41869992", name: "Ochoa, Johnny"},
-			{id:"41784334", name: "Pascual, Alfredo"},
-			{id:"40504699", name: "Perez, Christopher"},
-			{id:"43296396", name: "Qader, Abu Bakr"},
-			{id:"41013680", name: "Ramirez, Gustavo Ortiz"},
-			{id:"39908972", name: "Ramos, Nicholas Andrew"},
-			{id:"41835915", name: "Rivera, Matthew Luis"},
-			{id:"42396613", name: "Rula, Konrad"},
-			{id:"42223603", name: "Solorzano, Daniel"},
-			{id:"42758981", name: "Torres, Juan Pablo"},
-			{id:"41863900", name: "Vilchez, Kevin Joshua"},
-			{id:"43398482", name: "Vuong, Jenny"},
-			{id:"41906944", name: "Zimmers, Frank Conner"}
-	        ] 
-    };      
-
     $(function() {
 	    //Calls the selectBoxIt method on your HTML select box.
 	    $("select").selectBoxIt({
@@ -268,45 +146,45 @@
 				}
 		});
 
-		$("#id_class_period").change(function(){
-            var period = $(this).val();
+		// $("#id_class_period").change(function(){
+  //           var period = $(this).val();
 
-            var student_dropdown = $("#student_dropdown").data("selectBox-selectBoxIt");
-            var pair_dropdown = $("#pair_dropdown").data("selectBox-selectBoxIt");
+  //           var student_dropdown = $("#student_dropdown").data("selectBox-selectBoxIt");
+  //           var pair_dropdown = $("#pair_dropdown").data("selectBox-selectBoxIt");
 
-            if (period != '') {
-            	student_dropdown.enable();
-            	pair_dropdown.enable();
-            } else {
-            	student_dropdown.disable();
-            	pair_dropdown.disable(); 
-            	return;           	
-            }
+  //           if (period != '') {
+  //           	student_dropdown.enable();
+  //           	pair_dropdown.enable();
+  //           } else {
+  //           	student_dropdown.disable();
+  //           	pair_dropdown.disable(); 
+  //           	return;           	
+  //           }
 
-            // clear/initialize student dropdowns
-            student_dropdown.remove();
-        	student_dropdown.add({ value: '0', text: 'Select Name'});
+  //           // clear/initialize student dropdowns
+  //           student_dropdown.remove();
+  //       	student_dropdown.add({ value: '0', text: 'Select Name'});
             
-            pair_dropdown.remove();
-        	pair_dropdown.add({ value: '0', text: 'Select Pair\'s Name'});
+  //           pair_dropdown.remove();
+  //       	pair_dropdown.add({ value: '0', text: 'Select Pair\'s Name'});
 
-            for (var i = 0; i < data[period].length; i++) {
-            	student_dropdown.add({ value: data[period][i].id, text: data[period][i].name });
-            	pair_dropdown.add({ value: data[period][i].id, text: data[period][i].name });
-            }
+  //           for (var i = 0; i < data[period].length; i++) {
+  //           	student_dropdown.add({ value: data[period][i].id, text: data[period][i].name });
+  //           	pair_dropdown.add({ value: data[period][i].id, text: data[period][i].name });
+  //           }
 
-        	student_dropdown.add({ value: '', text: 'I\'m not listed'});
-        	pair_dropdown.add({ value: '', text: 'I\'m not listed'});
-        });
+  //       	student_dropdown.add({ value: '', text: 'I\'m not listed'});
+  //       	pair_dropdown.add({ value: '', text: 'I\'m not listed'});
+  //       });
 
-        $("#student_dropdown").change(function() {
-        	$("#student_id").val(this.options[this.selectedIndex].value);
-      		(this.options[this.selectedIndex].value == '') ? $("#studentId-div").show() : $("#studentId-div").hide();
-        });
-        $("#pair_dropdown").change(function() {
-        	$("#pair_id").val(this.options[this.selectedIndex].value);
-      		(this.options[this.selectedIndex].value == '') ? $("#pairId-div").show() : $("#pairId-div").hide();
-        });
+        // $("#student_dropdown").change(function() {
+        // 	$("#student_id").val(this.options[this.selectedIndex].value);
+      		// (this.options[this.selectedIndex].value == '') ? $("#studentId-div").show() : $("#studentId-div").hide();
+        // });
+        // $("#pair_dropdown").change(function() {
+        // 	$("#pair_id").val(this.options[this.selectedIndex].value);
+      		// (this.options[this.selectedIndex].value == '') ? $("#pairId-div").show() : $("#pairId-div").hide();
+        // });
     });
 
 </script>
@@ -326,45 +204,26 @@
 			<div id="content" class="container">
 
 		    <div class="header">
-		    	<div class="header-label">Lane Tech Programming I</div>
-					<image src="{% static "images/LaneTechLogo.png"%}" height="101px;"/>
+		    	<div style="font-size:33px;"><i>Snappier!</i> Programming</div>
+		    	<div style="font-size:22px;">Blocks and text living side-by-side</span>
 		    </div>
 				<div style="margin:0 1%; height:3px; border-top:#CCCCCC solid 1px;" align="center">&nbsp;</div>
 				<div style="height:10px; border-top:#CCCCCC solid 2px">&nbsp;</div>
 
 				<form id="theForm" action="/snap/" method="post">
-
-					<div class="input-label">Programming I Section: {{form.class_period}}</div>
-
-					<div class="input-label">Student:
-			            <select class="selectBoxIt" id="student_dropdown" name="student_dropdown" class="form-control" disabled>
-			            	<option>Please Select Section</option>
-			            </select>
-
-						<div id="studentId-div" style="margin-left: 47px;margin-top: 11px;display:none;">
-							ID: <input type="text" id="student_id" name="student_id" size="29" class="text-input"/>
-						</div>
-						<span class="error-msg">
-			            {% for error in form.student_id.errors %}
-			              {{ error }}
-			            {% endfor %}
-			          	</span>
+					<div class="input-label">Choose Mode: {{form.class_period}}</div>
+					<input type="hidden" id="student_id" name="student_id" size="29" class="text-input" value="17"/>
 			        </div>
-
-					<div class="input-label">Pair:
-			            <select class="selectBoxIt" id="pair_dropdown" name="pair_dropdown" class="form-control" disabled>
-			            	<option>Please Select Section</option>
-			            </select>
-
-				        <div id="pairId-div" style="margin-left: 13px;margin-top: 11px;display:none;">
-							ID: <input type="text" id="pair_id" name="pair_id" size="29" class="text-input"/>
-						</div>
-			        </div>
-
-					<div class="input-label project-radio">{{form.project_choice}}</div>
 					
-					<input onclick="return validate();"class="submit-button" type="submit" value="Let's Go ►"/>
+					<!-- <input type="hidden" id="pair_id" name="pair_id" size="29" class="text-input" value=""/> -->
 
+					<div style="display:none;">
+						<div class="input-label project-radio">{{form.project_choice}}</div>
+					</div>
+					<center>
+						<input onclick="return validate();"class="submit-button" type="submit" value="Let's Go ►"/>
+					</center>
+<!--
 					<div id="student_surveys" style="line-height:18pt">
 						<h3 style="cursor:pointer; margin-bottom: 0; padding: 0;"><span id="survey-arrow" style="font-size:16px;">►</span>&nbsp;Student Online Forms</h3>
 						<div class="form_list">
@@ -396,6 +255,7 @@
 								</div>
 						</div>
 					</div>
+-->
 
 				</form>
 				
@@ -405,7 +265,6 @@
 		      This work is covered by Northwestern University IRB Study STU00097586.
 		    </div>
 		     -->
-
 			</div>
 		</div>
   </body>

@@ -7,7 +7,7 @@ from oas.models import SnapRun, TextInteraction
 import datetime 
 
 def login(request):
-    return render(request, 'login.html', {'form': LoginForm()})
+    return render(request, 'login.html', {'form': LoginForm({'project_choice':'new'})})
 
 def snap(request):
 	if request.method == 'POST':
