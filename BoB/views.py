@@ -81,7 +81,6 @@ def snapTextInteraction(request):
 		return HttpResponse('success')
 	return HttpResponse('faliure')
 
-
 # pass through mappings to get around my not being able to figure out how to show an image directory
 def help(request):
     return render(request, 'help.html')
